@@ -1,0 +1,21 @@
+#!/bin/sh -uxe
+
+./configure \
+--prefix=/usr \
+--enable-cscope \
+--enable-multibyte \
+--with-ex-name=vim-ex \
+--with-view-name=vim-view \
+--disable-perlinterp \
+--enable-python3interp \
+--disable-rubyinterp \
+--disable-netbeans \
+--disable-gpm \
+--disable-hangulinput \
+--disable-xim \
+--disable-gui \
+--enable-nlw \
+--without-x
+
+make
+make DESTDIR="$1" install

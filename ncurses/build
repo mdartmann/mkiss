@@ -1,0 +1,31 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --mandir=/usr/share/man \
+    --enable-pc-files \
+    --disable-rpath-hack \
+    --with-pkg-config-libdir=/usr/share/pkgconfig \
+    --with-shared \
+    --enable-widec \
+    --without-ada \
+    --without-tests \
+    --with-debug \
+    --with-cxx-binding
+
+make 
+make DESTDIR="$1" install
+
+# force ncurses to link against wide-char ncurses 
+for lib in ncurses form panel menu; do
+	rm -f "$1/usr/lib/lib${lib}.so" 
+	printf '%s\n' "INPUT(-l${lib}w)" > "$1/usr/lib/lib${lib}.so"
+	chmod 755 "$1/usr/lib/lib${lib}.so"
+	ln -sf "lib${lib}w.a" "$1/usr/lib/lib${lib}.a"
+done
+
+# Some packages look for libcurses instead of libncurses
+printf "%s\n" "INPUT(-lncursesw)" > "$1/usr/lib/libcursesw.so"
+ln -s libncurses.so "$1/usr/lib/libcurses.so"
+ln -s libncurses.so "$1/usr/lib/libtinfo.5"
+ln -s libncurses.so "$1/usr/lib/libtinfo.so.5"
