@@ -16,46 +16,45 @@ unset LDFLAGS
 mkdir -p build
 cd build
 
-../gcc/configure                                               \
-    --build=$(CARCH)                                           \
-    --enable-bootstrap					       \
-    --prefix=/usr                                              \
-    --libexecdir=/usr/libexec                                  \
-    --mandir=/usr/share/man                                    \
-    --infodir=/usr/share/info                                  \
-    --with-bugurl=https://github.com/mdartmann/mkiss/issues    \
-    --with-pkgversion=mkiss				       \
-    --enable-languages=c,c++,go,lto,objc,obj-c++,d             \
-    --with-isl                                                 \
-    --with-linker-hash-style=gnu			       \
-    --with-system-zlib				               \
-    --enable-__cxa_atexit                                      \
-    --enable-cet=auto					       \
-    --enable-checking=release				       \
-    --enable-clocale=gnu				       \
-    --enable-default-pie				       \
-    --enable-default-ssp                                       \
-    --enable-gnu-indirect-function                             \
-    --enable-install-libiberty                                 \
-    --enable-linker-build-id                                   \
-    --enable-lto                                               \
-    --disable-multlib                                          \
-    --enable-plugin                                            \
-    --enable-shared                                            \
-    --enable-threads=posix                                     \
-    --disable-libssp                                           \
-    --disable-libstdcxx-pch                                    \
-    --disable-libunwind-exceptions                             \
+../gcc/configure \
+    --build=$(CARCH) \
+    --enable-bootstrap \
+    --prefix=/usr \
+    --libexecdir=/usr/libexec \
+    --mandir=/usr/share/man \
+    --infodir=/usr/share/info \
+    --with-bugurl=https://github.com/mdartmann/mkiss/issues \
+    --with-pkgversion=mkiss	\
+    --enable-languages=c,c++,go,lto,objc,obj-c++,d  \
+    --with-isl \
+    --with-linker-hash-style=gnu \
+    --with-system-zlib \
+    --enable-__cxa_atexit \
+    --enable-cet=auto  \
+    --enable-checking=release \
+    --enable-clocale=gnu \
+    --enable-default-pie \
+    --enable-default-ssp \
+    --enable-gnu-indirect-function \
+    --enable-install-libiberty \
+    --enable-linker-build-id \
+    --enable-lto \
+    --disable-multlib \
+    --enable-plugin \
+    --enable-shared \
+    --enable-threads=posix \
+    --disable-libssp \
+    --disable-libstdcxx-pch \
+    --disable-libunwind-exceptions \
     --disable-werror
 
 make
-
 make DESTDIR="$1" install
 
 # Add LTO
 install -vdm755 "$1/usr/lib/bfd/plugins"
 ln -sfv ../../libexec/gcc/$(cc -dumpmachine)/$2/liblto_plugin.so \
-	"$1/usr/lib/bfd-plusing/liblto_plugins.so"
+	"$1/usr/lib/bfd/plugins/liblto_plugins.so"
 
 ln -s gcc "$1/usr/bin/cc"
 install -Dm755 ../c99 "$1/usr/bin/c99"
