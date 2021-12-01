@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+
+python configure.py --bootstrap
+
+install -Dm755 ninja "$1/usr/bin/ninja"
+
+install -Dm644 misc/ninja.vim "$1/usr/share/vim/vimfiles/syntax/ninja.vim"
+install -Dm644 doc/manual.asciidoc "$1/usr/share/doc/ninja/manual.asciidoc"
+install -Dm644 misc/bash-completion "$1/usr/share/bash-completion/completions/ninja"
+install -Dm644 misc/zsh-completion "$1/usr/share/zsh/site-functions/_ninja"
