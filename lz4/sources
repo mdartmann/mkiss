@@ -1,0 +1,2 @@
+git+https://github.com/lz4/lz4.git#vVERSION
+https://github.com/lz4/lz4/commit/8301a21773ef61656225e264f4f06ae14462bca7.patch

@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+
+./configure \
+	--prefix=/usr \
+	--without-xml2 \
+	--without-nettle \
+	--disable-static
+
+make
+make DESTDIR="$1" install
