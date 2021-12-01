@@ -1,0 +1,33 @@
+#!/bin/sh -uxe
+
+# Disable development mode
+sed -i '/^development=/s/true/false/' bfd/development.sh
+
+./configure \
+	--prefix=/usr \
+	--with-lib-path=/usr/lib:/usr/local/lib \
+	--enable-deterministic-archives \
+	--enable-gold \
+	--enable-cet \
+	--enable-relro \
+	--without-debuginfod \
+	--enable-threads \
+	--enable-lto \
+	--enable-ld=default \
+	--enable-plugins \
+	--enable-multilib \
+	--enable-gdb \
+	--enable-nls \
+	--enable-readline \
+	--disable-gprof \
+	--disable-werror \
+	--with-mmap \
+	--with-pic \
+	--with-system-zlib
+
+make configure-host
+make tooldir=/usr
+make DESTDIR="$1" tooldir=/usr install
+
+echo 'INPUT( /usr/lib/libbfd.a -liberty -lz -ldl )' > "$1/usr/lib/libbfd.so"
+echo 'INPUT( /usr/lib/libopcodes.a -lbfd )' > "$1/usr/lib/libopcodes.so"
