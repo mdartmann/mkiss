@@ -1,0 +1,22 @@
+#!/bin/sh -uxe
+
+unset LDFLAGS
+export CXXFLAGS="$CFLAGS -D_GNU_SOURCE -DRECYCLES_PIDS -DDEFAULT_PATH_VALUE='\"/usr/local/bin:/usr/bin\"' -DSYSLOG_HISTORY -DSYSLOG_SHOPT=0"
+
+for patch in bash50*; do 
+	patch -p0 -i $patch;
+done
+
+autoconf
+
+./configure \
+	--prefix=/usr \
+	--without-bash-malloc \
+	--without-installed-readline \
+	--enable-nls
+
+# limit threads to avoid race condition
+make -j4
+make -j1 DESTDIR="$1" install
+
+ln -s bash "$1/usr/bin/sh"
