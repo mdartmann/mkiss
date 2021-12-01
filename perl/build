@@ -1,0 +1,47 @@
+#!/bin/sh -uxe
+
+export BUILD_ZLIB=0
+export BUILD_BZIP2=0
+
+export CPPFLAGS="-DFORTIFY_SOURCE=2 -DNO_POSIX_2008_LOCALE -D_GNU_SOURCE"
+
+./Configure \
+	-des \
+	-Dprefix=/usr \
+	-Dvendorprefix=/usr \
+	-Dusevendorprefix \
+	-Dinc_version_list=none \
+	-Dd_sockaddr_in6=define\
+	-Duseshrplib \
+	-Dusesoname \
+	-Dusethreads \
+	-Dccflags="$CFLAGS" \
+	-Dldflags="$LDFLAGS" \
+	-Dperl_static_inline="static __inline__" \
+	-Dd_static_inline \
+	-Dprivlib=/usr/share/perl5 \
+	-Darchlib=/usr/lib/perl5 \
+	-Dsitelib=/usr/share/perl5 \
+	-Dsitearch=/usr/lib/perl5 \
+	-Dvendorlib=/usr/share/perl5 \
+	-Dvendorarch=/usr/lib/perl5 \
+	-Dscriptdir=/usr/bin \
+	-Dsitescript=/usr/bin \
+	-Dvendorscript=/usr/bin \
+	-Dinc_version_list=none
+
+make
+make -j1 DESTDIR="$1" install
+
+
+# Remove all unneeded files.
+find "$1" -name \*.pod       -exec rm -f {} +
+find "$1" -name .packlist    -exec rm -f {} +
+find "$1" -name README\*     -exec rm -f {} +
+find "$1" -name TODO\*       -exec rm -f {} +
+find "$1" -name Change\*     -exec rm -f {} +
+find "$1" -name \*.bs        -exec rm -f {} +
+find "$1" -name \*.0 -type f -exec rm -f {} +
+
+# Fix permissions.
+find "$1/usr/lib" -type f -exec chmod 644 {} \;
