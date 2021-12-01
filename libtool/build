@@ -1,0 +1,8 @@
+#!/bin/sh -uxe
+
+./configure \
+	--prefix=/usr \
+	lt_cv_sys_lib_dlsearch_path_spec="/usr/lib /usr/lib32 /usr/lib64"
+
+make
+make DESTDIR="$1" install
