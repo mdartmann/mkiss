@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+
+export CFLAGS="$CFLAGS -Wno-format-truncation"
+
+./configure \
+	--prefix=/usr \
+	--disable-rpath \
+	--enable-werror
+
+make
+make DESTDIR="$1" install

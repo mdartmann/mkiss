@@ -1,0 +1,3 @@
+https://www.openssl.org/source/openssl-VERSION.tar.gz
+files/update-certdata.sh
+patches/ca-dir.patch

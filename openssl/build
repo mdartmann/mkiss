@@ -1,0 +1,15 @@
+#!/bin/sh -uxe
+
+./Config \
+	--prefix=/usr \
+	--openssldir=/etc/ssl \
+	--libdir=lib \
+	shared \
+	no-ssl3-method \
+	enable-ec_nistp_64_gcc_128 \
+	"-Wa,--noexecstack ${CPPFLAGS} ${CFLAGS} ${LDFLAGS}" \
+	linux-x86_64
+
+make
+make DESTDIR="$1" MANDIR=/usr/share/man MANSUFFIX=ssl install
+install -Dm755 update-certdata.sh "$1/etc/ssl"

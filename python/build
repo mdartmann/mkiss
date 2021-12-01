@@ -1,0 +1,40 @@
+#!/bin/sh -uxe
+
+export CFLAGS="-march=native -mtune=native -O3 -Wno-error"
+export CXXFLAGS="$CFLAGS"
+export CPPFLAGS="-DFORTIFY_SOURCE=1"
+export LDFLAGS="-Wl,-O1,--as-needed"
+
+
+sed -i "s|^#.* /usr/local/bin/python|#!/usr/bin/python|" Lib/cgi.py
+
+sed -i "s|-flto |-flto=4 |g" configure configure.ac
+
+# Use system libraries
+rm -r Modules/expat
+rm -r Modules/_ctypes/darwin* Modules/_ctypes/libffi*
+rm -r Modules/_decimal/libmpdec
+
+export LINKFORSHARED="$LDFLAGS"
+
+./configure \
+--prefix=/usr \
+--enable-shared \
+--with-ensurepip \
+--enable-big-digits \
+--without-lto \
+--enable-ipv6 \
+--with-system-expat \
+--with-system-ffi \
+--with-computed-gotos \
+--enable-optimizations \
+--with-doc-strings \
+ax_cv_c_float_words_bigendian=no
+
+make
+make DESTDIR="$1" install
+
+ln -s python3 "$1/usr/bin/python"
+ln -s pip3 "$1/usr/bin/pip"
+
+chmod u+w "$1/usr/lib/libpython"*
