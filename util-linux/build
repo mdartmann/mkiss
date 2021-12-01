@@ -1,0 +1,31 @@
+#!/bin/sh -uxe
+
+./configure \
+	--prefix=/usr \
+	--localstatedir=/var \
+	--bindir=/usr/bin \
+	--sbindir=/usr/bin \
+	--libdir=/usr/lib \
+	--enable-usrdir-path \
+	--enable-fs-paths-default=/usr/bin:/usr/local/bin \
+	--enable-raw \
+	--enable-vipw \
+	--enable-newgrp \
+	--enable-chfn-chsh \
+	--enable-write \
+	--enable-mesg \
+	--disable-more \
+	--disable-makeinstall-chown \
+	--without-systemd \
+	--with-python=3
+
+# Remove nonexsistant warnflag caused by configure.
+find -name Makefile -exec sed -i 's|-Wembedded-directive||g' {} \;
+
+make
+make DESTDIR="$1" install
+
+# Fix broken --sbindir.
+mv -f "$1/usr/sbin/"* "$1/usr/bin"
+rmdir "$1/usr/sbin"
+

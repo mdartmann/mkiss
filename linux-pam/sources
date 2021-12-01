@@ -1,0 +1,10 @@
+https://github.com/linux-pam/linux-pam/releases/download/vVERSION/linux-pam-VERSION.tar.xz
+files/base-account.pamd
+files/base-auth.pamd
+files/base-password.pamd
+files/base-session-noninteractive.pamd
+files/base-session.pamd
+files/other.pamd
+files/su.pamd
+files/system-local-login.pamd
+files/system-login.pamd
