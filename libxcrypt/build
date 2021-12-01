@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+
+./configure \
+	--prefix=/usr \
+	--disable-static \
+	--enable-hashes=strong,glibc \
+	--enable-obsolete-api=no \
+	--disable-failure-tokens
+make
+make DESTDIR="$1" install
