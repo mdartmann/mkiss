@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+
+./configure \
+	--prefix=/usr \
+	--sysconfdir=/etc \
+	--extra-cflags="$CFLAGS" \
+	--extra-ldflags="$LDFLAGS"
+
+make
+make DESTDIR="$1" install
+# circumvent broken makefile
+make -C librhash DESTDIR="$1" install-lib-headers install-lib-shared install-so-link
