@@ -1,0 +1,23 @@
+#!/bin/sh -uxe
+
+(
+cd libtextstyle
+./configure --prefix=/usr
+make
+make DESTDIR="$1" install
+)
+export CFLAGS="-I$1/usr/include $CFLAGS"
+export CXXFLAGS="-I$1/usr/include $CXXFLAGS"
+export LDFLAGS="-L$1/usr/lib $LDFLAGS"
+
+./configure \
+	--prefix=/usr \
+	--enable-csharp \
+	--enable-nls \
+	--with-xz \
+	--without-included-gettext
+
+sed -e 's/ -shared / $LDFLAGS\0/g' \
+	-i gettext-{tools,runtime,runtime/libasprintf}/libtool
+make
+make -j1 DESTDIR="$1" install
