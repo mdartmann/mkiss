@@ -1,0 +1,49 @@
+#!/bin/sh -uxe
+
+export CFLAGS="${CFLAGS/-Wp,-D_FORTIFY_SOURCE=2/}"
+export CXXFLAGS="${CXXFLAGS/-Wp,-D_FORTIFY_SOURCE-2/} -DPIC"
+
+install -Dm644 "sdt.h" "$1/usr/include/sys/sdt.h"
+install -Dm644 "sdt-config.h" "$1/usr/include/sys/sdt-config.h"
+
+mkdir build
+cd build
+
+../configure \
+    --prefix=/usr \
+    --with-headers=/usr/include \
+    --libdir=/usr/lib \
+    --libexecdir=/usr/libexec \
+    libc_cv_slibdir=/usr/lib \
+    --with-nonshared-cflags="-Wa,--generate-missing-build-notes=yes -fPIC -fPIE" \
+    --enable-add-ons \
+    --enable-bind-now \
+    --enable-cet \
+    --enable-kernel=5.0 \
+    --enable-lock-elision \
+    --enable-tunables \
+    --disable-multi-arch \
+    --enable-stack-protector=strong \
+    --enable-stackguard-randomization \
+    --enable-static-pie \
+    --disable-systemtap\
+    --disable-profile \
+    --disable-werror 
+
+printf "%s\n" \
+    "slibdir=/usr/lib" \
+    "rtlddir=/usr/lib" \
+    "sbindir=/usr/bin" \
+    "rootsbindir=/usr/bin" > configparms
+
+make 
+make DESTDIR="$1" install
+
+rm "$1"/var/db/Makefile "$1/usr/bin/ldd" "$1/usr/bin/sotruss" "$1/usr/bin/xtrace" "$1/usr/bin/tzselect"
+
+install -dm755 "$1/usr/lib/locale"
+printf "en_US.UTF8 UTF-8" > "$1/etc/locale.gen"
+
+for script in ldd locale-gen sotruss; do
+    install -Dm755 "../alternatives/glibc/$script" "$1/usr/bin/$script"
+done
