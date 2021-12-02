@@ -1,0 +1,26 @@
+#!/bin/sh -uxe
+
+./configure \
+	--prefix=/usr \
+	--enable-ipv6 \
+	--enable-unix-sockets \
+	--enable-symbol-hiding \
+	--enable-shared \
+	--enable-cookie \
+	--enable-crypto-auth \
+	--enable-mime \
+	--enable-optimize \
+	--enable-progress-meter \
+	--with-gssapi \
+	--with-libidn2 \
+	--with-openssl \
+	--enable-manual \
+	--enable-ares \
+	--without-librtmp \
+	--with-icu \
+	--with-libpsl \
+	--with-pic \
+	--with-ca-fallback
+
+make
+make DESTDIR="$1" install
