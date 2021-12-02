@@ -1,0 +1,18 @@
+#!/bin/sh -uxe
+
+./configure \
+	--sysconfdir=/etc \
+	--with-xz \
+	--with-zlib \
+	--with-zstd \
+	--with-openssl
+make
+make DESTDIR="$1" install
+
+install -dm755 "$1"/{etc,usr/lib}/{depmod,modprobe}.d
+
+for tool in {ins,ls,rm,dep}mod mod{probe,info}; do
+	ln -s kmod "$1/usr/bin/$tool"
+done
+install -Dm644 depmod-search.conf "$1/usr/lib/depmod.d/search.conf"
+

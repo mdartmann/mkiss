@@ -1,0 +1,68 @@
+#!/bin/sh -uxe
+export KBUILD_BUILD_HOST="eileen"
+export KBUILD_BUILD_USER='mae'
+export CC=gcc
+export CXX=g++
+export BUILD_LD="ld.bfd"
+
+:>nostrip
+scripts/setlocalversion --save-scmversion
+
+echo "Setting config..."
+cp config .config
+make ARCH="x86_64" CC="$CC" HOSTCC="$CC" CXX="$CXX" HOSTCXX="$CXX" olddefconfig
+
+make -s kernelrelease > version
+
+echo "Prepared linux version $(<version)!"
+
+make ARCH="x86_64" CC="$CC" HOSTCC="$CC" CXX="$CXX" HOSTCXX="$CXX" all
+
+kernver="$(<version)"
+modulesdir="$1/usr/lib/modules/$kernver"
+
+echo "Installing modules..."
+make INSTALL_MOD_PATH="$1/usr" INSTALL_MOD_STRIP=1 modules_install
+
+install -Dm644 "$(make -s image_name)" "$1/boot/vmlinuz-uwu"
+rm -rf "$modulesdir"/{source,build}
+
+builddir="$1/usr/lib/modules/$(<version)/build"
+install -Dt "$builddir" -m644 .config Makefile Module.symvers System.map \
+    version vmlinux
+install -Dt "$builddir/kernel" -m644 kernel/Makefile
+install -Dt "$builddir/arch/x86" -m644 arch/x86/Makefile
+cp -t "$builddir" -a scripts
+cp -t "$builddir" -a tools
+
+# add xfs and shmem for aufs building
+mkdir -p "$builddir"/{fs/xfs,mm}
+
+echo "Installing headers..."
+cp -t "$builddir" -a include
+cp -t "$builddir/arch/x86" -a arch/x86/include
+install -Dt "$builddir"/arch/x86/kernel -m644 arch/x86/kernel/asm-offsets.s
+
+install -Dt "$builddir/drivers/md" -m644 drivers/md/*.h
+install -Dt "$builddir/net/mac80211" -m644 drivers/md/*.h
+
+install -Dt "$builddir/drivers/media/i2c" -m644 drivers/media/i2c/msp3400-driver.h
+
+install -Dt "$builddir/drivers/media/usb/dvd-usb" -m644 drivers/media/usb/dvb-usb/*.h
+install -Dt "$builddir/drivers/media/usb/dvb-frontents" -m644 drivers/media/dvb-frontends/*.h
+install -Dt "$builddir/drivers/media/usb/tuners" -m644 drivers/media/tuners/*.h
+
+install -Dt "$builddir/drivers/iio/common/hid-sensors" -m644 drivers/iio/common/hid-sensors/*.h
+
+echo "Installing KConfig files..."
+find . -name "Kconfig*" -exec install -Dm644 {} "$builddir/{}" \;
+
+echo "Removing documentation..."
+rm -rf "$builddir"/Documentation
+
+echo "Removing broken symlinks..."
+find -L "$builddir" -type l -printf 'Removing %P\n' -delete
+
+echo "Adding symlink..."
+mkdir -p "$1/usr/src"
+ln -sr "$builddir" "$1/usr/src/linux"
