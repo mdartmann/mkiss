@@ -10,7 +10,7 @@
 	--enable-tmpfiles.d \
 	--with-pam \
 	--with-sssd \
-	--without-ldap \
+	--with-ldap \
 	--with-env-editor \
 	--with-all-insults
 
