@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+
+patch -p1 -i flex-pie.patch
+autoreconf -v
+
+./configure \
+	--prefix=/usr 
+make
+make DESTDIR="$1" install
+
+ln -s flex "$1/usr/bin/lex"

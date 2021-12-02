@@ -1,0 +1,7 @@
+#!/bin/sh -uxe
+
+./configure \
+	--prefix=/usr \
+	--libexecdir=/usr/lib/tar
+make
+make DESTDIR="$1" install
