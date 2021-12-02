@@ -1,0 +1,8 @@
+#!/bin/sh -uxe
+
+sh configure \
+	--prefix=/usr \
+	--sysconfdir=/etc \
+	--with-regex=pcre2
+make
+make DESTDIR="$1" install
