@@ -1,14 +1,13 @@
 #!/bin/sh -uxe
 
 ./configure \
-	--prefix=/usr \
 	--libdir=/usr/lib \
 	--sbindir=/usr/bin \
-	--enable-unix \
 	--enable-shared \
-	--enable-largefile \
+	--enable-unix \
 	--enable-pamlocking \
 	--enable-usergroups \
+	--enable-largefile \
 	--enable-nls \
 	--disable-db
 
@@ -25,5 +24,6 @@ install -Dm644 base-account.pamd                "$1/etc/pam.d/base-account"
 install -Dm644 base-session.pamd                "$1/etc/pam.d/base-session"
 install -Dm644 base-password.pamd               "$1/etc/pam.d/base-password"
 install -Dm644 system-login.pamd                "$1/etc/pam.d/system-login"
+install -Dm644 system-login.pamd		"$1/etc/pam.d/system-auth"
 install -Dm644 system-local-login.pamd          "$1/etc/pam.d/system-local-login"
 install -Dm644 base-session-noninteractive.pamd "$1/etc/pam.d/base-session-noninteractive"

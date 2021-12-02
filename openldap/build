@@ -1,0 +1,43 @@
+#!/bin/sh -uxe
+
+sed -i 's|-m 644 $(LIBRARY)|-m 755 $(LIBRARY)|' libraries/{liblber,libldap}/Makefile.in
+
+sed -i 's|#define LDAPI_SOCK LDAP_RUNDIR LDAP_DIRSEP "run" LDAP_DIRSEP "ldapi"|#define LDAPI_SOCK LDAP_DIRSEP "run" LDAP_DIRSEP "openldap" LDAP_DIRSEP "ldapi"|' include/ldap_defaults.h
+sed -i 's|%LOCALSTATEDIR%/run|/run/openldap|' servers/slapd/slapd.{conf,ldif}
+sed -i 's|-$(MKDIR) $(DESTDIR)$(localstatedir)/run|-$(MKDIR) $(DESTDIR)/run/openldap|' servers/slapd/Makefile.in
+
+# Drop makefiles because I'm not realistically going to use ldap.
+:>doc/man/Makefile.in
+
+autoconf
+./configure \
+	--prefix=/usr \
+	--libexecdir=/usr/lib \
+	--sysconfdir=/etc \
+	--localstatedir=/var/lib/openldap \
+	--sbindir=/usr/bin \
+	--enable-dynamic \
+	--enable-syslog \
+	--enable-ipv6 \
+	--enable-local \
+	--enable-crypt \
+	--enable-modules \
+	--enable-backends \
+	--disable-wt \
+	--disable-sql \
+	--without-cyrus-sasl \
+	--enable-overlays=mod \
+	--with-threads 
+
+sed -i -e "s/ -shared / ${LDFLAGS}\0/g" libtool
+make depend
+make
+for module in nssov autogroup lastbind passwd/sha2; do
+	make -C "contrib/slapd-modules/$module" \
+		OPT="$CFLAGS" \
+		prefix=/usr \
+		libexecdir=/usr/lib \
+		sysconfdir=/etc/openldap
+done
+make DESTDIR="$1" install
+

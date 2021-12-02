@@ -1,0 +1,21 @@
+#!/bin/sh -uxe
+
+./configure \
+	--prefix=/usr \
+	--sbindir=/usr/bin \
+	--sysconfdir=/etc \
+	--libexecdir=/usr/lib/audit \
+	--enable-gssapi-krb5=yes \
+	--enable-systemd=no \
+	--with-libcap-ng=no
+
+make
+
+make DESTDIR="$1" INSTALL="install -p" install
+
+cd "$1"
+install -dm700 var/log/audit
+
+sed -ri 's|/sbin|/usr/bin|' \
+	etc/audit/*.conf \
+	etc/audit/plugins.d/*.conf 

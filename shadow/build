@@ -1,0 +1,48 @@
+#!/bin/sh -uxe
+
+patch -Np1 -i fix-libpam.patch
+autoreconf -fsiv
+
+./configure \
+    --prefix=/usr \
+    --bindir=/usr/bin \
+    --sbindir=/usr/bin \
+    --libdir=/usr/lib \
+    --mandir=/usr/share/man \
+    --sysconfdir=/etc \
+    --disable-account-tools-setuid \
+    --with-group-name-max-length=32 \
+    --with-libpam \
+    --without-selinux \
+    --with-audit
+
+make
+make DESTDIR="$1" install
+
+# Fix broken --sbindir.
+mv -f "$1/usr/sbin/"* "$1/usr/bin"
+rmdir "$1/usr/sbin"
+
+install -Dm644 login.defs "$1/etc/login.defs"
+install -t "$1/etc/pam.d" -m644 ./{passwd,chgpasswd,chpasswd,newusers}
+install -Dm644 etc/pam.d/groupmems "$1/etc/pam.d/groupmems"
+
+for file in chage groupadd groupdel groupmod shadow useradd usermod userdel; do
+	install -Dm644 defaults.pam "$1/etc/pam.d/$file"
+done
+
+# Remove evil/broken tools
+rm "$1"/usr/bin/logoutd
+
+# Remove utilities provided by util-linux
+rm "$1"/usr/bin/login
+rm "$1"/usr/bin/su
+rm "$1"/usr/bin/chsh
+rm "$1"/usr/bin/chfn
+rm "$1"/usr/bin/sg
+rm "$1"/usr/bin/nologin
+rm "$1"/usr/bin/vipw
+rm "$1"/usr/bin/vigr
+
+# but we keep newgrp, as sg is really an alias to it
+mv "$1"/usr/bin/{newgrp,sg}

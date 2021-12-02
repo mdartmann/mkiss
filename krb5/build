@@ -1,0 +1,29 @@
+#!/bin/sh -uxe
+
+patch -Np1 < krb5-config_LDFLAGS.patch
+
+export CFLAGS+=" -fno-strict-aliasing -fstack-protector-all -Wp,-I/usr/include/et"
+cd src
+./configure \
+	--prefix=/usr \
+	--sbindir=/usr/bin \
+	--sysconfdir=/etc \
+	--localstatedir=/var/lib \
+	--enable-shared \
+	--with-system-et \
+	--with-system-ss \
+	--disable-rpath \
+	--without-tcl \
+	--enable-dns-for-realm \
+	--with-ldap \
+	--without-system-verto
+make
+make DESTDIR="$1" EXAMPLEDIR="/usr/share/doc/krb5/examples" install
+
+install -m644 plugins/kdb/ldap/libkdb_ldap/kerberos.{ldif,schema} \
+	"$1/usr/share/doc/krb5/examples"
+
+install -Dpm644 config-files/krb5.conf -t "$1/etc"
+install -Dpm644 config-files/kdc.conf "$1/var/lib/krb5dc"
+
+install -Dm644 util/ac_check_krb5.m4 -t "$1/usr/share/aclocal"

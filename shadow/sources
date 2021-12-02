@@ -1,0 +1,8 @@
+https://github.com/shadow-maint/shadow/releases/download/vVERSION/shadow-VERSION.tar.xz
+patches/fix-libpam.patch
+files/chgpasswd
+files/chpasswd
+files/defaults.pam
+files/login.defs
+files/newusers
+files/passwd
