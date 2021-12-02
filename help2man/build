@@ -1,1 +1,11 @@
-#!/bin/sh -e
+#!/bin/sh -uxe
+
+
+./configure \
+	--prefix=/usr \
+	--mandir=/usr/share/man \
+	--infodir=/usr/share/info \
+	--libdir=/usr/lib
+
+make 
+make DESTDIR="$1" install
