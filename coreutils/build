@@ -1,0 +1,15 @@
+#!/bin/sh -uxe
+
+autoreconf -fiv 
+
+patch -Np1 -i *.patch
+
+./configure \
+	--prefix=/usr \
+	--libexecdir=/usr/lib \
+	--with-openssl \
+	--with-packager=mkiss \
+	--enable-no-install-program=groups,hostname,kill,uptime
+
+make
+make DESTDIR="$1" install

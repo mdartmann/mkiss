@@ -1,0 +1,16 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+	--default-library shared \
+	${MESON_OPTIONS}
+
+ninja -C build
+
+meson build-static \
+	--default-library static
+
+ninja -C build-static
+
+ninja -C build install
+ninja -C build-static install

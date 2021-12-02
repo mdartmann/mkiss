@@ -1,0 +1,14 @@
+#!/bin/sh -uxe
+
+mkdir -p _b
+cd _b
+
+../configure \
+--prefix=/usr \
+--with-installed-readline \
+--disable-werror \
+--enable-lto \
+--enable-nls
+
+make
+make DESTDIR="$1" install

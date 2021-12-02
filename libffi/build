@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+
+./configure \
+	--prefix=/usr \
+	--disable-static \
+	--disable-multi-os-directory \
+	--disable-exec-static-tramp \
+	--enable-pax_emutramp
+
+make
+make DESTDIR="$1" install

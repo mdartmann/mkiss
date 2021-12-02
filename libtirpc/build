@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+
+./configure \
+	--prefix=/usr \
+	--sysconf=/etc \
+	--disable-gssapi
+
+sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
+
+make
+make DESTDIR="$1" install

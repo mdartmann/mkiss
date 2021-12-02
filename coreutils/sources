@@ -1,0 +1,2 @@
+https://ftp.gnu.org/gnu/coreutils/coreutils-VERSION.tar.xz
+patches/01-fix-fs72253.patch

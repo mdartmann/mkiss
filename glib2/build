@@ -1,0 +1,13 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+export CFLAGS+=" -DG_DISABLE_CAST_CHECKS"
+
+bash
+meson build \
+	$MESON_OPTIONS \
+	-D selinux=disabled \
+	-D man=false \
+	-D gtk_doc=false 
+
+ninja -C build
+ninja -C build install

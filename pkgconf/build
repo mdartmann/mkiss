@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+	$MESON_OPTIONS \
+	-D tests=false
+ninja -C build
+ninja -C build install
+
+ln -s pkgconf "$1/usr/bin/pkg-config"

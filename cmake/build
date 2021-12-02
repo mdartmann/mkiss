@@ -1,0 +1,33 @@
+#!/bin/sh -uxe
+
+if kiss l cmake; then
+
+    export DESTDIR="$1"
+
+    cmake -B build -G Ninja                 \
+        -D CMAKE_INSTALL_PREFIX=/usr        \
+        -D CMAKE_BUILD_TYPE=Release         \
+        -D CMAKE_USE_SYSTEM_CURL=True       \
+        -D CMAKE_USE_SYSTEM_EXPAT=True      \
+        -D CMAKE_USE_SYSTEM_LIBARCHIVE=True \
+        -D CMAKE_USE_SYSTEM_LIBUV=True      \
+        -D CMAKE_USE_SYSTEM_LIBLZMA=True    \
+        -D CMAKE_USE_SYSTEM_ZLIB=True       \
+        -D CMAKE_USE_SYSTEM_ZSTD=True       \
+        -D CMAKE_USE_SYSTEM_BZIP2=True      \
+        -D BUILD_TESTING=OFF
+
+    ninja -C build
+    ninja -C build install
+
+else
+    ./bootstrap \
+        --prefix=/usr \
+	--mandir=/usr/share/man \
+	--docdir=/usr/share/doc/cmake \
+	--system-libs \
+        --parallel=$(nproc)	
+
+    make
+    make DESTDIR="$1" install
+fi

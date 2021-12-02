@@ -1,0 +1,22 @@
+#!/bin/sh -uxe
+
+./configure \
+	--prefix=/usr \
+	--with-root-prefix="" \
+	--libdir=/usr/lib \
+	--sbindir=/usr/bin \
+	--enable-elf-shlibs \
+	--disable-fsck \
+	--disable-uuid \
+	--disable-libuuid \
+	--disable-libblkid
+
+make
+mkdir -p "$1/usr/share/man/man8" "$1/usr/share/man/man5" \
+       	"$1/usr/share/man/man3" "$1/usr/share/man/man1" \
+	"$1/etc/" "$1/usr/bin" "$1/usr/share/et" "$1/usr/share/ss" \
+	"$1/usr/lib/pkgconfig"	"$1/usr/include/et" "$1/usr/include/ss" \
+	"$1/usr/include/e2p" "$1/usr/include/ext2fs" 
+	
+
+make DESTDIR="$1" install

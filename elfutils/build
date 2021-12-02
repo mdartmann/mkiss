@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+autoreconf -fiv
+
+./configure \
+	--prefix=/usr \
+	--sysconfdir=/etc \
+	--enable-deterministic-archives \
+	--disable-debuginfod
+
+make
+make DESTDIR="$1" install

@@ -1,0 +1,20 @@
+#!/bin/sh -uxe
+
+./configure \
+	--prefix=/usr \
+	--sbindir=/usr/bin \
+	--libexecdir=/usr/lib \
+	--with-rundir=/var/run/sudo \
+	--with-vardir=/var/db/sudo \
+	--with-logfac=auth \
+	--enable-tmpfiles.d \
+	--with-pam \
+	--with-sssd \
+	--without-ldap \
+	--with-env-editor \
+	--with-all-insults
+
+make
+make DESTDIR="$1" install
+
+install -Dm644 sudo.pam "$1/etc/pam.d/sudo"
