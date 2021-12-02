@@ -1,0 +1,8 @@
+#!/bin/sh -uxe
+
+./configure \
+	--prefix=/usr \
+	CXXFLAGS="$CXXFLAGS" \
+	LDFLAGS="$LDFLAGS"
+make
+make DESTDIR="$1" install install-man

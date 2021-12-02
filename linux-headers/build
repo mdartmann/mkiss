@@ -1,0 +1,7 @@
+#!/bin/sh -uxe
+make olddefconfig
+make prepare
+
+make -s kernelrelease > version
+make headers
+make INSTALL_HDR_PATH="$1/usr" headers_install

@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+
+./configure \
+	--prefix=/usr \
+	--disable-debug \
+	--with-included-popt=yes \
+	--with-included-zlib=no \
+	--disable-md2man \
+	--disable-xxhash
+make
+make DESTDIR="$1" install
