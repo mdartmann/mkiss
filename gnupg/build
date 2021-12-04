@@ -1,0 +1,21 @@
+#!/bin/sh -uxe
+
+for i in *.patch; do
+	patch -p1 -i  $i
+done
+
+rm doc/gnupg.info*
+
+./autogen.sh
+
+./configure \
+	--prefix=/usr \
+	--sysconfdir=/etc \
+	--sbindir=/usr/bin \
+	--libexecdir=/usr/lib/gnupg \
+	--enable-maintainer-mode
+
+make
+make DESTDIR="$1" install
+ln -s gpg "$1/usr/bin/gpg2"
+ln -s gpgv "$1/usr/bin/gpgv2"
