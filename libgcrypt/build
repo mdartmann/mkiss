@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+
+autoreconf -fiv
+
+./configure \
+	--prefix=/usr \
+	--disable-static \
+	--disable-padlock-support
+
+make
+make DESTDIR="$1" install

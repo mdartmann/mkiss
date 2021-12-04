@@ -1,0 +1,9 @@
+#!/bin/sh -uxe
+
+./configure \
+	--prefix=/usr \
+	--enable-pinentry-curses \
+	--enable-fallback-curses \
+	--enable-libsecret
+make
+make DESTDIR="$1" install
