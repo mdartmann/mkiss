@@ -1,0 +1,9 @@
+#!/bin/sh -uxe
+sed -e '/extern int efi_set_verbose/d' -i "src/efibootmgr.c"
+
+
+make libdir=/usr/lib sbindir=/usr/bin EFIDIR="arch" -j1
+
+make DESTDIR="$1" libdir=/usr/lib sbindir=/usr/bin EFIDIR=arch install
+
+

@@ -1,0 +1,38 @@
+#!/bin/sh -uxe
+
+# Grub is built in a function so the script argument
+# needs to be stored.
+pkg_dir=$1
+
+cp -av grub-pc grub-efi
+
+build_grub() (
+    cd "grub-${1##*=}"
+
+    ./configure \
+        --prefix=/usr \
+        --sbindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-werror \
+        --enable-nls \
+        "$@"
+
+    make
+    make DESTDIR="$pkg_dir" install
+)
+
+#build_grub --with-platform=pc
+build_grub --with-platform=efi --disable-efiemu
+
+install -Dm0644 grub.default "$1/etc/default/grub"
+
+# Remove gdb debugging files.
+(
+    cd "$pkg_dir/usr/lib"
+
+    rm -f grub/*/*.module
+    rm -f grub/*/*.image
+    rm -f grub/*/kernel.exec
+    rm -f grub/*/gdb_grub
+    rm -f grub/*/gmodule.pl
+)

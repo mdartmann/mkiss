@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+
+sed -e 's|-Werror||g' -i gcc.specs
+
+sed 's|-rpath,$(TOPDIR)/src|-rpath,$(libdir)|g' -i src/test/Makefile
+
+make libdir=/usr/bin bindir=/usr/bin mandir=/usr/share/man includedir=/usr/include 
+
+make DESTDIR="$1" libdir=/usr/lib bindir=/usr/bin mandir=/usr/share/man includedir=/usr/include \
+       install	-j1 V=1
