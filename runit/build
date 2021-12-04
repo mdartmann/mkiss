@@ -1,0 +1,23 @@
+#!/bin/sh -uxe
+
+
+cd runit-${2}/src
+sed 's|sbin/runit|usr/bin/runit|g' -i runit.h
+printf "%s -D_GNU_SOURCE -static\n" "${CC-cc}" "${CFLAGS}" "${CXXFLAGS}" > conf-cc
+printf "%s %s -static -Wl,-z -Wl,noexecstack\n" "${CC-cc}" "${CFLAGS}" > conf-ld
+sed -i 's|^char \*varservice ="/service/";$|char \*varservice ="/var/service/";|' sv.c
+
+make
+install -Dm755 -t "$1/usr/bin" chpst runit runit-init runsv runsvdir runsvchdir sv svlogd utmpset
+
+cd ..
+install -Dm644 -t "$1/usr/share/man/man8" man/*
+mkdir -p "$1/var/service" "$1/etc/runit"
+ln -s runit-init "$1/usr/bin/init"
+
+install -Dm755 ../0 "$1/etc/runit/0"
+install -Dm755 ../1 "$1/etc/runit/1"
+install -Dm755 ../2 "$1/etc/runit/2"
+install -Dm755 ../3 "$1/etc/runit/3"
+
+install -Dm755 -t "$1/usr/bin" ../poweroff ../reboot

@@ -1,0 +1,178 @@
+#!/bin/sh
+# shellcheck disable=1090,1091
+
+# Shared code between boot/shutdown.
+. /etc/runit/0
+
+log "Welcome to KISS!"
+
+log "Remounting rootfs as read-only..."; {
+    mount -o remount,ro / || sos
+}
+
+log "Checking filesystems..."; {
+    fsck -ATat noopts=_netdev
+
+    # It can't be assumed that success is 0
+    # and failure is > 0.
+    [ $? -gt 1 ] && sos
+}
+
+log "Mounting rootfs as read-write..."; {
+    mount -o remount,rw / || sos
+}
+
+log "Mounting pseudo filesystems..."; {
+
+    mnt rw,nosuid,nodev,noexec,relatime                                             proc       proc       /proc
+    mnt rw,nosuid,nodev,noexec,relatime                                             sysfs      sys        /sys
+    mnt rw,nosuid,noexec,relatime,nr_inodes=4055544,mode=755,inode64                devtmpfs   dev        /dev
+
+    mkdir -p /dev/mqueue /dev/hugepages /sys/fs /dev/pts /dev/shm
+
+    mnt rw,nosuid,nodev,inode64,relatime,mode=1777                                  tmpfs      shm        /tmp
+    mnt rw,nosuid,nodev,inode64,relatime,mode=1777                                  tmpfs      shm        /var/tmp
+
+    mnt rw,relatime,pagesize=2M                                                     hugetlbfs  hugetlbfs  /dev/hugepages
+    mnt rw,nosuid,nodev,noexec,relatime                                             mqueue     mqueue     /dev/mqueue
+    mnt rw,nosuid,noexec,nodev,relatime                                             securityfs securityfs /sys/kernel/security
+    mnt rw,nosuid,nodev,noexec,relatime,mode=700                                    bpf        bpf        /sys/fs/bpf
+    mnt rw,nosuid,nodev,inode64,relatime,mode=1777                                  tmpfs      shm        /dev/shm
+    mnt rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=000                       devpts     devpts     /dev/pts
+    mnt rw,nosuid,nodev,noexec,size=4096k,nr_inodes=1024,mode=755                   tmpfs      cgroup     /sys/fs/cgroup
+    mnt  rw,nosuid,nodev,noexec,relatime                                            efivarfs efivarsfs    /sys/firmware/efi/efivars
+
+    mnt rw,nosuid,nodev,noexec,relatime,mode=755,inode64                            tmpfs      run        /run
+
+    mkdir -p /run/runit /run/user /run/lock /run/log /run/mount
+}
+
+
+log "Starting device manager..."; {
+        log "Starting udev..."
+
+    udevd -d
+    udevadm trigger -c add -t subsystems
+    udevadm trigger -c add -t devices
+    udevadm trigger -c change -t devices
+    udevadm settle
+    modprobe tun
+    modprobe tap
+    modprobe fuse
+    modprobe fs-fuse
+    modprobe fs-fusectl
+    modprobe fs-fuseblk
+    #acpid -f &
+}
+
+
+log "Starting messaging daemon..."; { 
+    [ ! -d /var/run/dbus ] && install -m755 -g 102 -o 102 -d /var/run/dbus
+    dbus-daemon --syslog-only --system --nofork --nopidfile &
+}
+
+log "Starting messaging daemon..."; { 
+    [ ! -d /var/run/nscd ] && install -m755 -g 103 -o 103 -d /var/run/nscd
+    nscd
+}
+
+log "Starting docker daemon..."; { 
+    cd /sys/fs/cgroup
+    while read -r sys _; do
+        case "$sys" in \#*) continue; esac
+        mkdir -p "$sys"
+        mount -n -t cgroup -o "$sys" cgroup "$sys" 
+    done < /proc/cgroups
+    [ -e /sys/fs/cgroup/memory/memory.use_hierarchy ] && echo 1 > /sys/fs/cgroup/memory/memory.use_hierarchy
+    dockerd &
+}
+
+log "Starting networking stuff"; {
+    dhcpcd -q -BM &
+    iwd >/dev/null 2>&1 &
+    /usr/libexec/bluetooth/bluetoothd -E >/dev/null 2>&1 &
+    ip link set up dev lo
+    #ip link add br0 type bridge
+    #ip link set dev br0 up
+    #ip addr add 172.20.0.1/16 dev br0
+    #ip tuntap add dev tap0 mode tap
+    #ip link set up dev tap0
+    #ip link set dev tap0 master br0
+
+    #dnsmasq --interface=br0 --bind-interfaces --dhcp-range=172.20.0.2,172.20.255.254 &
+    #iptables -I FORWARD -m physdev --physdev-is-bridged -j ACCEPT &
+
+    #iptables -t nat -A POSTROUTING -o br0 -j MASQUERADE
+    #iptables -t nat -A POSTROUTING -o tap0 -j MASQUERADE
+    #iptables -t nat -A POSTROUTING -o tun0 -j MASQUERADE
+    #iptables -t nat -A POSTROUTING -o wlan0 -j MASQUERADE
+
+    # various services
+    /usr/bin/sshd -D &
+}
+
+
+
+log "Running boot hooks..."; {
+    run_hook boot
+}
+
+
+log "Starting seat daemon..."; {
+    seatd -g video &
+}
+
+log "Mounting all local filesystems..."; {
+    mount -a || sos
+}
+
+log "Enabling swap..."; {
+    swapon -a || sos
+    swapon /swapfile
+}
+
+log "Seeding random..."; {
+    random_seed load
+}
+
+log "Setting hostname..."; {
+    read -r hostname < /etc/hostname
+    printf %s "${hostname:-KISS}" > /proc/sys/kernel/hostname
+} 2>/dev/null
+
+log "Loading sysctl settings..."; {
+    # This is a portable equivalent to 'sysctl --system'
+    # following the exact same semantics.
+
+    sysctl --system -q >/dev/null 2>&1
+}
+
+log "Starting logging daemon..."; {
+    [ ! -d /var/run/syslog ] && install -m755 -g 104 -o 104 -d /var/run/syslog
+    MODULE_FILE=/usr/lib/syslog-ng
+    CONFIG_FILE=/etc/syslog/syslog-ng.conf
+    PERSIST_FILE=/var/lib/syslog/syslog-ng.persist
+    CONTROL_FILE=/var/run/syslog/syslog-ng.ctl
+    PID_FILE=/var/run/syslog/syslog-ng.pid
+    syslog-ng -F --user log --cfgfile "$CONFIG_FILE" --control "$CONTROL_FILE" --persist-file "$PERSIST_FILE" --pidfile $PID_FILE --module-path="$MODULE_FILE" &
+
+    touch /var/log/wtmp /var/log/utmp /var/log/btmp
+    chown log:log /var/log/wtmp /var/log/utmp /var/log/btmp
+
+    touch /var/run/wtmp /var/run/utmp /var/run/btmp
+    chown log:log /var/run/wtmp /var/run/utmp /var/run/btmp
+}
+
+log "Loading brightness level..."; {
+    brightnessctl s "$(cat /var/db/brightnesslvl)" &>/dev/null
+}
+
+log "Loading volume level..."; {
+    alsactl restore
+}
+
+# Calculate how long the boot process took to
+# complete. This entire process is too cheap!
+IFS=. read -r boot_time _ < /proc/uptime
+
+log "Boot stage completed in ${boot_time}s..."
