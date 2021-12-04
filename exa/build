@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+
+cargo fetch
+
+cargo build --frozen --release
+
+install -Dm755 target/release/exa "$1/usr/bin/exa"
+
+install -Dm644 completions/completions.bash \
+	"$1/usr/share/bash-completion/completions/exa"
+install -Dm644 completions/completions.zsh \
+	"$1/usr/share/zsh/site-functions/_exa"
