@@ -1,0 +1,34 @@
+#!/bin/sh -uxe
+
+sed -i 's|usr/share/keymaps|/usr/share/kbd/keymaps|g' Completion/Unix/Command/_loadkeys 
+sed -i 's|/usr/share/misc/usb.ids|/usr/share/hwdata/usb.ids|g' Completion/Linux/Command/_lsusb
+
+for path in ATX BSD Cygwin Darwin Debian Mandriva openSUSE Redhat Solaris; do
+	rm -rf Completion/$path 
+	sed "s|\s*Completion/$path/\*/\*||g" -i Src/Zle/complete.mdd
+done
+rm Completion/Linux/Command/_pkgtool
+
+./configure \
+	--prefix=/usr \
+	--docdir=/usr/share/doc/zsh \
+	--htmldir=/usr/share/doc/zsh/html \
+	--enable-etcdir=/etc/zsh \
+	--enable-zshenv=/etc/zsh/zshenv \
+	--enable-zlogin=/etc/zsh/zlogin \
+	--enable-zlogout=/etc/zsh/zlogout \
+	--enable-zprofile=/etc/zsh/zprofile \
+	--enable-zshrc=/etc/zh/zshrc \
+	--enable-maildir-support \
+	--with-term-lib='ncursesw' \
+	--enable-multibyte \
+	--enable-function-subdirs \
+	--enable-fndir=/usr/share/zsh/functions \
+	--enable-scriptdir=/usr/share/zsh/scripts \
+	--with-tcsetpgrp \
+	--enable-pcre \
+	--enable-cap \
+	--enable-zsh-secure-free
+make
+make DESTDIR="$1" install
+install -Dm644 zprofile "$1/etc/zsh/zprofile"
