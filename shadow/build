@@ -9,12 +9,23 @@ autoreconf -fsiv
     --sbindir=/usr/bin \
     --libdir=/usr/lib \
     --mandir=/usr/share/man \
+    --localstatedir=/var/run \
     --sysconfdir=/etc \
+    --enable-utmpx \
+    --enable-man \
+    --enable-largefile \
+    --enable-nls \
     --disable-account-tools-setuid \
     --with-group-name-max-length=32 \
+    --with-sha-crypt \
+    --with-btrfs \
+    --with-bcrypt \
     --with-libpam \
-    --without-selinux \
-    --with-audit
+    --without-fcaps \
+    --with-audit \
+    --with-nscd \
+    --with-gnu-ld \
+    --without-selinux 
 
 make
 make DESTDIR="$1" install
@@ -23,14 +34,7 @@ make DESTDIR="$1" install
 mv -f "$1/usr/sbin/"* "$1/usr/bin"
 rmdir "$1/usr/sbin"
 
-install -Dm644 login.defs "$1/etc/login.defs"
-install -t "$1/etc/pam.d" -m644 ./{passwd,chgpasswd,chpasswd,newusers}
-install -Dm644 etc/pam.d/groupmems "$1/etc/pam.d/groupmems"
-
-for file in chage groupadd groupdel groupmod shadow useradd usermod userdel; do
-	install -Dm644 defaults.pam "$1/etc/pam.d/$file"
-done
-
+#rm -r "$1"/etc/pam.d
 # Remove evil/broken tools
 rm "$1"/usr/bin/logoutd
 
@@ -43,6 +47,5 @@ rm "$1"/usr/bin/sg
 rm "$1"/usr/bin/nologin
 rm "$1"/usr/bin/vipw
 rm "$1"/usr/bin/vigr
-
 # but we keep newgrp, as sg is really an alias to it
-mv "$1"/usr/bin/{newgrp,sg}
+#mv "$1"/usr/bin/{newgrp,sg}
