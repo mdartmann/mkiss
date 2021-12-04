@@ -1,0 +1,3 @@
+https://github.com/balabit/syslog-ng/releases/download/syslog-ng-VERSION/syslog-ng-VERSION.tar.gz
+files/syslog-ng.conf
+files/syslog-ng.logrotate
