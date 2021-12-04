@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+
+cargo fetch
+
+make
+cd cli
+cargo build --release --locked --offline --all-features
+cd ..
+
+make PREFIX=/usr DESTDIR="$1" install
+install -Dm755 target/release/tree-sitter "$1/usr/bin/tree-sitter"
