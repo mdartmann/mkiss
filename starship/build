@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+
+cargo fetch \
+	--locked \
+	--target $CARCH-unknown-linux-gnu 
+cargo build \
+	--release \
+	--frozen \
+	--features notify-rust 
+install -Dm755 target/release/starship -t "$1/usr/bin"
