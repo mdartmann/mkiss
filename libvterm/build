@@ -1,0 +1,4 @@
+#!/bin/sh -uxe
+
+make PREFIX=/usr
+make PREFIX=/usr DESTDIR="$1" install
