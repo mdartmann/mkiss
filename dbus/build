@@ -1,0 +1,20 @@
+#!/bin/sh -uxe
+
+./configure \
+	--prefix=/usr \
+	--sysconfdir=/etc \
+	--localstatedir=/var \
+	--with-system-socket=/var/run/dbus/system_bus_socket \
+	--with-system-pid-file=/var/run/dbus/pid \
+	--with-console-auth-dir=/var/run/console \
+	--enable-assert \
+	--disable-doxygen-docs \
+	--enable-inotify \
+	--enable-user-session \
+	--without-x
+
+make
+make DESTDIR="$1" install
+
+ln -s /var/lib/dbus/machine-id "$1/etc"
+rm -rf "$1/usr/lib/systemd"
