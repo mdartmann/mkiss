@@ -1,0 +1,30 @@
+#!/bin/sh -uxe
+
+autoreconf -v
+
+./configure \
+	--prefix=/usr \
+	--sbindir=/usr/bin \
+	--libexecdir=/usr/lib/ssh \
+	--sysconfdir=/etc/ssh \
+	--without-selinux \
+	--with-privsep-user=nobody \
+	--with-audit=linux \
+	--with-mantype=doc \
+	--with-kerberos5 \
+	--with-pam \
+	--without-rpath \
+	--enable-strip \
+	--with-hardening \
+	--with-ssl-engine \
+	--with-pid-dir=/var/run \
+	--enable-wtmp \
+	--enable-utmp \
+	--with-sandbox \
+	--with-shadow \
+	--with-default-path='/usr/local/sbin:/usr/local/bin:/usr/bin'
+
+make
+make DESTDIR="$1" install
+install -m755 contrib/ssh-copy-id "$1/usr/bin/ssh-copy-id"
+install -m644 contrib/ssh-copy-id.1 "$1/usr/share/man/man8/ssh-copy-id.1"
