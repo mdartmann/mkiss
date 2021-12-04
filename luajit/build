@@ -1,0 +1,4 @@
+#!/bin/sh -uxe
+
+make amalg PREFIX=/usr
+make DESTDIR="$1" PREFIX=/usr install

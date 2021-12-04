@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+cmake -B build -G Ninja \
+	-D WITH_SHARED_LIBUV=ON \
+	-D LUA_BUILD_TYPE=System \
+	-D BUILD_MODULE=OFF \
+	-D BUILD_SHARED_LIBS=ON \
+	-D CMAKE_INSTALL_PREFIX=/usr 
+
+ninja -C build
+ninja -C build install

@@ -1,0 +1,13 @@
+#!/bin/sh -uxe
+
+cmake -B build -G Ninja \
+	-D CMAKE_BUILD_TYPE=Release \
+	-D CMAKE_INSTALL_PREFIX=/usr \
+	-D USE_BUNDLED=OFF
+
+ninja -C build
+ninja -C build install
+
+install -Dm644 runtime/nvim.desktop "$1/usr/share/applications/nvim.desktop"
+install -Dm644 runtime/nvim.appdata.xml "$1/usr/share/metainfo/nvim.appdata.xml"
+install -Dm644 runtime/nvim.png "$1/usr/share/pixmaps/nvim.png"
