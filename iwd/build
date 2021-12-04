@@ -1,0 +1,20 @@
+#!/bin/sh -uxe
+
+./configure \
+	--prefix=/usr \
+	--sysconfdir=/etc \
+	--localstatedir=/var \
+	--libexecdir=/usr/bin \
+	--enable-wired \
+	--enable-dbus-policy \
+	--enable-ofono \
+	--enable-hwsim \
+	--enable-pie \
+	--enable-static=yes \
+	--enable-tools \
+	--disable-systemd-service
+
+make
+
+make DESTDIR="$1" install
+

@@ -1,0 +1,9 @@
+#!/bin/sh -uxe
+
+./configure 
+
+make
+
+make DESTDIR="$1" SBINDIR="/usr/bin" install
+install -Dm644 include/libnetlink.h "$1/usr/include/libnetlink.h"
+install -Dm644 lib/libnetlink.a "$1/usr/lib/libnetlink.a"

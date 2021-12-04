@@ -1,0 +1,16 @@
+#!/bin/sh -uxe
+
+./configure \
+	--prefix=/usr \
+	--sysconfdir=/etc \
+	--sbindir=/usr/bin \
+	--libexecdir=/usr/lib/dhcpcd \
+	--dbdir=/var/lib/dhcpcd \
+	--runstatedir=/var/run \
+	--privsepuser=dhcpcd
+
+make
+make DESTDIR="$1" install
+
+# Disable ip4vall
+echo nopiv4ll >> "$1/etc/dhcpcd.conf"
