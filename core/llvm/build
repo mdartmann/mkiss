@@ -1,0 +1,42 @@
+#!/bin/sh -uxe
+
+export DESTDIR="$1"
+
+for i in *.patch; do
+    patch -Np1 -i $i
+done
+
+cmake -B build -G Ninja \
+    -D CMAKE_C_COMPILER="$CC" \
+    -D CMAKE_CXX_COMPILER="$CXX" \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D CMAKE_BUILD_TYPE=Release \
+    -D CMAKE_BUILD_WITH_INSTALL_RPATH=OFF \
+    -D CMAKE_SKIP_BUILD_RPATH=ON \
+    -D LLVM_BUILD_LLVM_DYLIB=ON \
+    -D LLVM_LINK_LLVM_DYLIB=ON \
+    -D LLVM_INSTALL_UTILS=ON \
+    -D LLVM_TARGETS_TO_BUILD="all" \
+    -D LLVM_ENABLE_PROJECTS="clang;clang-tools-extra;compiler-rt;libunwind;debuginfo-tests;libclc;libcxx;libcxxabi;lld;lldb;llvm;llvm-spirv;mlir;parallel-libs;polly;pstl;utils" \
+    -D LLVM_ENABLE_RTTI=ON \
+    -D LLVM_ENABLE_EH=ON \
+    -D LLVM_ENABLE_FFI=ON \
+    -D LLVM_ENABLE_LTO=OFF \
+    -D LLVM_ENABLE_TERMINFO=ON \
+    -D LLVM_ENABLE_LIBXML2=ON \
+    -D LLVM_ENABLE_LIBEDIT=ON \
+    -D LLVM_HOST_TRIPLE="${CHOST}" \
+    -D LLVM_BUILD_EXAMPLES=OFF \
+    -D LLVM_BUILD_DOCS=OFF \
+    -D LLVM_BUILD_TESTS=OFF \
+    -D LLVM_ENABLE_LIBCXX=OFF \
+    -D LLVM_ENABLE_LLD=OFF \
+    -D LLVM_INSTALL_BINUTILS_SYMLINKS=OFF \
+    -Wno-dev llvm
+
+ninja -C build
+ninja -C build install
+
+# libc++abi header files
+mkdir -p "$1/usr"
+cp -r libcxxabi/include "$1/usr"

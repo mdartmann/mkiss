@@ -1,0 +1,4 @@
+https://github.com/llvm/llvm-project/releases/download/llvmorg-VERSION/llvm-project-VERSION.src.tar.xz
+https://github.com/KhronosGroup/SPIRV-LLVM-Translator/archive/refs/tags/dev-build.tar.gz llvm-spirv
+#https://github.com/KhronosGroup/SPIRV-LLVM-Translator/archive/refs/tags/v11.0.0.tar.gz llvm-spirv
+patches/no-strict-aliasing-DwarfCompileUnit.patch
