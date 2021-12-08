@@ -12,6 +12,7 @@
 	--with-sssd \
 	--with-ldap \
 	--with-env-editor \
+    --with-passprompt="[sudo] password for %p: " \
 	--with-all-insults
 
 make
