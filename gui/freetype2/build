@@ -1,0 +1,15 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+for i in *.patch; do
+	patch -Np1 -i $i
+done
+
+meson build \
+	-D freetype2:default_library=shared \
+	-D harfbuzz=disabled \
+	${MESON_OPTIONS}
+
+ninja -C build
+ninja -C build install
+

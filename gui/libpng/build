@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+
+./configure \
+	--prefix=/usr \
+	--disable-static
+
+make
+make DESTDIR="$1" install
+cd contrib/pngminus
+make PNGLIB_SHARED="-L$1/usr/lib -lpng" CFLAGS="$CFLAGS" LDFLAGS="$LDFLAGS" png2pnm pnm2png
+install -m0755 png2pnm pnm2png "$1/usr/bin/"
