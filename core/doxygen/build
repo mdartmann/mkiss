@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+cmake -B build -G Ninja \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D DOC_INSTALL_DIR:PATH=share/doc/doxygen \
+    -D PYTHON_EXECUTABLE:FILE=/usr/bin/python \
+    -D build_doc:BOOL=OFF \
+    -D build_wizard:BOOL=OFF
+
+ninja -C build
+ninja -C build install

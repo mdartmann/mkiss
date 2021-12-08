@@ -8,7 +8,7 @@
 	--with-system-pid-file=/var/run/dbus/pid \
 	--with-console-auth-dir=/var/run/console \
 	--enable-assert \
-	--disable-doxygen-docs \
+	--enable-doxygen-docs \
 	--enable-inotify \
 	--enable-user-session \
 	--without-x
