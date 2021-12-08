@@ -1,0 +1,15 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+python setup.py build
+
+cmake -B build -G Ninja \
+	-D CMAKE_BUILD_TYPE=Release \
+	-D CMAKE_INSTALL_PREFIX=/usr \
+	-D CMAKE_INSTALL_LIBDIR=lib \
+	-D BUILD_SHARED_LIBS=True
+
+ninja -C build
+ninja -C build install
+
+python setup.py install --skip-build -O1 --root="$1"

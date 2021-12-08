@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+cd source
+./configure \
+	--prefix=/usr \
+	--sysconfdir=/etc \
+	--mandir=/usr/share/man \
+	--sbindir=/usr/bin
+
+make
+make DESTDIR="$1" install

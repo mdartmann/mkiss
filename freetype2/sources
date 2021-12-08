@@ -1,0 +1,5 @@
+https://download-mirror.savannah.gnu.org/releases/freetype/freetype-VERSION.tar.xz
+patches/0003-Enable-infinality-subpixel-hinting.patch
+patches/0004-Enable-long-PCF-family-names.patch
+patches/0001-Enable-table-validation-modules.patch
+patches/0002-Enable-subpixel-rendering.patch

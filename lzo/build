@@ -1,0 +1,9 @@
+#!/bin/sh -uxe
+
+./configure \
+	--prefix=/usr \
+	--enable-shared
+
+make
+make DESTDIR="$1" install
+install -pm644 minilzo/minilzo.h "$1/usr/include/lzo"
