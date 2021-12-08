@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+
+autoreconf -iv
+
+./configure \
+	--prefix=/usr \
+	--disable-examples \
+	--enable-python-bindings \
+	--enable-lib-only
+make
+make DESTDIR="$1" install

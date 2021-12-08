@@ -1,0 +1,13 @@
+#!/bin/sh -uxe
+./configure \
+	--prefix=/usr \
+	--with-intl=system-icu \
+	--shared-openssl \
+	--shared-zlib \
+	--shared-libuv \
+	--experimental-http-parser \
+	--shared-nghttp2 \
+	--shared-cares
+
+make
+make DESTDIR="$1"  install
