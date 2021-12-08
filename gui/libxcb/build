@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --enable-xinput \
+    --enable-xkb \
+    --disable-static
+
+make
+make DESTDIR="$1" install

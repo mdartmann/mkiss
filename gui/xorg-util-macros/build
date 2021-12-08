@@ -1,0 +1,8 @@
+#!/bin/sh -uxe
+
+./configure --prefix=/usr
+make
+make DESTDIR="$1" install
+
+install -dm755 "$1/usr/lib"
+mv "$1/usr/share/pkgconfig" "$1/usr/lib"
