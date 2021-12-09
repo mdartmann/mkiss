@@ -1,0 +1,14 @@
+#!/bin/sh -uxe
+
+export CFLAGS+=" -pthread"
+
+./configure \
+    --prefix=/usr \
+    --datadir=/usr/share/file \
+    --enable-fsect-man5 \
+    --enable-libseccomp
+
+sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
+
+make
+make DESTDIR="$1" install
