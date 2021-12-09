@@ -1,1 +1,2 @@
 http://ftp.gnu.org/gnu/binutils/binutils-VERSION.tar.xz
+patches/0001-close-thin-archive-fd.patch

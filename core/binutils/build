@@ -3,6 +3,9 @@
 # Disable development mode
 sed -i '/^development=/s/true/false/' bfd/development.sh
 
+# Fix malformed archive error with nodejs
+patch -Np1 -i 0001-close-thin-archive-fd.patch
+
 ./configure \
 	--prefix=/usr \
 	--with-lib-path=/usr/lib:/usr/local/lib \
