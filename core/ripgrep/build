@@ -1,0 +1,5 @@
+#!/bin/sh -uxe
+
+cargo build --release --locked --features 'pcre2' 
+
+install -Dm755 "target/release/rg" "$1/usr/bin/rg"
