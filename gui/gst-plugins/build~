@@ -1,0 +1,15 @@
+#!/bin/sh -xe
+
+export DESTDIR="$1"
+
+#vaapi FIXME PLZ UwU
+for plugin in libav good bad ugly; do (
+    cd "$plugin"
+    meson build \
+        -D prefix=/usr \
+        -D example=false \
+        -D qt5=disabled \
+
+    ninja -C build 
+    ninja -C build install
+) done

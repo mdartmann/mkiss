@@ -1,0 +1,5 @@
+#!/bin/sh -uxe
+
+perl Makefile.PL INSTALLDIRS=vendor
+make
+make DESTDIR="$1" install

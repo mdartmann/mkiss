@@ -1,0 +1,16 @@
+#!/bin/sh -xe
+
+export DESTDIR="$1"
+
+meson build \
+    -D prefix=/usr \
+    -D tremor=disabled \
+    -D examples=disabled \
+    -D gtk_doc=disabled \
+    -D cdparanoia=disabled \
+    -D introspection=enabled \
+    -D sndio=disabled 
+
+zsh
+ninja -C build 
+ninja -C build install

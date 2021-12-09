@@ -1,0 +1,9 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --enable-alsa \
+    --without-libbsd 
+
+make
+make DESTDIR="$1" install

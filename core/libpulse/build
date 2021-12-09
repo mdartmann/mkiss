@@ -1,0 +1,31 @@
+#!/bin/sh -uxe
+
+
+# We don't need the binaries, so we install into a throwaway dir 
+mkdir output
+export DESTDIR="$PWD/output"
+
+echo 15.0>.tarball-version
+
+meson build \
+    -D doxygen=false \
+    -D pulsedsp-location='/usr/lib/\$LIB/pulseaudio' \
+    -D gtk=disabled \
+    -D stream-restore-clear-old-devices=true \
+    -D prefix=/usr \
+    -D udevrulesdir=/usr/lib/udev/rules.d \
+    -D bluez5-gstreamer=enabled \
+    -D elogind=disabled \
+    -D tcpwrap=disabled \
+    -D tests=false
+
+ninja -C build
+ninja -C build install
+
+
+# only move out libraries
+mkdir -p "$1"/usr/lib
+mv output/usr/lib "$1"/usr
+mv output/usr/include "$1"/usr
+
+

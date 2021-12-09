@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+
+export DESTDIR="$1"
+
+meson build \
+    -D prefix=/usr \
+    -D buildtype=release \
+    -D dbghelp=disabled \
+    -D introspection=enabled 
+
+ninja -C build 
+ninja -C build install

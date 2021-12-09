@@ -1,0 +1,15 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+cmake -B build -G Ninja \
+    -D SPDLOG_BUILD_BENCH=OFF \
+    -D SPDLOG_FMT_EXTERNAL=ON \
+    -D SPDLOG_BUILD_SHARED=ON \
+    -D SPDLOG_BUILD_TESTS=OFF \
+    -D CMAKE_BUILD_TYPE=None \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D CMAKE_INSTALL_LIBDIR=lib \
+    -Wno-dev
+
+ninja -C build
+ninja -C build install

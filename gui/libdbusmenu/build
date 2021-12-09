@@ -1,0 +1,18 @@
+#!/bin/sh -uxe
+
+sed -i "s|-Werror||" libdbusmenu-*/Makefile.{am,in}
+
+export HAVE_VALGRIND_TRUE="#"
+export HAVE_VALGRIND_FALSE=''
+
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --disable-{dumper,static,test} \
+    --with-gtk-3
+
+make
+make DESTDIR="$1" install
+
+make -j1 -C libdbusmenu-glib DESTDIR="$1" install

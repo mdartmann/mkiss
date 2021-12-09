@@ -1,0 +1,19 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+    ${MESON_OPTIONS/-D b_lto=true/} \
+    -D docs=disabled \
+    -D jack=disabled \
+    -D libcamera=disabled \
+    -D udevrulesdir=/usr/lib/udev/rules.d \
+    -D roc=disabled \
+    -D session-managers=[] \
+    -D systemd=disabled \
+    -D avahi=disabled \
+    -D bluez5=disabled \
+    -D docs=disabled \
+    -D man=disabled
+
+ninja -C build
+ninja -C build install

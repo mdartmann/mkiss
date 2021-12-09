@@ -1,0 +1,20 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+cmake -B build -G Ninja \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D SDL_STATIC=OFF \
+    -D SDL-DLOPEN=ON \
+    -D ARTS=OFF \
+    -D ESD=OFF \
+    -D NAS=OFF \
+    -D HIDAPI=ON \
+    -D PULSEAUDIO_SHARED=ON \
+    -D VIDEO_WAYLAND=ON \
+    -D RPATH=OFF \
+    -D CLOCK_GETTIME=ON \
+    -D PIPEWIRE=ON \
+    -D PIPEWIRE_SHARED=ON
+
+ninja -C build
+ninja -C build install

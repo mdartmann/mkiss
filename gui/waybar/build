@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+    --prefix=/usr \
+    --buildtype=plain \
+    --auto-features=enabled \
+    --wrap-mode=nodownload \
+    -D systemd=disabled
+
+ninja -C build
+ninja -C build install
