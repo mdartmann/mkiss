@@ -1,0 +1,18 @@
+#!/bin/sh -uxe
+
+# Valgrind does not like some flags
+export CFLAGS="${CFLAGS/-fno-plt/}"
+export CXXFLAGS="${CXXFLAGS/-fno-plt/}"
+
+patch -Np1 -i valgrind-3.7.0-respect-flags.patch
+autoreconf -fiv
+
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --libexecdir=/usr/lib \
+    --mandir=/usr/share/man
+
+make
+make DESTDIR="$1" install

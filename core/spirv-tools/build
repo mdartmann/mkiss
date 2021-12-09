@@ -1,0 +1,17 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+cd SPIRV-Tools
+
+rm -rf build
+cmake -B build -G Ninja \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D CMAKE_INSTALL_LIBDIR=lib \
+    -D CMAKE_BUILD_TYPE=Release \
+    -D SPIRV_WERROR=Off \
+    -D BUILD_SHARED_LIBS=ON \
+    -D SPIRV_TOOLS_BUILD_STATIC=OFF \
+    -D SPIRV-Headers_SOURCE_DIR=$PWD/../SPIRV-Headers
+
+ninja -C build
+ninja -C build install

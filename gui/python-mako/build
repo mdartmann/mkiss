@@ -1,0 +1,5 @@
+#!/bin/sh -uxe
+sed -i 's/-W error//' setup.cfg
+
+python setup.py build
+python setup.py install --root="$1" --optimize=1

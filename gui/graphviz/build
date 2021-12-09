@@ -1,0 +1,16 @@
+#!/bin/sh -uxe
+
+export CXXFLAGS="${CXXFLAGS} -fpermissive"
+export LIBPOSTFIX=/
+
+./configure \
+    --prefix=/usr \
+    --enable-python3=yes \
+    --disable-python \
+    --enable-lefty \
+    --disable-docs
+
+sed -i "s/ -shared / ${LDFLAGS}\0/g" libtool
+
+make
+make DESTDIR="$1" install

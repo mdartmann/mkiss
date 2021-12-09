@@ -1,0 +1,3 @@
+https://github.com/KhronosGroup/glslang/archive/VERSION.tar.gz
+git+https://github.com/KhronosGroup/SPIRV-Tools#1fbed83c8aab8517d821fcb4164c08567951938f SPIRV-Tools
+git+https://github.com/KhronosGroup/SPIRV-Headers#449bc986ba6f4c5e10e32828783f9daef2a77644 SPIRV-Headers

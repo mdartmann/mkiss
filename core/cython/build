@@ -1,0 +1,9 @@
+#!/bin/sh -uxe
+
+python setup.py build
+python setup.py install --root="$1" --skip-build
+
+for f in cygdb cython cythonize; do
+    mv "$1/usr/bin/$f" "$1/usr/bin/${f}3"
+    ln -s ${f}3 "$1/usr/bin/$f"
+done

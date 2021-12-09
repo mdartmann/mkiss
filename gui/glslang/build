@@ -1,0 +1,36 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+# glslang uses super specific versions of SPIRV headers/tools, so we need to use
+# their vendored version
+cp -r SPIRV-Tools External/spirv-tools
+cp -r SPIRV-Headers External/spirv-tools/external/spirv-headers
+
+cmake -B build-shared -G Ninja \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D CMAKE_BUILD_TYPE=Release \
+    -D CMAKE_INSTALL_LIBDIR=lib \
+    -D BUILD_SHARED_LIBS=ON
+
+ninja -C build-shared
+
+cmake -B build-static -G Ninja \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D CMAKE_BUILD_TYPE=Release \
+    -D CMAKE_INSTALL_LIBDIR=lib \
+    -D BUILD_SHARED_LIBS=OFF
+ninja -C build-static
+
+ninja -C build-shared install
+ninja -C build-static install
+
+cd "$1/usr/lib"
+
+for lib in *.so; do
+    ln -sf ${lib} ${lib}.0
+done
+
+# Delete the vendored-in stuff
+mv "$1/usr/bin/spirv-remap" .
+rm -r "$1"/usr/{bin/spirv*,include/spirv-tools,lib/cmake/SPIRV-Tools*,lib/libSPIRV-*,lib/pkgconfig}
+mv spirv-remap "$1/usr/bin/spirv-remap"

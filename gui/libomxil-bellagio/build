@@ -1,0 +1,14 @@
+#!/bin/sh -uxe
+export CFLAGS+=" -fcommon"
+
+patch -Np1 -i fedora-fixes.patch
+sed -i 's/-Werror//' configure.ac
+autoreconf -fiv
+
+./configure \
+    --prefix=/usr \
+    --disable-static \
+    --docdir=/usr/share/doc/libomxil-bellagio
+
+make
+make DESTDIR="$1" install

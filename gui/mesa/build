@@ -1,0 +1,34 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+    -D b_ndebug=true \
+    -D platforms=x11,wayland \
+    -D dri-drivers=i915,i965,r100,r200,nouveau \
+    -D gallium-drivers=r300,r600,radeonsi,nouveau,virgl,svga,swrast,swr,iris,crocus,zink \
+    -D vulkan-drivers=amd,intel,swrast \
+    -D vulkan-layers=device-select,intel-nullhw,overlay \
+    -D swr-arches=avx,avx2 \
+    -D dri3=enabled \
+    -D egl=enabled \
+    -D gallium-extra-hud=true \
+    -D gallium-nine=true \
+    -D gallium-omx=bellagio \
+    -D gallium-opencl=icd \
+    -D gallium-vdpau=enabled \
+    -D gallium-xa=enabled \
+    -D gallium-xvmc=disabled \
+    -D gbm=enabled \
+    -D gles1=disabled \
+    -D gles2=enabled \
+    -D glx=dri \
+    -D libunwind=enabled \
+    -D llvm=enabled \
+    -D osmesa=true \
+    -D shared-glapi=enabled \
+    -D microsoft-clc=disabled \
+    -D valgrind=enabled \
+    ${MESON_OPTIONS/-D b_lto=true}
+
+ninja -C build
+ninja -C build install

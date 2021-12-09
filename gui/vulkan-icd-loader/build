@@ -1,0 +1,22 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+for i in *.patch; do
+    patch -Np1 -i $i
+done
+
+rm -rf build
+cmake -B build -G Ninja \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D VULKAN_HEADERS_INSTALL_DIR=/usr \
+    -D CMAKE_INSTALL_SYSCONFDIR=/etc \
+    -D CMAKE_INSTALL_DATADIR=/share \
+    -D CMAKE_SKIP_RPATH=True \
+    -D BUILD_TESTS=Off \
+    -D BUILD_WSI_XCB_SUPPORT=On \
+    -D BUILD_WSI_XLIB_SUPPORT=On \
+    -D BUILD_WSI_WAYLAND_SUPPORT=On \
+    -D CMAKE_BUILD_TYPE=Release
+
+ninja -C build
+ninja -C build install
