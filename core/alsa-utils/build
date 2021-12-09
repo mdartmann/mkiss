@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --disable-alsaconf \
+    --sbindir=/usr/bin \
+    --with-udev-rules-dir=/usr/lib/udev/rules.d
+
+make
+make DESTDIR="$1" install
