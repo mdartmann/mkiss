@@ -1,0 +1,13 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+    --prefix=/usr \
+    --buildtype=plain \
+    -D examples="disabled" \
+    -D server="enabled" \
+    -D libseat-logind="disabled" \
+    -D man-pages="enabled" 
+
+ninja -C build
+ninja -C build install

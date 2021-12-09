@@ -1,0 +1,13 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+    ${MESON_OPTIONS} \
+    -D xkb-base="/usr/share/X11/xkb" \
+    -D compat-rules=true \
+    -D xorg-rules-symlinks=true
+
+ninja -C build
+ninja -C build install
+
+install -dm755 "$1/usr/lib/xkb"

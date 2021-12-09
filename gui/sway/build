@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+
+export DESTDIR="$1"
+
+meson build \
+    -D prefix=/usr \
+    -D man-pages=disabled
+
+ninja -C build
+ninja -C build install

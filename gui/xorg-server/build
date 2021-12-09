@@ -1,0 +1,24 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+# revert dpi calculation that leads to unwanted miscalculation resuts
+patch -Rp1 -i 0001_revert_dpi_calculation.patch
+
+meson build \
+    ${MESON_OPTIONS/-D b_lto=true/} \
+    -D ipv6=true \
+    -D xvfb=true \
+    -D xnest=true \
+    -D xcsecurity=true \
+    -D xorg=true \
+    -D xephyr=true \
+    -D glamor=true \
+    -D udev=true \
+    -D dtrace=false \
+    -D systemd_logind=true \
+    -D suid_wrapper=true \
+    -D xkb_dir=/usr/share/X11/xkb \
+    -D xkb_output_dir=/var/lib/xkb
+
+ninja -C build
+ninja -C build install

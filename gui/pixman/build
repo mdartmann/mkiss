@@ -1,0 +1,15 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+    -D loongson-mmi=disabled \
+    -D vmx=disabled \
+    -D arm-simd=disabled \
+    -D neon=disabled \
+    -D iwmmxt=disabled \
+    -D mips-dspr2=disabled \
+    -D gtk=disabled \
+    ${MESON_OPTIONS/-D b_lto=true/}
+
+ninja -C build
+ninja -C build install

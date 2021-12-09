@@ -1,0 +1,8 @@
+#!/bin/sh -uxe
+
+install -Dm644 unhinted/ttf/Noto*/*.tt[fc] -t "$1/usr/share/fonts/noto"
+install -Dm644 hinted/ttf/Noto*/*.tt[fc] -t "$1/usr/share/fonts/noto"
+
+install -Dm644 *.conf -t "$1/usr/share/fontconfig/conf.avail/"
+install -d "$1/usr/share/fontconfig/conf.default"
+ln -rs "$1/usr/share/fontconfig/conf.avail/*" "$1"/usr/share/fontconfig/conf.default

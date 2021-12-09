@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+cmake -B build -G Ninja \
+    -D CMAKE_C_FLAGS:STRING="${CFLAGS}" \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D CMAKE_BUILD_TYPE:STRING=Release \
+    -D GRAPHITE2_COMPARE_RENDERER=OFF
+
+ninja -C build
+ninja -C build install

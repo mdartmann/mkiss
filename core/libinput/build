@@ -1,0 +1,13 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+    ${MESON_OPTIONS/-D b_lto=true/} \
+    -D udev-dir=/usr/lib/udev \
+    -D tests=false \
+    -D documentation=false \
+    -D libwacom=false \
+    -D debug-gui=false
+
+ninja -C build
+ninja -C build install

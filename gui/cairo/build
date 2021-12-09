@@ -19,7 +19,7 @@ meson build \
     -D spectre=disabled \
     -D tee=enabled \
     -D tests=disabled \
-    ${MESON_OPTIONS}
+    ${MESON_OPTIONS/-D b_lto=true/}
 
 ninja -C build
 ninja -C build install

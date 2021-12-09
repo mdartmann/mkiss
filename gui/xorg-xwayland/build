@@ -1,0 +1,18 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+    ${MESON_OPTIONS/-D b_lto=true/} \
+    -D ipv6=true \
+    -D xvfb=false \
+    -D xdmcp=false \
+    -D xcsecurity=true \
+    -D dri3=true \
+    -D glamor=true \
+    -D xkb_dir=/usr/share/X11/xkb \
+    -D xkb_output_dir=/var/lib/xkb
+
+ninja -C build
+
+install -m755 -Dt "$1/usr/bin" build/hw/xwayland/Xwayland
+install -m644 -Dt "$1/usr/lib/pkgconfig" build/hw/xwayland/xwayland.pc

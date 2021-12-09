@@ -1,0 +1,13 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+    ${MESON_OPTIONS/-D b_lto=true/} \
+    -D builtin_loaders=all \
+    -D gtk_doc=false \
+    -D installed_tests=false \
+    -D docs=false \
+    -D man=false
+
+ninja -C build
+ninja -C build install

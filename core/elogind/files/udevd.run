@@ -1,0 +1,3 @@
+#!/bin/sh
+[ ! -d /var/run/udevd ] && install -m755 -g 22 -o 22 -d /var/run/udevd
+exec udevd

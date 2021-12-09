@@ -1,0 +1,9 @@
+#!/bin/sh -uxe
+
+export DESTDIR="$1"
+
+meson build \
+    -D prefix=/usr 
+
+ninja -C build
+ninja -C build install

@@ -1,0 +1,13 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+    ${MESON_OPTIONS/-D b_lto=true/} \
+    -D gtk_doc=false \
+    -D doctool=disabled
+
+ninja -C build
+ninja -C build install
+
+python -m compileall -d /usr/lib/gobject-introspection "$1/usr/lib/gobject-introspection"
+python -O -m compileall -d /usr/lib/gobject-introspection "$1/usr/lib/gobject-introspection"

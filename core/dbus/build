@@ -7,11 +7,12 @@
 	--with-system-socket=/var/run/dbus/system_bus_socket \
 	--with-system-pid-file=/var/run/dbus/pid \
 	--with-console-auth-dir=/var/run/console \
+    --enable-elogind \
 	--enable-assert \
 	--enable-doxygen-docs \
 	--enable-inotify \
 	--enable-user-session \
-	--without-x
+	--enable-x11-autolaunch
 
 make
 make DESTDIR="$1" install
