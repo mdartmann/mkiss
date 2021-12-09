@@ -1,0 +1,24 @@
+#!/bin/sh -uxe
+
+export CFLAGS="$CFLAGS -fcommon"
+sed -i '/int dummy/d'         compat_err.c
+sed -i "s|\"more -s\"|\"less\"|g" main.c
+sed -i "s|CC=.*|CC=\'$CC\'|"    configure
+mv configure.local.example configure.local
+
+cat > configure.local <<EOF
+PREFIX=/usr
+MANDIR=/usr/share/man
+LIBDIR=/usr/lib
+SBINDIR=/usr/bin
+CC="${CC:-cc}"
+CFLAGS="$CFLAGS"
+LDFLAGS="$LDFLAGS"
+LN="ln -sf"
+EOF
+zsh -i
+./configure \
+    --prefix=/usr
+
+make
+make -j1 DESTDIR="$1" base-install
