@@ -1,0 +1,9 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+    ${MESON_OPTIONS} \
+    -D default_bus=dbus-broker 
+
+ninja -C build
+ninja -C build install

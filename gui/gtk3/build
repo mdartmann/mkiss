@@ -1,0 +1,16 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+export CFLAGS+=" -DG_DISABLE_CAST_CHECKS"
+
+meson build \
+    ${MESON_OPTIONS} \
+    -D broadway_backend=true \
+    -D cloudproviders=false \
+    -D tracker3=false \
+    -D colord=no \
+    -D gtk_doc=false \
+    -D introspection=false \
+    -D man=false
+
+ninja -C build
+ninja -C build install
