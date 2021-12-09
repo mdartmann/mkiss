@@ -5,11 +5,10 @@ autoreconf -fiv
 ./configure \
 	--prefix=/usr \
 	--sysconfdir=/etc \
-	--enable-cgroup \
 	--enable-delayacct \
 	--enable-openvz \
 	--enable-unicode \
-	--enable-vserver
+	--enable-vserver 
 
 make
 make DESTDIR="$1" install
