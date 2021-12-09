@@ -9,7 +9,6 @@ meson build \
     -D tracker3=false \
     -D colord=no \
     -D gtk_doc=false \
-    -D introspection=false \
     -D man=false
 
 ninja -C build

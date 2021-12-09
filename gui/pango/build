@@ -7,8 +7,7 @@ git cherry-pick -n f5fdfe4e16b7da761d918f40bb82dad52513c9ff
 git cherry-pick -n 1cf8e9b3cada dc5b1fdea7d6
 
 meson build \
-    ${MESON_OPTIONS} \
-    -D introspection=disabled
+    ${MESON_OPTIONS} 
 
 
 ninja -C build

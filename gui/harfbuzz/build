@@ -1,13 +1,15 @@
 #!/bin/sh -uxe
 
 ./configure \
+    --enable-introspection \
     --enable-static \
     --with-libstdc=yes \
     --prefix=/usr \
     --with-icu=yes \
+    --with-gobject=yes\
     --with-glib=yes \
     --with-graphite2=yes \
-    --with-cairo=yes
+    --with-cairo=yes 
 
 make
 make DESTDIR="$1" install
