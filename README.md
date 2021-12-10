@@ -27,4 +27,4 @@ Contributions are welcome, as long as they:
 
 - aren't a very niche edge case
 - follow a similar programming style as my scripts
-- are reproducible with the flags found in my [mkissconfig repository](https://gitub.com/mdartmann/mkissconfig)
+- are reproducible with the flags found in my [mkissconfig repository](https://github.com/mdartmann/mkissconfig)
