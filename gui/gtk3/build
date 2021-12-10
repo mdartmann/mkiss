@@ -8,7 +8,6 @@ meson build \
     -D cloudproviders=false \
     -D tracker3=false \
     -D colord=no \
-    -D gtk_doc=false \
     -D man=false
 
 ninja -C build

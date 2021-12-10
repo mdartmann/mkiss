@@ -1,0 +1,3 @@
+#!/bin/sh -uxe
+
+python3 setup.py install --root "$1" -O1
