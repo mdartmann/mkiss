@@ -1,0 +1,46 @@
+#!/bin/sh -uxe
+
+export NSS_USE_SYSTEM_SQLITE=1
+export NSS_DISABLE_GTESTS=1
+export NSS_ENABLE_WERROR=0
+export USE_64=1
+export BUILD_OPT=1
+export CC="${CC:-cc}"
+export CCC="${CXX:-c++}"
+export CXX="${CXX:-c++}"
+
+cd nspr
+./configure \
+    --prefix=/usr \
+    --enable-64bit \
+
+cd ..
+
+make  -C nss nss_build_all
+make  -C nss DESTDIR="$1" install
+make  -C nspr
+make  -C nspr DESTDIR="$1" install
+
+
+sed nspr/Linux*/config/nspr.pc \
+    -e "s,/usr/local,/usr,g" |
+install -Dm644 /dev/stdin "$1/usr/lib/pkgconfig/nspr.pc"
+
+install -Dt "$1/usr/include/nss" -m644 dist/public/nss/*.h
+install -Dt "$1/usr/include/nss" -m644 dist/Linux*/include/*.h
+install -Dt "$1/usr/lib"               dist/Linux*/lib/*.so
+install -Dt "$1/usr/lib"         -m644 dist/Linux*/lib/*.chk
+install -Dt "$1/usr/bin"         -m755 dist/Linux*/bin/*
+
+
+install -Dt "$1/usr/include/nss/obsolete" \
+    -m644 dist/Linux*/include/obsolete/*.h
+
+# This is disgusting and I hate this package with a passion.
+sed nss/pkg/pkg-config/nss.pc.in \
+    -e "s,%libdir%,/usr/lib,g" \
+    -e "s,%prefix%,/usr,g" \
+    -e "s,%exec_prefix%,/usr/bin,g" \
+    -e "s,%includedir%,/usr/include/nss,g" \
+    -e "s,%NSS_VERSION%,3.71,g" |
+install -Dm644 /dev/stdin "$1/usr/lib/pkgconfig/nss.pc"
