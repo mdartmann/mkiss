@@ -1,0 +1,45 @@
+#!/bin/sh -uxe
+
+export src=$PWD
+
+for patch in *.patch; do
+    patch -p1 -i $patch
+done
+
+./configure -confirm-license -opensource -v \
+    -prefix /usr \
+    -docdir /usr/share/doc/qt \
+    -headerdir /usr/include/qt \
+    -archdatadir /usr/lib/qt \
+    -datadir /usr/share/qt \
+    -sysconfdir /etc/xdg \
+    -examplesdir /usr/share/doc/qt/examples \
+    -system-sqlite \
+    -openssl-linked \
+    -nomake examples \
+    -no-rpath \
+    -dbus-linked \
+    -system-harfbuzz \
+    -no-mimetype-database \
+    -no-use-gold-linker \
+    -reduce-relocations \
+    -no-strip \
+    -disable-avx512
+
+make
+make INSTALL_ROOT="$1" install
+
+# Drop QMAKE_PRL_BUILD_DIR because of build dir reference
+find "$1/usr/lib" -type f -name '*.prl' \
+    -exec sed -i '/^QMAKE_PRL_BUILD_DIR/d' {} \;
+
+sed -i "s|${src}/usr|/usr|" \
+    "$1/usr/lib/qt/mkspecs/modules/qt_lib_bootstrap_private.pri"
+
+# Symlinks for backwards compatibility
+for b in "$1/usr/bin/*"; do
+    ln -s $(basename $b) "$1/usr/bin/$(basename $b)-qt5"
+done
+
+install -dm755 "$1/usr/include/qtxcb-private"
+cp -r src/plugins/platforms/xcb/*.h "$1/usr/include/qtxcb-private/"
