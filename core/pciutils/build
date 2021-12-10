@@ -1,0 +1,9 @@
+#!/bin/sh -uxe
+
+make OPT="${CFLAGS} -DPIC" ZLIB=no SHARED=no PREFIX=/usr SHAREDIR=/usr/share/hwdata MANDIR=/usr/share/man SBINDIR=/usr/bin lib/libpci.a
+
+cp lib/libpci.a . 
+
+make clean
+make OPT="${CFLAGS} -DPIC" ZLIB=no SHARED=yes PREFIX=/usr SHAREDIR=/usr/share/hwdata MANDIR=/usr/share/man SBINDIR=/usr/bin all
+make SHARED=yes PREFIX=/usr SHAREDIR=/usr/share/hwdata MANDIR=/usr/share/man SBINDIR=/usr/bin DESTDIR="$1" install install-lib
