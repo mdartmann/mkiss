@@ -1,8 +1,0 @@
-#!/bin/sh -uxe
-
-./configure --prefix=/usr 
-
-make
-make DESTDIR="$1" install
-
-ln -sf pixz "$1/usr/bin/xz"
