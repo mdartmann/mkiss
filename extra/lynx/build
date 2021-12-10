@@ -1,0 +1,14 @@
+#!/bin/sh -uxe
+
+patch -Np1 -i CVE-2021-38165.diff
+
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --with-ssl=/usr \
+    --enable-nls \
+    --enable-ipv6 \
+    --mandir=/usr/share/man
+
+make
+make DESTDIR="$1" install

@@ -1,0 +1,30 @@
+#!/bin/sh -uxe
+
+for i in *.patch; do
+    cd xsl
+    patch -Np2 -i ../$i
+    cd ../xsl-nons
+    patch -Np2 -i ../$i 
+    cd ..
+done
+
+version=$2
+destdir=$1
+
+for ns in -nons ''; do
+    pkgroot="$destdir/usr/share/xml/docbook/xsl-stylesheets-$version$ns"
+    dir=xsl$ns
+
+    install -Dt "$pkgroot" -m644 $dir/VERSION{,.xsl}
+    (
+       shopt -s nullglob
+       for fn in assembly common eclipse epub epub3 fo highlighting html \
+        htmlhelp javahelp lib manpages params profiling roundtrip template \
+        website xhtml xhtml-1_1 xhtml5
+        do
+            install -Dt "$pkgroot/$fn" -m644 $dir/$fn/*.{xml,xsl,dtd,ent}
+        done       
+    )
+done
+
+install -d "$1/etc/xml"

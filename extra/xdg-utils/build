@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+
+zsh
+./configure \
+    --prefix=/usr \
+    --disable-man
+
+make
+make DESTDIR="$1" install
+
+install -dm755 "$1"/usr/share/desktop-directories

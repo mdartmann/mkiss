@@ -1,0 +1,3 @@
+https://github.com/docbook/xslt10-stylesheets/releases/download/release%2FVERSION/docbook-xsl-VERSION.tar.gz xsl
+https://github.com/docbook/xslt10-stylesheets/releases/download/release%2FVERSION/docbook-xsl-nons-VERSION.tar.gz xsl-nons
+patches/765567_non-recursive_string_subst.patch
