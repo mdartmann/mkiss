@@ -1,0 +1,24 @@
+#!/bin/sh -uxe
+
+pushd tools/build
+./bootstrap.sh --cxxflags="${CXXFLAGS} ${LDFLAGS}"
+./b2 install --prefix="$1/usr"
+popd
+
+./bootstrap.sh --with-toolset=gcc --with-icu --with-python=python3
+
+./b2 install \
+    variant=release \
+    debug-symbols=off \
+    threading=multi \
+    runtime-link=shared \
+    link=shared,static \
+    toolset=gcc \
+    python=3.10 \
+    cflags="${CFLAGS}" \
+    cxxflags="${CXXFLAGS}" \
+    linkflags="${LDFLAGS}" \
+    --layout=system \
+    -j$(nproc) \
+    \
+    --prefix="$1/usr"
