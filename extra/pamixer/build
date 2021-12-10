@@ -1,0 +1,7 @@
+#!/bin/sh -uxe
+
+export CXXFLAGS+=" -DVERSION=${2}"
+
+make
+install -Dm755 pamixer "$1"/usr/bin/pamixer
+install -Dm644 pamixer.1 -t "$1"/usr/share/man/man1
