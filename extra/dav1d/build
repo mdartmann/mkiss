@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+    ${MESON_OPTIONS/-D b_lto=true} \
+    -D testdata_tests=false \
+    -D enable_avx512=false \
+    -D xxhash_muxer=disabled
+
+ninja -C build
+ninja -C build install

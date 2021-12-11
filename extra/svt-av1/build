@@ -1,0 +1,15 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+sed "/CMAKE_BUILD_TYPE Release/d" -i CMakeLists.txt
+
+export LDFLAGS="${LDFLAGS} -Wl,-z,noexecstack"
+
+cmake -B build -G Ninja \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D BUILD_SHARED_LIBS=ON \
+    -D NATIVE=OFF \
+    -D ENABLE_AVX512=OFF
+
+ninja -C build
+ninja -C build install

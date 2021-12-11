@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --enable-shared \
+    --enable-pic \
+    --disable-avs 
+
+make
+make DESTDIR="$1" install-cli install-lib-shared

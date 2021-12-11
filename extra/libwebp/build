@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --disable-static \
+    --enable-swap-16bit-csp \
+    --enable-libwebp{mux,demux,decoder,extras}
+
+sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
+
+make
+make DESTDIR="$1" install

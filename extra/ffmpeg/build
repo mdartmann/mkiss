@@ -1,0 +1,35 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --disable-debug \
+    --disable-static \
+    --disable-stripping \
+    --enable-cuda-llvm \
+    --enable-lto \
+    --enable-fontconfig \
+    --enable-gpl \
+    --enable-ladspa \
+    --enable-libass \
+    --enable-libdav1d \
+    --enable-libdrm \
+    --enable-libfreetype \
+    --enable-libfribidi \
+    --enable-libmp3lame \
+    --enable-libopenjpeg \
+    --enable-libopus \
+    --enable-libpulse \
+    --enable-librsvg \
+    --enable-libsvtav1 \
+    --enable-libv4l2 \
+    --enable-libvorbis \
+    --enable-libvpx \
+    --enable-libwebp \
+    --enable-libx264 \
+    --enable-libxcb \
+    --enable-libxml2 \
+    --enable-shared \
+    --enable-version3
+
+make
+make DESTDIR="$1" install

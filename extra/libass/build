@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+
+./autogen.sh
+
+./configure \
+    --prefix=/usr \
+    --enable-harfbuzz \
+    --enable-fontconfig
+
+make
+make DESTDIR="$1" install

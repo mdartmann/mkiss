@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+zsh
+autoreconf -fiv
+
+./configure \
+    --prefix=/usr \
+    --disable-static 
+sed -s "s| -shared | ${LDFLAGS}\0|g" libtool
+
+make
+make DESTDIR="$1" install

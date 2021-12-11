@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+
+./autogen.sh
+
+./configure \
+    --prefix=/usr \
+    --disable-static \
+    --enable-shared
+
+make
+make DESTDIR="$1" install

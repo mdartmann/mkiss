@@ -1,0 +1,2 @@
+git+https://github.com/itstool/itstool#VERSION
+patches/0001-Fix-the-crash-from-912099.patch
