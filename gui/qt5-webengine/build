@@ -21,12 +21,12 @@ qmake ../ -- \
     -webengine-kerberos \
     -webengine-webrtc-pipewire
 
-# Re-run make three times to avoid failure due to race conditions.
-# If the error isn't related to a race condition, it will fail thrice.
+# Re-run make five times to avoid failure due to race conditions.
+# If the error isn't related to a race condition, it will fail every time.
 # This is bad, stupid and bad,
 # but I've already spent 24hrs on this and I'm not going to reverse engineer 
 # millions of LOC on my f***ing own. 
-make || make || make
+make || make || make || make || make || zsh
 
 make INSTALL_ROOT="$1" install
 
