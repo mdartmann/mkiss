@@ -1,0 +1,13 @@
+#!/bin/sh -uxe
+
+ar x *.deb
+
+bsdtar -x --strip-components 4 -f data.tar.xz opt/google/chrome/WidevineCdm
+
+install -dm755 "$1/usr/lib/chromium"
+cp -a WidevineCdm "$1/usr/lib/chromium"
+find "$1" -name '*.so' -exec chmod +x {} \;
+
+# backward compatibility
+
+ln -s WidevineCdm/_platform_specific/linux_x64/libwidevinecdm.so "$1"/usr/lib/chromium/libwidevinecdm.so

@@ -1,0 +1,7 @@
+#!/bin/sh -uxe
+
+cargo fetch --locked --target "x86_64-unknown-linux-gnu"
+
+cargo build --frozen --release --all-features
+
+install -vDm 755 target/release/maturin -t "$1"/usr/bin

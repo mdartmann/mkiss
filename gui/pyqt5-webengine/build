@@ -1,0 +1,9 @@
+#!/bin/sh -uxe
+
+sip-build \
+    --no-make \
+    --api-dir /usr/share/qt/qsci/api/python || zsh
+
+cd build
+make
+make INSTALL_ROOT="$1" install

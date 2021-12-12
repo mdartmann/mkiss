@@ -1,0 +1,16 @@
+#!/bin/sh -uxe
+
+maturin build --release --strip 
+cargo build --release --locked --all-features --target-dir=target
+
+install -Dm755 target/release/libadblock.so -t "$1"/usr/lib
+
+export PIP_CONFIG_FILE="/dev/null"
+
+for wheel in target/wheels/*.whl; do
+    pip install --isolated \
+        --root="$1" \
+        --ignore-installed \
+        --no-deps \
+        ${wheel}
+done

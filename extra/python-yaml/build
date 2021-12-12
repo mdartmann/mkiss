@@ -1,0 +1,4 @@
+#!/bin/sh -uxe
+
+python setup.py build 
+python setup.py install --prefix=/usr --root="$1" -O1 --skip-build
