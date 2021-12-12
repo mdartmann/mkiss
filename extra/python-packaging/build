@@ -1,0 +1,6 @@
+#!/bin/sh -uxe
+
+python setup.py build
+python2 setup.py build
+python setup.py install --root "$1"
+python setup.py install --root "$1" 

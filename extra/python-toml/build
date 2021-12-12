@@ -1,0 +1,9 @@
+#!/bin/sh -uxe
+
+python setup.py build
+python2 setup.py build
+
+python setup.py install --skip-build --optimize=1 --prefix=/usr --root="$1"
+python2 setup.py install --skip-build --optimize=1 --prefix=/usr --root="$1"
+
+

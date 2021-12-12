@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+
+sip-build \
+    --confirm-license \
+    --no-make \
+    --api-dir /usr/share/qt/qsci/api/python
+cd build
+make
+make INSTALL_ROOT="$1" install -j1
+
+python -m compileall -d / "$1/usr/lib"
+python -O -m compileall -d / "$1/usr/lib"
