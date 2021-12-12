@@ -1,0 +1,2 @@
+https://github.com/libfuse/libfuse/releases/download/fuse-VERSION/fuse-VERSION.tar.gz
+https://src.fedoraproject.org/rpms/fuse/raw/rawhide/f/fuse2-0007-util-ulockmgr_server.c-conditionally-define-closefro.patch

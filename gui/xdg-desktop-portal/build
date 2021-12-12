@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+
+NOCONFIGURE=1 ./autogen.sh
+
+./configure \
+    --prefix=/usr \
+    --libexecdir=/usr/lib \
+    --disable-geoclue
+
+make
+make DESTDIR="$1" install

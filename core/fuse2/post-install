@@ -1,0 +1,4 @@
+#!/bin/sh
+
+echo "Adding setuid to fusermount..."
+chmod +s /usr/bin/fusermount

@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+    ${MESON_OPTIONS} \
+    -D default_library=shared \
+    -D distro_install=true \
+    -D with_INIReader=true
+
+ninja -C build
+ninja -C build install
