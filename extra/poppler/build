@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+export DESTDIR="$1" 
+
+cmake -B build -G Ninja \
+    -D CMAKE_BUILD_TYPE=Release \
+    -D CMAKE_INSTALL_PREFIX:PATH=/usr \
+    -D CMAKE_INSTALL_LIBDIR=/usr/lib \
+    -D ENABLE_UNSTABLE_API_ABI_HEADERS=ON \
+    -D ENABLE_GTK_DOC=OFF
+
+ninja -C build
+ninja -C build install

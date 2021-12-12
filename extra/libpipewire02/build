@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+    ${MESON_OPTIONS} \
+    -D gstreamer=disabled
+
+ninja -C build
+ninja -C build install
+
+rm -rf "$1/usr/bin" "$1/etc"

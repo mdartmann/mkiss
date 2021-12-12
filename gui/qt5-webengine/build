@@ -1,0 +1,38 @@
+#!/bin/sh -uxe
+
+origin="$PWD"
+
+git submodule init
+git submodule update
+
+for i in *.patch; do 
+    patch -p1 -i $i
+done
+
+mkdir build
+cd build
+
+qmake ../ -- \
+    -proprietary-codecs \
+    -system-ffmpeg \
+    -webp \
+    -spellchecker \
+    -webengine-icu \
+    -webengine-kerberos \
+    -webengine-webrtc-pipewire
+
+# Re-run make three times to avoid failure due to race conditions.
+# If the error isn't related to a race condition, it will fail thrice.
+# This is bad, stupid and bad,
+# but I've already spent 24hrs on this and I'm not going to reverse engineer 
+# millions of LOC on my f***ing own. 
+make || make || make
+
+make INSTALL_ROOT="$1" install
+
+# Drop QMAKE_PRL_BUILD_DIR because reference the build dir
+find "$1/usr/lib" -type f -name '*.prl' \
+    -exec sed -i -e '/^QMAKE_PRL_BUILD_DIR/d' {} \;
+
+# Fix cmake dependdency versions
+sed -e "s|${2}\ |5.15.2 |" -i "$1"/usr/lib/cmake/*/*Config.cmake

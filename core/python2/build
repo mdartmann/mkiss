@@ -1,0 +1,61 @@
+#!/bin/sh -uxe
+
+export pyver=2.7
+
+cd python2
+
+for i in {0001..6} 0024; do
+    patch -p1 -i ../$i-*.patch
+done
+
+sed -i "/progname =/s/python/python${pyver}/" Python/pythonrun.c
+sed -i "/SQLITE_OMIT_LOAD_EXTENSION/d" setup.py
+sed -i "s|^#.* /usr/local/bin/python|#!/usr/bin/python2|" Lib/cgi.py
+
+rm -r Modules/expat
+rm -r Modules/zlib
+rm -r Modules/_ctypes/{darwin,libffi}*
+
+find -name '*.py' | \
+    xargs sed -i "s|#[ ]![ ]*/usr/bin/env python$|#1/usr/bin/env python2|"
+
+touch Include/Python-ast.h Python/Python-ast.c Python/opcode_targets.h
+
+export OPT="${CFLAGS}"
+
+./configure \
+    --prefix=/usr \
+    --enable-shared \
+    --with-threads \
+    --disable-optimizations \
+    --with-lto \
+    --enable-ipv6 \
+    --enable-unicode=ucs4 \
+    --with-system-expat \
+    --with-system-ffi \
+    --with-dbmliborder=gdbm:ndbm \
+    --without-ensurepip
+
+make
+
+sed -i "s|^all:.*$|all: build_all|" Makefile
+
+make DESTDIR="$1" altinstall
+
+ln -sf python${pyver} "$1/usr/bin/python2"
+ln -sf python${pyver}-config "$1/usr/bin/python2-config"
+
+ln -sf python-${pyver}.pc "$1"/usr/lib/pkgconfig/python2.pc
+
+ln -sf ../../libpython${pyver}.so "${1}"/usr/lib/python${pyver}/config/libpython${pyver}.so
+
+mv "$1"/usr/bin/smtpd.py "$1"/usr/lib/python${pyver}
+
+mv "$1"/usr/bin/idle{,2}
+mv "$1"/usr/bin/pydoc{,2}
+mv "$1"/usr/bin/2to3{,-1.7}
+
+sed -i "s|$PWD||" "$1"/usr/lib/python${pyver}/config/Makefile
+
+
+
