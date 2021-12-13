@@ -1,0 +1,4 @@
+#!/bin/sh -uxe
+
+cargo build --release
+cargo install --path "$PWD" --root "$1/usr"
