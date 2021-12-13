@@ -1,0 +1,14 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+cmake -B build -G Ninja \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D RANGE_V3_TESTS=OFF \
+    -D RANGE_V3_HEADER_CHECKS=OFF \
+    -D RANGE_V3_EXAMPLES=OFF \
+    -D RANGE_V3_PERF=OFF
+
+ninja -C build
+ninja -C build install
+
+mv "$1/usr/include/module.modulemap" "$1/usr/include/range-v3.modulemap"

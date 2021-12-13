@@ -1,0 +1,8 @@
+#!/bin/sh -uxe
+
+export CXXFLAGS+=" -lpthread"
+
+./configure --prefix=/usr
+
+make
+make DESTDIR="$1" install

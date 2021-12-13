@@ -1,0 +1,18 @@
+#!/bin/sh -uxe
+
+export DESTDIR="$1"
+
+git submodule init
+git submodule update --recursive
+
+# See https://github.com/desktop-app/tg_owt/issues/75
+# I hate this static link, but the maintainers are... special
+# So for now it's the only option.
+
+cmake -B build -G Ninja \
+    -D CMAKE_BUILD_TYPE=Release \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D BUILD_SHARED_LIBS=OFF
+
+ninja -C build
+ninja -C build install

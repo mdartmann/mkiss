@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+cmake -B build -G Ninja \
+    -D CMAKE_INSTALL_LIBEXECDIR=lib \
+    -D BUILD_TESTING=OFF \
+    -D BUILD_QCH=ON
+
+ninja -C build
+ninja -C build install

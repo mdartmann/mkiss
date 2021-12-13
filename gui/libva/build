@@ -1,0 +1,14 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+export CFLAGS+=" -DNENABLE_VA_MESSAGING"
+
+meson build \
+    ${MESON_OPTIONS}
+
+ninja -C build
+ninja -C build install
+
+install -Dm644 /dev/stdin "$1/etc/libva.conf" << EOF
+LIBVA_MESSAGING_LEVEL=1
+EOF
+

@@ -1,0 +1,19 @@
+#!/bin/sh -uxe
+
+autoreconf -fiv
+
+./configure --prefix=/usr
+make
+make DESTDIR="$1" install
+
+install -vDm 644 editors/proto.vim "$1"/usr/share/vim/vimfiles/syntax
+
+cd python
+export pyver=$(python -c 'import sys; print(".".join(map(str, sys.version_info[:2])))')
+python setup.py build --cpp_implementation
+PYTHONPATH="$PWD/build/lib.linux-$CARCH-${pyver}:PYTHONPATH"
+python setup.py install --skip-build \
+    --cpp_implementation \
+    --optimize=1 \
+    --root="$1"
+

@@ -1,0 +1,15 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+git fetch
+
+git cherry-pick -n 302e88dbf0f10224a5b87be4ce43b3fdd9d20184
+git cherry-pick -n b7ff1de48efda9ad54e6a3b4c1526722c371e832
+
+cmake -B build -G Ninja \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D CMAKE_BUILD_TYPE=None \
+    -D CMAKE_INSTALL_LIBDIR=lib
+
+ninja -C build
+ninja -C build install

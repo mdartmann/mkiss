@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+    ${MESON_OPTIONS} \
+    -D bash-completions=true \
+    -D zsh-completions=true
+
+ninja -C build
+ninja -C build install

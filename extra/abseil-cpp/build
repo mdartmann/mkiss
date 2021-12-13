@@ -1,0 +1,13 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+cmake -B build -G Ninja \
+    -D CMAKE_BUILD_TYPE=RelWithDebInfo \
+    -D CMAKE_CXX_FLAGS="-DNEBUG" \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D CMAKE_CXX_STANDARD=17 \
+    -D BUILD_SHARED_LIBS=ON \
+    -D CMAKE_POSITION_INDEPENDENT_CODE=ON 
+
+ninja -C build
+ninja -C build install
