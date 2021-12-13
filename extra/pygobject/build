@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+    ${MESON_OPTIONS}
+
+ninja -C build
+ninja -C build install
+
+python -m compileall -d /usr/lib "$1/usr/lib"
+python -O -m compileall -d /usr/lib "$1/usr/lib"
