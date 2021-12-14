@@ -1,0 +1,3 @@
+#!/bin/sh -uxe
+
+install -Dm644 51-android.rules "$1"/usr/lib/udev/rules.d/51-android.rules
