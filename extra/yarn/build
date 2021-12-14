@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+
+install -dm755 "$1"/usr/lib/node_modules/yarn
+cp -R * "$1"/usr/lib/node_modules/yarn
+
+install -dm755 "$1"/usr/bin
+ln -sf /usr/lib/node_modules/yarn/bin/yarn.js "$1/usr/bin/yarn"
+ln -sf /usr/lib/node_modules/yarn/bin/yarn.js "$1/usr/bin/yarnpkg"
+
+
+
