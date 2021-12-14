@@ -1,6 +1,7 @@
 #!/bin/sh -uxe
-# Use lib not lib64 by default
 
+
+# Use lib not lib64 by default
 sed -i '/m64=/s/lib64/lib/' gcc/gcc/config/i386/t-linux64
 sed -i 's/lib64/lib/' gcc/gcc/config/i386/linux64.h
 
@@ -9,9 +10,9 @@ unset CXX
 unset CPP
 unset LD
 
-unset CFLAGS
+export CFLAGS="-march=native -mtune=native -O3 -fgraphite -floop-nest-optimize"
 unset CPPFLAGS
-unset CXXFLAGS
+export CXXFLAGS="$CFLAGS"
 unset LDFLAGS
 
 mkdir -p build
@@ -43,7 +44,7 @@ export libat_cv_have_ifunc=yes
     --enable-lto \
     --enable-tls \
     --with-isl \
-    --enable-languages=c,c++,lto,objc,obj-c++ \
+    --enable-languages=c,c++,lto,objc,obj-c++,go \
     --without-included-gettext \
     --with-system-zlib \
     --with-gmp=/usr \
