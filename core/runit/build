@@ -19,5 +19,6 @@ install -Dm755 ../0 "$1/etc/runit/0"
 install -Dm755 ../1 "$1/etc/runit/1"
 install -Dm755 ../2 "$1/etc/runit/2"
 install -Dm755 ../3 "$1/etc/runit/3"
+install -Dm755 ../ctrlaltdel "$1/etc/runit/ctrlaltdel"
 
 install -Dm755 -t "$1/usr/bin" ../poweroff ../reboot

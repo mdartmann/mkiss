@@ -1,0 +1,7 @@
+#!/bin/sh -e
+
+# Source shared code
+. /etc/runit/0
+
+log "Ctrl+Alt+Del recieved. Rebooting...";
+runit-init 6
