@@ -1,14 +1,13 @@
 #!/bin/sh -uxe
 
-mkdir -p _b
-cd _b
+mkdir build && cd build
 
 ../configure \
---prefix=/usr \
---with-installed-readline \
---disable-werror \
---enable-lto \
---enable-nls
+    --prefix=/usr \
+    --disable-nls \
+    --enable-tui \
+    --with-system-highlight \
+    --with-python=/usr/bin/python 
 
 make
 make DESTDIR="$1" install
