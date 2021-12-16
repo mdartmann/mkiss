@@ -3,7 +3,7 @@
 unset LDFLAGS
 export CXXFLAGS="$CFLAGS -D_GNU_SOURCE -DRECYCLES_PIDS -DDEFAULT_PATH_VALUE='\"/usr/local/bin:/usr/bin\"' -DSYSLOG_HISTORY -DSYSLOG_SHOPT=0"
 
-for patch in bash50*; do 
+for patch in bash51*; do 
 	patch -p0 -i $patch;
 done
 
