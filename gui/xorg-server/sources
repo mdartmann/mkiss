@@ -1,2 +1,1 @@
 git+https://gitlab.freedesktop.org/xorg/xserver.git#xorg-server-VERSION
-patches/0001_revert_dpi_calculation.patch

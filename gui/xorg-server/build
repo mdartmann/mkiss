@@ -1,9 +1,6 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
 
-# revert dpi calculation that leads to unwanted miscalculation resuts
-patch -Rp1 -i 0001_revert_dpi_calculation.patch
-
 meson build \
     ${MESON_OPTIONS/-D b_lto=true/} \
     -D ipv6=true \
