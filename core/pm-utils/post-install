@@ -1,0 +1,6 @@
+#!/bin/sh
+
+cat << EOF
+NOTE: pm-utils support is deprecated.
+NOTE: Please use elogind's 'loginctl suspend' instead.
+EOF
