@@ -1,7 +1,6 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
 
-zsh
 meson build \
     -D maintainer-mode=true \
     -D build-documentation=false \
