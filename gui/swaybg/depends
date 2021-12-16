@@ -1,0 +1,4 @@
+cairo
+gdk-pixbuf2
+glib2
+wayland

@@ -1,0 +1,10 @@
+alsa-lib
+dbus
+eudev
+glib2
+gst-plugins-base
+gstreamer
+libpulse
+ncurses
+readline
+webrtc-audio-processing

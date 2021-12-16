@@ -1,0 +1,10 @@
+cairo
+fontconfig
+freetype2
+fribidi
+glib2
+harfbuzz
+libthai
+libx11
+libxft
+libxrender

@@ -1,0 +1,12 @@
+eudev
+libdrm
+libinput
+libxcb
+libxkbcommon
+mesa
+pixman
+seatd
+wayland
+xcb-util-errors
+xcb-util-renderutil
+xcb-util-wm

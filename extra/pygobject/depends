@@ -1,0 +1,4 @@
+cairo
+glib2
+gobject-introspection
+libffi

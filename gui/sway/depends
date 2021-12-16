@@ -1,0 +1,16 @@
+cairo
+elogind
+eudev
+gdk-pixbuf2
+glib2
+json-c
+libevdev
+libinput
+libxcb
+libxkbcommon
+mesa
+pango
+pcre
+pixman
+wayland
+wlroots

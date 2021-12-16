@@ -1,0 +1,10 @@
+fontconfig
+freetype2
+glib2
+libx11
+libxcomposite
+libxkbcommon
+mesa
+qt5-base
+qt5-declarative
+wayland

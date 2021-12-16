@@ -1,2 +1,6 @@
+acl
+audit
 kmod
+libcap
+linux-pam
 util-linux

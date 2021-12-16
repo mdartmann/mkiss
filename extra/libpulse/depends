@@ -1,0 +1,13 @@
+alsa-lib
+dbus
+eudev
+glib2
+libice
+libsm
+libtool
+libx11
+libxcb
+libxtst
+openssl
+tdb
+webrtc-audio-processing

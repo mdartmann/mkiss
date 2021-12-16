@@ -1,0 +1,8 @@
+atkmm
+cairomm
+gdk-pixbuf2
+glib2
+glibmm
+gtk3
+libsigc++
+pangomm

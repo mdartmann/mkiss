@@ -1,0 +1,5 @@
+dbus
+glib2
+libx11
+libxi
+libxtst

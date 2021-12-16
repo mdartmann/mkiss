@@ -1,0 +1,9 @@
+atk
+cairo
+gdk-pixbuf2
+glib2
+gtk3
+harfbuzz
+json-glib
+pango
+zlib

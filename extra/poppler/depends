@@ -1,0 +1,11 @@
+cairo
+curl
+fontconfig
+freetype2
+glib2
+libjpeg-turbo
+libpng
+nss
+openjpeg2
+qt5-base
+zlib

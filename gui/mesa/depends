@@ -1,0 +1,14 @@
+elfutils
+expat
+libdrm
+libomxil-bellagio
+libx11
+libxcb
+libxext
+libxfixes
+libxshmfence
+libxxf86vm
+llvm
+wayland
+zlib
+zstd

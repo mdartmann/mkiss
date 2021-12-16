@@ -1,0 +1,7 @@
+curl
+expat
+libarchive
+libuv
+ncurses
+rhash
+zlib

@@ -1,0 +1,14 @@
+alsa-lib
+cairo
+glib2
+gstreamer
+libjpeg-turbo
+libpng
+libx11
+libxcb
+libxext
+libxv
+mesa
+pango
+wayland
+zlib

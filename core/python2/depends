@@ -1,0 +1,9 @@
+bzip2
+expat
+gdbm
+libffi
+ncurses
+openssl
+readline
+sqlite
+zlib
