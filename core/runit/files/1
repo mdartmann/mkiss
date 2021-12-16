@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh 
 # shellcheck disable=1090,1091
 
 # Shared code between boot/shutdown.
@@ -55,14 +55,9 @@ log "Starting device manager..."; {
     udevadm trigger -c add -t subsystems
     udevadm trigger -c add -t devices
     udevadm trigger -c change -t devices
-    udevadm settle
+    udevadm settle &
     modprobe tun
     modprobe tap
-    modprobe fuse
-    modprobe fs-fuse
-    modprobe fs-fusectl
-    modprobe fs-fuseblk
-    #acpid -f &
 }
 
 
@@ -71,26 +66,25 @@ log "Starting messaging daemon..."; {
     dbus-daemon --syslog-only --system --nofork --nopidfile &
 }
 
-log "Starting messaging daemon..."; { 
-    [ ! -d /var/run/nscd ] && install -m755 -g 103 -o 103 -d /var/run/nscd
-    nscd
-}
+#log "Starting messaging daemon..."; { 
+#    [ ! -d /var/run/nscd ] && install -m755 -g 103 -o 103 -d /var/run/nscd
+#    nscd
+#}
 
-log "Starting docker daemon..."; { 
-    cd /sys/fs/cgroup
-    while read -r sys _; do
-        case "$sys" in \#*) continue; esac
-        mkdir -p "$sys"
-        mount -n -t cgroup -o "$sys" cgroup "$sys" 
-    done < /proc/cgroups
-    [ -e /sys/fs/cgroup/memory/memory.use_hierarchy ] && echo 1 > /sys/fs/cgroup/memory/memory.use_hierarchy
-    dockerd &
-}
+#log "Starting docker daemon..."; { 
+#    cd /sys/fs/cgroup
+#    while read -r sys _; do
+#        case "$sys" in \#*) continue; esac
+#        mkdir -p "$sys"
+#        mount -n -t cgroup -o "$sys" cgroup "$sys" 
+#    done < /proc/cgroups
+#    [ -e /sys/fs/cgroup/memory/memory.use_hierarchy ] && echo 1 > /sys/fs/cgroup/memory/memory.use_hierarchy
+#    dockerd &
+#}
 
 log "Starting networking stuff"; {
     dhcpcd -q -BM &
     iwd >/dev/null 2>&1 &
-    /usr/libexec/bluetooth/bluetoothd -E >/dev/null 2>&1 &
     ip link set up dev lo
     #ip link add br0 type bridge
     #ip link set dev br0 up
@@ -117,18 +111,17 @@ log "Running boot hooks..."; {
     run_hook boot
 }
 
-
 log "Starting seat daemon..."; {
     seatd -g video &
 }
 
 log "Mounting all local filesystems..."; {
     mount -a || sos
+    swapon -a || sos
 }
 
-log "Enabling swap..."; {
-    swapon -a || sos
-    swapon /swapfile
+log "Starting elogind..."; {
+    /usr/lib/elogind/elogind -D
 }
 
 log "Seeding random..."; {
@@ -140,12 +133,12 @@ log "Setting hostname..."; {
     printf %s "${hostname:-KISS}" > /proc/sys/kernel/hostname
 } 2>/dev/null
 
-log "Loading sysctl settings..."; {
+#log "Loading sysctl settings..."; {
     # This is a portable equivalent to 'sysctl --system'
     # following the exact same semantics.
 
-    sysctl --system -q >/dev/null 2>&1
-}
+#    sysctl --system -q >/dev/null 2>&1
+#}
 
 log "Starting logging daemon..."; {
     [ ! -d /var/run/syslog ] && install -m755 -g 104 -o 104 -d /var/run/syslog
@@ -163,16 +156,8 @@ log "Starting logging daemon..."; {
     chown log:log /var/run/wtmp /var/run/utmp /var/run/btmp
 }
 
-log "Loading brightness level..."; {
-    brightnessctl s "$(cat /var/db/brightnesslvl)" &>/dev/null
-}
-
-log "Loading volume level..."; {
-    alsactl restore
-}
-
 # Calculate how long the boot process took to
-# complete. This entire process is too cheap!
+# complete.
 IFS=. read -r boot_time _ < /proc/uptime
 
 log "Boot stage completed in ${boot_time}s..."
