@@ -1,0 +1,15 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --exec-prefix=/ \
+    --sysconfdir=/etc \
+    --libdir=/usr/lib \
+    --bindir=/usr/bin \
+    --sbindir=/usr/bin \
+    --enable-watch8bit \
+    --without-systemd \
+    --disable-kill
+
+make
+make DESTDIR="$1" install
