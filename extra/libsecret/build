@@ -1,0 +1,8 @@
+#!/bin/sh -uxe
+
+meson build \
+    ${MESON_OPTIONS/-D b_lto=true/} \
+    -D vapi=false
+
+ninja -C build
+ninja -C build install

@@ -1,0 +1,13 @@
+diff --git a/prepare_vscode.sh b/prepare_vscode.sh
+index 50fe74e..f810e25 100755
+--- a/prepare_vscode.sh
++++ b/prepare_vscode.sh
+@@ -57,7 +57,7 @@ keyboardShortcutsUrlMac='setpath(["keyboardShortcutsUrlMac"]; "https://go.micros
+ keyboardShortcutsUrlLinux='setpath(["keyboardShortcutsUrlLinux"]; "https://go.microsoft.com/fwlink/?linkid=832144")'
+ keyboardShortcutsUrlWin='setpath(["keyboardShortcutsUrlWin"]; "https://go.microsoft.com/fwlink/?linkid=832145")'
+ quality='setpath(["quality"]; "stable")'
+-extensionsGallery='setpath(["extensionsGallery"]; {"serviceUrl": "https://open-vsx.org/vscode/gallery", "itemUrl": "https://open-vsx.org/vscode/item"})'
++extensionsGallery='setpath(["extensionsGallery"]; {"serviceUrl": "https://marketplace.visualstudio.com/_apis/public/gallery", "cacheUrl": "https://vscode.blob.core.windows.net/gallery/index", "itemUrl": "https://marketplace.visualstudio.com/items", "controlUrl": "", "recommendationsUrl": ""})'
+ linkProtectionTrustedDomains='setpath(["linkProtectionTrustedDomains"]; ["https://open-vsx.org"])'
+ nameShort='setpath(["nameShort"]; "VSCodium")'
+ nameLong='setpath(["nameLong"]; "VSCodium")'

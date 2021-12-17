@@ -1,0 +1,4 @@
+https://github.com/OpenPrinting/cups/releases/download/vVERSION/cups-VERSION-source.tar.gz
+patches/guid.patch
+patches/cups-freebind.patch
+patches/0001_fix_missing_bracket.patch

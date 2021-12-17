@@ -1,0 +1,36 @@
+#!/bin/sh -uxe
+
+# Version of node.js for nvm.
+export _node="14.16.0"
+
+# Move bundled vs code into place
+cd vscodium
+rm -rf vscode
+mv ../vscode vscode
+
+# Use Microsoft extension gallery
+patch -p1 -i ../use-microsoft-vscode-gallery.patch
+
+# Set env variables that would normally be set by Travis
+export SHOULD_BUILD="yes"
+export VSCODE_ARCH="x64"
+export OS_NAME="linux"
+
+# Skip packages for other distributions.
+export SKIP_LINUX_PACKAGES="True"
+
+source /usr/share/nvm/init-nvm.sh
+
+nvm install ${_node}
+./build.sh
+
+mkdir -p "$1/usr/bin" "$1/usr/share/vscodium" "$1/usr/share/applications" "$1/usr/share/pixmaps"
+
+cp -r VSCode-linux-x64/* "$1/usr/share/vscodium"
+ln -s /usr/share/vscodium/bin/codium "$1/usr/bin/codium"
+ln -s /usr/share/vscodium/bin/codium "$1/usr/bin/vscodium"
+ln -s /usr/share/vscodium/bin/codium "$1/usr/bin/code"
+
+install -Dm644 ../vscodium.desktop "$1/usr/share/applications/vscodium.desktop"
+install -Dm644 VSCode-linux-x64/resources/app/resources/linux/code.png \
+    "$1/usr/share/pixmaps/vscodium.png"

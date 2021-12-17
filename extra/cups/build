@@ -1,0 +1,51 @@
+#!/bin/sh -uxe
+
+for i in *.patch; do
+    patch -Np1 -i $i
+done
+
+aclocal -I config-scripts
+autoconf -I config-scripts
+
+export DSOFLAGS="$LDFLAGS"
+
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --sbindir=/usr/bin \
+    --libdir=/usr/lib \
+    --with-logdir=/var/log/cups \
+    --with-docdir=/usr/share/cups/doc \
+    --with-exe-file-perm=0755 \
+    --with-cups-user=209 \
+    --with-cups-group=209 \
+    --enable-pam=yes \
+    --enable-raw-printing \
+    --enable-dbus=yes \
+    --with-dbusdir=/usr/share/dbus-1 \
+    --enable-relro \
+    --enable-libpaper \
+    --with-optim="$CFLAGS"
+
+make
+make BUILDROOT="$1" install
+
+chmod 755 "$1/var/spool"
+chmod 755 "$1/etc"
+
+touch "$1/etc/cups/printers.conf"
+touch "$1/etc/cups/classes.conf"
+touch "$1/etc/cups/subscriptions.conf"
+
+sed -i "s|&Exec=htmlview http://localhost:631|Exec=xdg-open http://localhost:631|g" \
+    "$1/usr/share/applications/cups.desktop"
+
+find "$1"/usr/share/cups/model -name "*.ppd" | xargs gzip -n9f
+
+# comment out removed filters that are now part of cups-filters
+perl -p -i -e 's:^(.*\s+bannertops\s*)$:#\1:' "$1"/usr/share/cups/mime/mime.convs
+
+# comment out unnecessary PageLogFormat entry
+sed -i -e 's:PageLogFormat:#PageLogFormat:' "$1"/etc/cups/cupsd.conf*
+

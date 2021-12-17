@@ -1,0 +1,4 @@
+git+https://github.com/VSCodium/vscodium.git#master vscodium
+git+https://github.com/microsoft/vscode.git#VERSION vscode
+files/vscodium.desktop
+patches/use-microsoft-vscode-gallery.patch

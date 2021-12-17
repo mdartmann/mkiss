@@ -1,0 +1,16 @@
+#!/bin/sh -uxe
+
+# Init script 
+install -Dm644 init-nvm.sh "$1/usr/share/nvm/init-nvm.sh"
+
+# Companion script for symlinks in NVM_DIR
+install -Dm644 install-nvm-exec "$1/usr/share/nvm/install-nvm-exec"
+
+# nvm itself
+install -Dm644 nvm.sh "$1/usr/share/nvm/nvm.sh"
+
+# nvm-exec script for nvm exec command
+install -Dm755 nvm-exec "$1/usr/share/nvm/nvm-exec"
+
+# bash completion
+install -Dm644 bash_completion "$1/usr/share/nvm/bash_completion"
