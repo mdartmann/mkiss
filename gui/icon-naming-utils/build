@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --libexecdir=/usr/lib/icon-naming-utils \
+    --localstatedir=/var
+
+make
+make DESTDIR="$1" install

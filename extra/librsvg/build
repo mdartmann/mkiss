@@ -1,10 +1,15 @@
 #!/bin/sh -uxe
-zsh
-autoreconf -fiv
+
+NOCONFIGURE=1 ./autogen.sh
 
 ./configure \
     --prefix=/usr \
-    --disable-static 
+    --disable-static \
+    --disable-vala \
+    --enable-gtk-doc
+
+export CARGO_PROFILE_RELEASE_LTO=true CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
+
 sed -s "s| -shared | ${LDFLAGS}\0|g" libtool
 
 make

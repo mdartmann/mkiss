@@ -5,8 +5,7 @@ meson build \
     ${MESON_OPTIONS/-D b_lto=true/} \
     -D builtin_loaders=all \
     -D installed_tests=false \
-    -D docs=false \
-    -D man=false
+    -D gtk_doc=true
 
 ninja -C build
 ninja -C build install

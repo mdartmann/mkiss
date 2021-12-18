@@ -1,0 +1,5 @@
+#!/bin/sh
+
+if kiss l gdk-pixbuf2 &>/dev/null; then
+    gdk-pixbuf-query-loaders --update-cache
+fi
