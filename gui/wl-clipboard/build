@@ -5,4 +5,4 @@ meson build \
     ${MESON_OPTIONS/-D b_lto=true/}
 
 ninja -C build
-ninja -C build
+ninja -C build install
