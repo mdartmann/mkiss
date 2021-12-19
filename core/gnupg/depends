@@ -3,6 +3,7 @@ libassuan
 libgcrypt
 libgpg-error
 libksba
+libusb
 npth
 openldap
 readline

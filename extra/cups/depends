@@ -1,0 +1,6 @@
+acl
+dbus
+gnutls
+libusb
+linux-pam
+zlib

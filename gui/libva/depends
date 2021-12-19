@@ -1,0 +1,6 @@
+libdrm
+libx11
+libxext
+libxfixes
+mesa
+wayland
