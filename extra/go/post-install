@@ -1,0 +1,7 @@
+#!/bin/sh
+
+cat << EOF
+NOTE: Remeber to use 
+NOTE: kiss a | grep go | kiss a - 
+NOTE: to swap out the go binaries from gccgo!
+EOF

@@ -1,0 +1,30 @@
+#!/bin/sh -uxe
+
+:>nostrip
+
+export GOARCH=amd64
+export GOAMD64=v1
+export GOROOT_FINAL=/usr/lib/go
+export GOROOT_BOOTSTRAP=/usr
+export GOPATH="$PWD"
+export GOROOT="$PWD/go"
+
+cd src
+./make.bash -v
+cd ..
+
+install -d "$1/usr/bin" "$1/usr/lib/go" "$1/usr/share/doc/go" \
+    "$1/usr/lib/go/pkg/linux_amd64_"{dynlink,race}
+
+cp -a bin pkg src lib misc api test "$1/usr/lib/go"
+cp -r doc/* "$1/usr/share/doc/go"
+
+ln -sf /usr/lib/go/bin/go "$1/usr/bin/go"
+ln -sf /usr/lib/go/bin/gofmt "$1/usr/bin/gofmt"
+ln -sf /usr/share/doc/go "$1/usr/lib/go/doc"
+
+install -Dm644 VERSION "$1/usr/lib/go/VERSION"
+
+rm -rf "$1/usr/lib/go/pkg/bootstrap" "$1/usr/lib/pkg/tool/*/api"
+
+rm -rf "$1/usr/lib/go/pkg/obj/go-build/*"
