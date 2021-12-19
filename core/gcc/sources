@@ -1,2 +1,3 @@
 https://gcc.gnu.org/pub/gcc/releases/gcc-VERSION/gcc-VERSION.tar.xz gcc
+https://github.com/oss-mirror/gcc/commit/7edb992d8195572e2c823fedab319eb6cb2f0f32.patch
 files/c99

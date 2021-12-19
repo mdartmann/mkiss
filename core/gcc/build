@@ -1,5 +1,8 @@
 #!/bin/sh -uxe
 
+# Fix gccgo breaking in go bootstrap.
+# See github.com/golang/go/issues/47771 for details.
+patch -d gcc -p1 -i ../7edb992d8195572e2c823fedab319eb6cb2f0f32.patch
 
 # Use lib not lib64 by default
 sed -i '/m64=/s/lib64/lib/' gcc/gcc/config/i386/t-linux64
