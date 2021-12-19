@@ -1,6 +1,10 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
 
+for i in *.patch; do
+    patch -p1 -i $i
+done
+
 meson build \
     -D b_ndebug=true \
     -D platforms=x11,wayland \
