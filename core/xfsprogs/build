@@ -1,0 +1,17 @@
+#!/bin/sh -uxe
+
+make configure
+
+export OPTIMIZER="-march=${CARCH/_/-} -O1"
+export DEBUG=-DNDEBUG
+
+./configure \
+    --prefix=/usr \
+    --sbindir=/usr/bin
+
+make
+
+make DIST_ROOT="$1" PKG_ROOT_SBIN_DIR="/usr/bin" install install-dev
+
+# bad Makefile is bad
+mv "$1/lib" "$1/usr/lib"
