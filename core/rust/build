@@ -1,0 +1,73 @@
+#!/bin/sh -uxe
+
+# Source rustup if available
+source ~/.cargo/env || true
+
+export DESTDIR="$1"
+
+# Move credential helpers from libexec to lib
+patch -d src/tools/cargo -Np1 < 0001-cargo-Change-libexec-dir.patch
+patch -Np1 -i 0001-bootstrap-Change-libexec-dir.patch
+
+# Use pc-linux-gnu instead of unknown-linux-gnu targets
+patch -Np1 -i 0002-compiler-Change-LLVM-targets.patch
+
+# Use LLVMs wasm-ld
+patch -Np1 -i 0003-compiler-Use-wasm-ld-for-wasm-targets.patch
+
+cat > config.toml << EOF
+changelog-seen = 2
+profile = "user"
+
+[llvm]
+link-shared = true
+
+[build]
+target = [
+  "x86_64-unknown-linux-gnu",
+  "wasm32-unknown-unknown",
+]
+
+locked-deps = true
+vendor = true
+tools = ["cargo", "rls", "clippy", "rustfmt", "analysis", "src", "rust-demangler"]
+sanitizers = true
+profiler = true
+
+# Generating docs fails with the wasm32-* targets
+docs = false
+
+[install]
+prefix = "/usr"
+
+[rust]
+debuginfo-level-std = 2
+channel = "stable"
+description = "MKiss Rust ${2}-1"
+rpath = false
+backtrace-on-ice = true
+remap-debuginfo = true
+jemalloc = true
+
+# LLVM crashes when passing an object through ThinLTO twice.  This is triggered
+# when using rust code in cross-language LTO if libstd was built using ThinLTO.
+# http://blog.llvm.org/2019/09/closing-gap-cross-language-lto-between.html
+# https://github.com/rust-lang/rust/issues/54872
+codegen-units-std = 1
+
+[dist]
+compression-formats = ["zst"]
+
+[target.x86_64-unknown-linux-gnu]
+llvm-config = "/usr/bin/llvm-config"
+
+[target.wasm32-unknown-unknown]
+sanitizers = false
+profiler = false
+EOF
+
+export RUST_BACKTRACE=1
+
+python3 x.py
+python3 x.py doc
+python3 x.py install
