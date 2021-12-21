@@ -1,0 +1,9 @@
+#!/bin/sh -uxe
+
+xslver="$(kiss l docbook-xsl | cut -d ' ' -f2 | cut -d '-' -f1)"
+
+sed -i "s|xml/docbook/stylesheet/docbook-xsl|xml/docbook/xsl-stylesheets-${xslver}-nons|g" \
+    Makefile
+
+make
+make PREFIX=/usr install
