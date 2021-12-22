@@ -1,0 +1,24 @@
+#!/bin/sh -uxe
+
+sed -i "s|LIBGIT_STATIC = true|LIBGIT_STATIC = false|" phoenix.pro
+
+sed -i "s|Exec=Fritzing|Exec=env QT_AUTO_SCREEN_SCALE_FACTOR=0 Fritzing|" org.fritzing.Fritzing.desktop
+
+mkdir build
+cd build
+qmake ..
+make
+
+make INSTALL_ROOT="$1" install
+
+cd ..
+
+cp -r parts "$1/usr/share/fritzing/fritzing-parts"
+
+"$1/usr/bin/Fritzing" \
+    -db "$1/usr/share/fritzing/fritzing-parts/parts.db" \
+    -pp "$1/usr/share/fritzing/fritzing-parts" \
+    -f "$1/usr/share/fritzing" \
+    -platform offscreen
+
+rm -rf "$1"/usr/share/fritzing/fritzing-parts/.git{,ignore}

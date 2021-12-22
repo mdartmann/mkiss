@@ -1,0 +1,2 @@
+git+https://github.com/fritzing/fritzing-app.git#VERSION
+git+https://github.com/fritzing/fritzing-parts.git#640fa25650211afccd369f960375ade8ec3e8653 parts

@@ -1,0 +1,6 @@
+#!/bin/sh -uxe
+
+sed -i 's|-Werror||' Makefile
+
+make library
+make PREFIX=/usr DESTDIR="$1" install
