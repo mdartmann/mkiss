@@ -17,9 +17,9 @@ non-standard preferences in my scripts.
 
 This repository includes three folders:
 
-- `core` for core system utilities, such as compilers, the libc and coreutils
-- `extra` for extra utilities useful in daily use
-- `gui` for graphical applications, such as the Sway window manager, and their back-end
+- `core` for core system utilities, such as compilers, libc, coreutils and the kernel
+- `extra` for extra console utilities and libraries that aren't part of the core
+- `gui` for graphical applications, such as the Sway window manager, and their back-ends
 
 ## Contributions
 
