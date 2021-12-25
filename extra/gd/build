@@ -1,0 +1,13 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+# Re-add macros that are used in PHP
+# See https://github.com/php/php-src/pull/7490
+patch -p1 -R -i "bdc281eadb1d58d5c0c7bbc1125ee4674256df08.patch"
+
+cmake -B build -G Ninja \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D CMAKE_SKIP_BUILD_RPATH=ON
+
+ninja -C build
+ninja -C build install

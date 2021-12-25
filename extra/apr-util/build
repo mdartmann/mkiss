@@ -1,0 +1,24 @@
+#!/bin/sh -uxe
+
+for i in *.patch; do
+    patch -Np1 -i $i
+done
+
+./buildconf --with-apr=`apr-1-config --srcdir` 
+
+./configure \
+    --prefix=/usr \
+    --with-apr=/usr \
+    --with-ldap \
+    --with-crypto \
+    --with-gdbm=/usr \
+    --with-sqlite3=/usr \
+    --with-nss=/usr \
+    --with-berkeley-db=/usr \
+    --with-pgsql=/usr \
+    --with-mysql=/usr \
+    --with-openssl=/usr
+
+make
+
+make DESTDIR="$1" install

@@ -1,0 +1,41 @@
+#!/bin/sh -uxe
+
+export DESTDIR="$1"
+
+cmake -B build -G Ninja \
+    -Wno-dev \
+    -D COMPILATION_COMMENT="MKiss Linux" \
+    -D CMAKE_BUILD_TYPE=RelWithDebInfo \
+    -D INSTALL_SYSCONFDIR=/etc \
+    -D INSTALL_SYSCONF2DIR=/etc/my.cnf.d \
+    -D INSTALL_UNIX_ADDRDIR=/run/mysqld/mysqld.sock \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D INSTALL_SCRIPTDIR=bin \
+    -D INSTALL_INCLUDEDIR=include/mysql \
+    -D INSTALL_PLUGINDIR=lib/mysql/plugin \
+    -D INSTALL_SHAREDIR=share \
+    -D INSTALL_SUPPORTFILESDIR=share/mysql \
+    -D INSTALL_MYSQLSHAREDIR=share/mysql \
+    -D INSTALL_DOCREADMEDIR=share/doc/mariadb \
+    -D INSTALL_DOCDIR=share/doc/mariadb \
+    -D INSTALL_MANDIR=share/man \
+    -D MYSQL_DATADIR=/var/lib/mysql \
+    -D DEFAULT_CHARSET=utf8mb4 \
+    -D DEFAULT_COLLATION=utf8mb4_unicode_ci \
+    -D ENABLED_LOCAL_INFILE=ON \
+    -D PLUGIN_EXAMPLE=NO \
+    -D PLUGIN_FEDERATED=NO \
+    -D PLUGIN_FEEDBACK=NO \
+    -D WITH_EMBEDDED_SERVER=ON \
+    -D WITH_EXTRA_CHARSETS=complex \
+    -D WITH_JEMALLOC=ON \
+    -D WITH_LIBWRAP=OFF \
+    -D WITH_PCRE=system \
+    -D WITH_READLINE=ON \
+    -D WITH_SSL=system \
+    -D WITH_SYSTEMD=no \
+    -D WITH_UNIT_TESTS=OFF \
+    -D WITH_ZLIB=system 
+    
+ninja -C build 
+ninja -C build install

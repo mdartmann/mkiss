@@ -1,0 +1,14 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+cmake -B build -G Ninja \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D CMAKE_BUILD_TYPE=Release
+
+ninja -C build
+ninja -C build install
+
+# Compatibility symlinks
+
+ln -s tidybuffio.h "$1/usr/include/buffio.h"
+ln -s tidyplatform.h "$1/usr/include/platform.h"

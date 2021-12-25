@@ -1,0 +1,7 @@
+https://www.apache.org/dist/apr/apr-VERSION.tar.bz2
+https://github.com/apache/apr/commit/0a763c5e500f4304b7c534fae0fad430d64982e8.patch
+patches/fix-apr.pc.patch
+patches/fix_apr-config.patch
+patches/omit_extra_libs.patch
+patches/ship_find_apr.m4.patch
+patches/dont-override-external-buildflags.patch

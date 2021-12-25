@@ -1,0 +1,7 @@
+#!/bin/sh -uxe
+
+unzip pdfjs-${2}-dist.zip
+
+mkdir -p "$1"/usr/share/pdf.js
+cp -R ./{build,web} "$1"/usr/share/pdf.js
+find "$1" -type f -exec chmod 644 {} \;

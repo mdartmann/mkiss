@@ -1,0 +1,38 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --libexec=/usr/bin \
+    --localstatedir=/var \
+    --sysconfdir=/etc \
+    --without-wrap \
+    --with-pam \
+    --enable-ftp \
+    --disable-ftpd \
+    --enable-telnet \
+    --disable-telnetd \
+    --enable-talk \
+    --disable-talkd \
+    --enable-rlogin \
+    --enable-rlogind \
+    --enable-rsh \
+    --disable-rshd \
+    --enable-rcp \
+    --enable-hostname \
+    --enable-dnsdomainname \
+    --disable-rexec \
+    --disable-rexecd \
+    --enable-tftp \
+    --enable-tftpd \
+    --enable-ping \
+    --enable-ping6 \
+    --disable-logger \
+    --enable-syslogd \
+    --disable-inetd \
+    --enable-whois \
+    --disable-uucpd \
+    --disable-ifconfig \
+    --enable-traceroute
+
+make
+make DESTDIR="$1" install

@@ -1,0 +1,61 @@
+#!/bin/sh -uxe
+
+sed -e 's|User daemon|User http|' \
+    -e 's|Group daemon|Group http|' \
+    -i docs/conf/httpd.conf.in
+
+cat kiss.layout >> config.layout
+
+for i in *.patch; do
+    patch -Np1 -i $i;
+done
+
+
+./configure --sbindir=/usr/bin \
+    --enable-layout=Kiss \
+    --enable-mpms-shared=all \
+    --enable-modules=all \
+    --enable-mods-shared=all \
+    --enable-so \
+    --enable-suexec \
+    --with-suexec-caller=http \
+    --with-suexec-docroot=/srv/http \
+    --with-suexec-logfile=/var/log/httpd/suexec.log \
+    --with-suexec-bin=/usr/bin/suexec \
+    --with-suexec-uidmin=99 --with-suexec-gidmin=99 \
+    --enable-ldap --enable-authnz-ldap --enable-authnz-fcgi \
+    --enable-cache --enable-disk-cache --enable-mem-cache --enable-file-cache \
+    --enable-ssl --with-ssl \
+    --enable-deflate --enable-cgi --enable-cgid \
+    --enable-proxy --enable-proxy-connect \
+    --enable-proxy-http --enable-proxy-ftp \
+    --enable-dbd --enable-imagemap --enable-ident --enable-cern-meta \
+    --enable-lua=/usr/lib/libluajit-5.1.so.2.0.5 --enable-xml2enc --enable-http2 \
+    --enable-proxy-http2 --enable-md --enable-brotli \
+    --with-apr=/usr/bin/apr-1-config \
+    --with-apr-util=/usr/bin/apu-1-config \
+    --with-pcre=/usr
+
+make
+
+make DESTDIR="$1" install
+
+ln -fs /usr/lib/httpd/modules "$1/etc/httpd/modules"
+
+# set sane defaults
+
+ sed -e 's#/usr/lib/httpd/modules/#modules/#' \
+      -e 's|#\(LoadModule include_module \)|\1|' \
+      -e 's|#\(LoadModule userdir_module \)|\1|' \
+      -e 's|#\(LoadModule slotmem_shm_module \)|\1|' \
+      -e 's|#\(Include conf/extra/httpd-multilang-errordoc.conf\)|\1|' \
+      -e 's|#\(Include conf/extra/httpd-autoindex.conf\)|\1|' \
+      -e 's|#\(Include conf/extra/httpd-languages.conf\)|\1|' \
+      -e 's|#\(Include conf/extra/httpd-userdir.conf\)|\1|' \
+      -e 's|#\(Include conf/extra/httpd-default.conf\)|\1|' \
+      -e 's|#\(Include conf/extra/httpd-mpm.conf\)|\1|' \
+      -i "${1}/etc/httpd/conf/httpd.conf"
+
+
+# create var dirs
+install -dm755 "$1/var/run/httpd" "$1/var/log/httpd" "$1/var/cache/httpd" "$1/run/httpd"

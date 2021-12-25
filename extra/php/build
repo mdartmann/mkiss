@@ -1,0 +1,108 @@
+#!/bin/sh -uxe
+
+for i in *.patch; do
+    patch -p0 -i $i
+done
+autoconf
+
+phpconfig=('--prefix=/usr '
+'--config-cache '
+'--prefix=/usr '
+'--sbindir=/usr/bin '
+'--sysconfdir=/etc/php '
+'--localstatedir=/var '
+'--with-layout=GNU '
+'--with-config-file-path=/etc/php '
+'--with-config-file-scan-dir=/etc/php/conf.d '
+'--disable-rpath '
+'--mandir=/usr/share/man '
+'--enable-bcmath=shared '
+'--enable-calendar=shared '
+'--enable-dba=shared '
+'--enable-exif=shared '
+'--enable-ftp=shared '
+'--enable-gd=shared '
+'--enable-intl=shared '
+'--enable-mbstring '
+'--enable-pcntl '
+'--enable-shmop=shared '
+'--enable-soap=shared '
+'--enable-sockets=shared '
+'--enable-sysvmsg=shared '
+'--enable-sysvsem=shared '
+'--enable-sysvshm=shared '
+'--with-bz2=shared '
+'--with-curl=shared '
+'--with-enchant=shared '
+'--with-external-gd '
+'--with-external-pcre '
+'--with-ffi=shared '
+'--with-gdbm '
+'--with-gettext=shared '
+'--with-gmp=shared '
+'--with-iconv=shared '
+'--with-imap-ssl '
+'--with-imap=shared '
+'--with-kerberos '
+'--with-ldap=shared '
+'--with-ldap-sasl '
+'--with-mhash '
+'--with-mysql-sock=/var/run/mysqld/mysqld.sock '
+'--with-mysqli=shared,mysqlnd '
+'--with-openssl '
+'--with-password-argon2 '
+'--with-pdo-dblib=shared,/usr '
+'--with-pdo-mysql=shared,mysqlnd '
+'--with-pdo-odbc=shared,unixODBC,/usr '
+'--with-pdo-sqlite=shared '
+'--without-snmp '
+'--with-readline '
+'--with-sodium=shared '
+'--with-sqlite3=shared '
+'--with-tidy=shared '
+'--with-unixODBC=shared '
+'--with-xsl=shared '
+'--with-zip=shared '
+'--with-zlib' 
+'--enable-phpdbg')
+
+export EXTENSION_DIR=/usr/lib/php/modules 
+
+mkdir -p build
+cd build
+../configure ${phpconfig[@]} \
+    --enable-cgi \
+    --enable-fpm \
+    --without-fpm-systemd \
+    --with-fpm-acl \
+    --with-fpm-user=http \
+    --with-fpm-group=http \
+    --enable-embed=shared
+
+make
+cd ..
+
+cp -prv build build-apache
+cd build-apache
+../configure ${phpconfig[@]} \
+    --with-apxs2
+make
+cd ..
+
+cd build
+make -j1 INSTALL_ROOT="$1" PHP_SAPI=embed install-{modules,cli,build,headers,programs,pharcmd,cgi,sapi,phpdbg}
+cd ..
+
+install -Dm644 'php.ini-production' "$1/etc/php/php.ini"
+
+install -dm755 "$1/etc/php/conf.d"
+
+# Remove static modules
+rm -f "$1/usr/lib/php/modules/*.a"
+
+# remove empty directory
+rmdir "$1/usr/include/php/include"
+
+install -Dm644 apache.conf "${1}"/etc/httpd/conf/extra/php_module.conf
+install -Dm755 build-apache/libs/libphp.so "${1}"/usr/lib/httpd/modules/libphp.so
+

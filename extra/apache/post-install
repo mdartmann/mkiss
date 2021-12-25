@@ -1,0 +1,10 @@
+#!/bin/sh 
+
+echo "Adding suid to suexec..."
+chmod +s /usr/bin/suexec
+
+echo "Adding user" 
+useradd -r -d /srv/http -s /bin/nologin http
+
+echo "Setting permissions..."
+chown -R http:http /var/run/httpd /var/cache/httpd /var/log/httpd

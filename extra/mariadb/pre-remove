@@ -1,0 +1,13 @@
+#!/bin/sh 
+
+echo "-> stopping mariadb daemon..."
+/etc/init.d/mysql stop 
+
+echo "-> removing mysql user..."
+userdel mysql
+
+cat <<EOF
+-> Not deleting databases.
+-> If you want to delete your databases, run 
+   # rm -rf /var/lib/mysql 
+EOF

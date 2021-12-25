@@ -1,0 +1,31 @@
+#!/bin/sh -uxe
+
+sed  \
+    -e 's|-g -fno-omit-frame-pointer -O6|\${CFLAGS}|' \
+    -e 's|SSLDIR=/usr/local/ssl|SSLDIR=/usr|' \
+    -e 's|SSLCERTS=\$(SSLDir)/certs|SSLCERTS=/etc/ssl/certs|' \
+    -i src/osdep/unix/Makefile
+
+for i in *.patch; do
+    patch -p1 -i $i
+done
+
+yes 'y' | make lnp EXTRAAUTHENTICATORS=gss PASSWDTYPE=pam SPECIALAUTHENTICATORS=ssl SSLTYPE=unix EXTRACFLAGS="${CFLAGS} -fPIC -lgssapi_krb5 -lkrb5 -lk5crypto -lcom_err -lpam" EXTRALDFLAGS="${LDFLAGS}"
+
+install -d "$1/usr/bin"
+install -Dm755 imapd/imapd "$1/usr/bin/imapd"
+install -Dm755 imapd/imapd "$1/usr/bin/ipop2d"
+install -Dm755 imapd/imapd "$1/usr/bin/ipop3d"
+
+for i in c-client mail imap4r1 rfc822 linkage misc smtp nntp\
+    osdep env_unix env fs ftl nl tcp sslio utf8 utf8aux; do
+install -Dm644 c-client/${i}.h "$1"/usr/include/imap/${i}.h
+done
+
+install -m644 c-client/linkage.c "$1/usr/include/imap/linkage.c"
+install -Dm644 c-client/c-client.a "$1/usr/lib/c-client.a"
+ln -sf c-client.a "$1/usr/lib/libc-client.a"
+
+install -Dm755 c-client/libc-client.so.1.0.0 "$1/usr/lib/libc-client.so.1.0.0"
+ln -sf /usr/lib/libc-client.so.1.0.0 "$1"/usr/lib/libc-client.so.1
+ln -sf /usr/lib/libc-client.so.1.0.0 "$1"/usr/lib/libc-client.so

@@ -1,0 +1,7 @@
+#!/bin/sh -uxe
+
+make OPTTARGET='none' LIBRARY_REL='lib'
+
+make OPTTARGET='none' LIBRARY_REL='lib' DESTDIR="$1" install
+
+

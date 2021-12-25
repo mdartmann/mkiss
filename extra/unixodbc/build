@@ -1,0 +1,9 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc
+
+make
+make DESTDIR="$1" install
+touch "$1"/etc/{obdc,obdcinst}.ini

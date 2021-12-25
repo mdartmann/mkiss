@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+
+
+./configure \
+   --prefix=/usr \
+   --sysconfdir=/etc/freetds \
+   --enable-msdblib \
+   --with-unixobdc=/usr \
+   --with-openssl
+
+make
+make DESTDIR="$1" install

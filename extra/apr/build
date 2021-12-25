@@ -1,0 +1,20 @@
+#!/bin/sh -uxe
+
+for i in *.patch; do
+    patch -p1 -i $i
+done
+
+./buildconf 
+
+./configure \
+    --prefix=/usr \
+    --includedir=/usr/include/apr-1 \
+    --with-installbuilddir=/usr/share/apr-1/build \
+    --enable-nonportable-atomics \
+    --with-devrandom=/dev/urandom \
+    --disable-static
+
+sed -i -e 's| -shared | $LDFLAGS\0|g' libtool
+make
+
+make DESTDIR="$1" install

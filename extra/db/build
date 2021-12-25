@@ -1,0 +1,20 @@
+#!/bin/sh -uxe
+
+patch -p0 -i atomic.patch
+
+cd build_unix
+../dist/configure \
+    --prefix=/usr \
+    --enable-compat185 \
+    --enable-shared \
+    --enable-static \
+    --enable-cxx \
+    --enable-dbm \
+    --enable-stl
+
+make LIBSO_LIBS='-lpthread'
+
+make DESTDIR="$1" install
+
+rm -r "$1/usr/docs"
+

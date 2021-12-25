@@ -1,0 +1,3 @@
+https://www.apache.org/dist/apr/apr-util-VERSION.tar.bz2
+patches/disable_failing_test.patch
+patches/buildconf_config.guess_sub_location.patch

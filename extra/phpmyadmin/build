@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+
+export srcdir=$(pwd)
+_instdir="$1"/usr/share/webapps/phpMyAdmin
+mkdir -p "$_instdir" "$1/etc/webapps/phpmyadmin"
+
+cd "$_instdir"
+cp -ra $srcdir/* .
+
+ln -s /etc/webapps/phpmyadmin/config.inc.php "$_instdir"/config.inc.php
+cp "$_instdir"/config.sample.inc.php "$1"/etc/webapps/phpmyadmin/config.inc.php

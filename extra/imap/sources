@@ -1,0 +1,2 @@
+git+https://github.com/uw-imap/imap.git#patches-FD29-RPM
+patches/c-client-2006k_GENTOO_amd64-so-fix.patch
