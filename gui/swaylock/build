@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+    --prefix /usr \
+    --buildtype=plain
+
+sed -i "s|-Werror|-Wno-error|g" build/build.ninja
+
+ninja -C build
+ninja -C build install
