@@ -1,0 +1,8 @@
+#!/bin/sh -uxe
+
+make DESTDIR="$1" WITH_ALLCOMP=yes install
+
+
+install  -Dm0755 -t "$1/usr/bin" contrib/dmenu/passmenu
+install -Dm0644 -t "$1/usr/share/vim/vimfiles/plugin" \
+    contrib/vim/redact_pass.vim
