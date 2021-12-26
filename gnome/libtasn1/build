@@ -1,0 +1,6 @@
+#!/bin/sh -uxe
+
+./configure --prefix=/usr 
+
+CODE_COVERAGE_LDFLAGS="${LDFLAGS}" make
+make DESTDIR="$1" install

@@ -1,0 +1,14 @@
+#!/bin/sh -uxe
+export DESTDIR="$1" install
+
+meson build \
+    ${MESON_OPTIONS/-D b_lto=true/} \
+    -D gtk_doc=true \
+    -D man=true \
+    -D trust_paths=/etc/ca-certificates/trust-source:/usr/share/ca-certificates/trust-source \
+    -D systemd=disabled 
+
+ninja -C build
+ninja -C build install
+
+ln -srf "$1/usr/bin/update-ca-trust" "$1/usr/lib/p11-kit/trust-extract-compat"

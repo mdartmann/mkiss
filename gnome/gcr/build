@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+zsh
+meson build \
+    ${MESON_OPTIONS/-D b_lto=true/} \
+    -D systemd=disabled \
+    -D ssh_agent=false
+
+ninja -C build
+ninja -C build install
