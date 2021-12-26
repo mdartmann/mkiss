@@ -1,0 +1,16 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+zsh
+meson build \
+    ${MESON_OPTIONS/-D b_lto=true/} \
+    -D admin_group=wheel \
+    -D elogind=true \
+    -D systemd=false \
+    -D systemdsystemunitdir=disabled \
+    -D docbook=true \
+    -D gtk_doc=true \
+    -D user_heuristics=false
+
+ninja -C build
+ninja -C build install
