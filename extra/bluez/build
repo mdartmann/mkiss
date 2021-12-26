@@ -1,0 +1,51 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --mandir=/usr/share/man \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --with-dbusconfdir=/usr/share \
+    --enable-btpclient \
+    --enable-midi \
+    --enable-sixaxis \
+    --enable-mesh \
+    --enable-hid2hci \
+    --enable-experimental \
+    --enable-library \
+    --disable-systemd \
+    --enable-manpages
+
+make 
+make DESTDIR="$1" install install-am \
+    install-pkglibexecPROGRAMS \
+    install-dbussessionbusDATA\
+    install-dbusDATA \
+    install-man1 \
+    install-man8 \
+    install-binPROGRAMS \
+    install-dist_zshcompletionDATA \
+    install-pluginLTLIBRARIES \
+    install-cupsPROGRAMS \
+    install-pkgincludeHEADERS \
+    install-libLTLIBRARIES \
+    install-pkgconfigDATA
+
+
+# add upstream config file
+install -dm755 "$1"/etc/bluetooth
+install -Dm644 src/main.conf "$1"/etc/bluetooth/main.conf
+
+# add basic documentation
+install -dm755 "$1"/usr/share/doc/bluez/dbus-apis
+cp -av doc/*.txt "$1"/usr/share/doc/bluez/dbus-apis/
+
+# fix module loading errors
+install -dm755 "$1"/usr/lib/modprobe.d
+install -Dm644 bluetooth.modprobe "$1"/usr/lib/modprobe.d/bluetooth-usb.conf
+
+# add missing tools
+for files in `find tools/ -type f -perm 755`; do
+    filename=$(basename $files)
+    install -Dm755 tools/$filename "$1"/usr/bin/$filename
+done

@@ -11,9 +11,9 @@ meson build \
     -D session-managers='media-session' \
     -D systemd=disabled \
     -D avahi=disabled \
-    -D bluez5=disabled \
+    -D bluez5=enabled \
     -D docs=disabled \
-    -D man=disabled \
+    -D man=enabled \
     -D alsa=enabled \
     -D pipewire-alsa=enabled || zsh
 ninja -C build
