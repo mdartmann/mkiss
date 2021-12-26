@@ -102,7 +102,7 @@ log "Starting networking stuff"; {
     #iptables -t nat -A POSTROUTING -o wlan0 -j MASQUERADE
 
     # various services
-    /usr/bin/sshd -D &
+    /usr/bin/sshd &
 }
 
 
@@ -147,7 +147,7 @@ log "Starting logging daemon..."; {
     PERSIST_FILE=/var/lib/syslog/syslog-ng.persist
     CONTROL_FILE=/var/run/syslog/syslog-ng.ctl
     PID_FILE=/var/run/syslog/syslog-ng.pid
-    syslog-ng -F --user log --cfgfile "$CONFIG_FILE" --control "$CONTROL_FILE" --persist-file "$PERSIST_FILE" --pidfile $PID_FILE --module-path="$MODULE_FILE" &
+    syslog-ng --user log --cfgfile "$CONFIG_FILE" --control "$CONTROL_FILE" --persist-file "$PERSIST_FILE" --pidfile $PID_FILE --module-path="$MODULE_FILE" &
 
     touch /var/log/wtmp /var/log/utmp /var/log/btmp
     chown log:log /var/log/wtmp /var/log/utmp /var/log/btmp
