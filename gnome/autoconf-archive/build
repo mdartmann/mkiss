@@ -1,0 +1,8 @@
+#!/bin/sh -uxe
+
+patch -Np1 -i *.patch
+
+./configure --prefix=/usr
+
+make
+make DESTDIR="$1" install
