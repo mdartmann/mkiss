@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+
+python setup.py build
+python setup.py install --root="$1" --optimize=1
+
+# symlink without py
+
+for f in "$1"/usr/bin/*.py; do
+    ln -s "$(basename $f)" "$1/usr/bin/$(basename $f .py)"
+done
