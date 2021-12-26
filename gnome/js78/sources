@@ -1,0 +1,3 @@
+https://archive.mozilla.org/pub/firefox/releases/VERSIONesr/source/firefox-VERSIONesr.source.tar.xz
+https://src.fedoraproject.org/rpms/mozjs78/raw/rawhide/f/Fixup-compatibility-of-mozbuild-with-Python-3.10.patch
+patches/0001-Fixes-for-LTO-PGO-support.patch

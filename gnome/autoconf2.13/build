@@ -1,0 +1,9 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --infodir=/usr/share/info \
+    --program-suffix=-2.13
+
+make
+make prefix="$1/usr" infodir="$1/usr/share/info" install
