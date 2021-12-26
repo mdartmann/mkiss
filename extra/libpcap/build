@@ -1,0 +1,13 @@
+#!/bin/sh -uxe
+
+autoreconf -fiv
+
+./configure \
+    --prefix=/usr \
+    --enable-ipv6 \
+    --enable-bluetooth \
+    --enable-usb \
+    --with-libnl
+
+make
+make DESTDIR="$1" install
