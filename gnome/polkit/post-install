@@ -1,0 +1,12 @@
+#!/bin/sh
+
+useradd -rd / -s /usr/bin/nologin polkitd
+useradd -rd / -s /usr/bin/nologin system-auth
+
+chmod 4755 /usr/lib/polkit-1/polkit-agent-helper-1
+chmod 4755 /usr/bin/pkexec
+
+chown -R system-auth.system-auth /etc/polkit-1/rules.d
+chown -R system-auth.system-auth /usr/share/polkit-1/rules.d
+chmod 0700 -R /etc/polkit-1/rules.d
+chmod 0700 -R /usr/share/polkit-1/rules.d

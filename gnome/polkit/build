@@ -1,0 +1,18 @@
+#!/bin/sh -uxe
+
+autoreconf -fiv
+
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --without-systemdsystemuserdir \
+    --enable-libelogind \
+    --enable-gtk_doc \
+    --enable-examples \
+    --with-os_type=redhat
+
+make
+make DESTDIR="$1" install
+
+install -dm750 "$1"/{etc,usr/share}/polkit-1/rules.d
+cp 50-default.rules "$1/usr/share/polkit-1/rules.d"
