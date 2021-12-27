@@ -1,0 +1,5 @@
+http://0pointer.de/lennart/projects/libcanberra/libcanberra-VERSION.tar.xz
+http://git.0pointer.net/libcanberra.git/patch/?id=5a71fffd3da981127d0a012dda1a1412acaee7d8
+http://git.0pointer.net/libcanberra.git/patch/?id=c0620e432650e81062c1967cc669829dbd29b310
+files/40-libcanberra-gtk-module.sh
+patches/libcanberra-multi-backend.patch

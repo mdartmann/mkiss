@@ -1,0 +1,35 @@
+#!/bin/sh -uxe
+
+# Patch through all commits manually, because of course
+# Poetterings Git is the only one not supporting shallow -.-
+
+for i in '?id=5a71fffd3da981127d0a012dda1a1412acaee7d8' '?id=c0620e432650e81062c1967cc669829dbd29b310' ; do
+    patch -p1 -i $i
+done
+
+patch -Np1 -i libcanberra-multi-backend.patch
+
+./autogen.sh
+
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --disable-static \
+    --with-builtin=dso \
+    --enable-null \
+    --disable-oss \
+    --enable-alsa \
+    --enable-pulse \
+    --without-systemdsystemunitdir \
+    --enable-gtk-doc
+
+make
+make -j1 DESTDIR="$1" install
+
+rm "$1"/usr/lib/*.la
+rm "$1"/usr/lib/gtk-3.0/modules/*.la
+
+rm --r "$1"/usr/share/{gnome,gdm}
+
+install -Dt "$1/etc/X11/xinit/xinitrc.d" 40-libcanberra-gtk-module.sh

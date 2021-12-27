@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+    ${MESON_OPTIONS} \
+    -D gtk_doc=true \
+    -D icon_update=false
+
+ninja -C build
+ninja -C build install
+
