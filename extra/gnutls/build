@@ -8,7 +8,7 @@
     --with-guile-site-dir=no \
     --with-included-libtasn1 \
     --with-included-unistring \
-    --without-p11-kit
+    --with-p11-kit
 
 sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
 
