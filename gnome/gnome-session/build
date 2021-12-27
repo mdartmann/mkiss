@@ -1,0 +1,13 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+    ${MESON_OPTIONS/-D b_lto=true/} \
+    --buildtype plain \
+    -D systemd=false \
+    -D systemd_session=disable \
+    -D systemd_journal=false
+
+ninja -C build
+ninja -C build install
+
