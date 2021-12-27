@@ -1,0 +1,33 @@
+#!/bin/sh -uxe
+
+for i in *.patch; do
+    patch -Np1 -i $i
+done
+
+cd wpa_supplicant
+cp ../config .config
+
+make LIBDIR=/usr/lib BINDIR=/usr/bin
+make LIBDIR=/usr/lib BINDIR=/usr/bin eapol_test
+
+make LIBDIR=/usr/lib BINDIR=/usr/bin DESTDIR="$1" install
+
+install -Dm755 eapol_test "$1/usr/bin/eapol_test"
+
+install -dm755 "$1/etc/wpa-supplicant"
+install -Dm644 wpa_supplicant.conf "$1/usr/share/doc/wpa_supplicant/wpa_supplicant.conf"
+
+install -dm755 "$1/usr/share/dbus-1/"{system.d,system-services}
+
+install -m644 \
+    'dbus/fi.w1.wpa_supplicant1.service' \
+    "$1/usr/share/dbus-1/system-services"
+
+install -Dm644 dbus/dbus-wpa_supplicant.conf \
+    "$1/usr/share/dbus-1/system.d/wpa_supplicant.conf"
+
+install -dm755 "$1/usr/share/man/man"{5,8}
+install -m644 doc/docbook/*.5 "$1/usr/share/man/man5"
+install -m644 doc/docbook/*.8 "$1/usr/share/man/man8"
+
+rm -f "$1/usr/share/man/man8/wpa_"{priv,gui}.8

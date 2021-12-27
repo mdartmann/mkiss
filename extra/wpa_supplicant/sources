@@ -1,0 +1,6 @@
+https://w1.fi/releases/wpa_supplicant-VERSION.tar.gz
+https://w1.fi/security/2020-2/0001-P2P-Fix-copying-of-secondary-device-types-for-P2P-gr.patch
+patches/CVE-2019-16275.patch
+patches/roam-properties.patch
+patches/tls.patch
+files/config

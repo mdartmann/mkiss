@@ -1,0 +1,8 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc
+
+make -j1
+make DESTDIR="$1" -j1 install-all

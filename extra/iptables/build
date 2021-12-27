@@ -1,0 +1,23 @@
+#!/bin/sh -uxe
+
+mkdir build
+
+# use system types
+rm include/linux/types.h
+
+cd build 
+
+../configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --sbindir=/usr/bin \
+    --libexecdir=/usr/lib \
+    --enable-bpf-compiler \
+    --enable-devel \
+    --enable-libipq \
+    --enable-shared
+
+sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
+
+make
+make DESTDIR="$1" install

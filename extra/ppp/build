@@ -1,0 +1,35 @@
+#!/bin/sh -uxe
+
+CFLAGS="$CFLAGS -D_GNU_SOURCE" ./configure --prefix=/usr # GNU_SOURCE is needed for ipv6
+make
+
+make INSTROOT="$1" install
+
+install -Dm644 options "$1"/etc/ppp/options
+install -Dm755 ip-up "$1"/etc/ppp/ip-up
+install -Dm755 ip-down "$1"/etc/ppp/ip-down
+install -dm755 "$1"/etc/ppp/ip-up.d
+install -dm755 "$1"/etc/ppp/ip-down.d
+
+install -m755 ip-up.d.dns.sh "$1"/etc/ppp/ip-down.d
+install -Dm644 options "$1"/etc/ppp/options
+install -Dm755 ip-up   "$1"/etc/ppp/ip-up
+install -Dm755 ip-down "$1"/etc/ppp/ip-down
+install -dm755 "$1"/etc/ppp/ip-up.d
+install -dm755 "$1"/etc/ppp/ip-down.d
+install -m755 ip-up.d.dns.sh   "$1"/etc/ppp/ip-up.d/00-dns.sh
+install -m755 ip-down.d.dns.sh "$1"/etc/ppp/ip-down.d/00-dns.sh
+install -Dm755 ipv6-up   "$1"/etc/ppp/ipv6-up
+install -Dm755 ipv6-down "$1"/etc/ppp/ipv6-down
+install -dm755 "$1"/etc/ppp/ipv6-up.d
+install -dm755 "$1"/etc/ppp/ipv6-down.d
+install -m755 ipv6-up.d.iface-config.sh "$1"/etc/ppp/ipv6-up.d/00-iface-config.sh
+
+install -Dm755 scripts/pon  "$1"/usr/bin/pon
+install -Dm755 scripts/poff "$1"/usr/bin/poff
+install -Dm755 scripts/plog "$1"/usr/bin/plog
+install -Dm644 scripts/pon.1 "$1"/usr/share/man/man1/pon.1
+install -Dm600 etc.ppp/pap-secrets  "$1"/etc/ppp/pap-secrets
+install -Dm600 etc.ppp/chap-secrets "$1"/etc/ppp/chap-secrets
+install -dm755 "$1"/etc/ppp/peers
+chmod 0755 "$1"/usr/lib/pppd/2.4.9/*.so

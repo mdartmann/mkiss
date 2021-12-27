@@ -1,0 +1,5 @@
+#!/bin/sh -uxe
+
+install -Dm644 public_suffix_list.dat tests/test_psl.txt -t "$1/usr/share/publicsuffix"
+
+ln -s public_suffix_list.dat "$1/usr/share/publicsuffix/effective_tld_names.dat"

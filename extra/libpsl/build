@@ -1,0 +1,15 @@
+#!/bin/sh -uxe
+
+autoreconf -fiv
+
+./configure \
+    --prefix=/usr \
+    --disable-static \
+    --disable-dependency-tracking \
+    --enable-man \
+    --enable-gtk-doc \
+    --with-psl-file=/usr/share/publicsuffix/effective_tld_names.dat \
+    --with-psl-testfile=/usr/share/publicsuffix/test_psl.txt
+
+LC_CTYPE=en_US.UTF-8 make -j1
+make DESTDIR="$1" install

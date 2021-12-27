@@ -1,0 +1,27 @@
+#!/bin/sh -uxe
+
+for i in *.patch; do
+    patch -Np1 -i $i
+done
+
+export CFLAGS+=" -ffat-lto-objects"
+
+./configure \
+    --prefix=/usr \
+    --sbindir=/usr/bin \
+    --sysconfdir=/etc \
+    --enable-binary-leases \
+    --enable-paranoia \
+    --with-ldap \
+    --with-ldapcrypto \
+    --with-srv-lease-file=/var/lib/dhcp/dhcpd.leases \
+    --with-srv6-lease-file=/var/lib/dhcp/dhcpd6.leases \
+    --with-cli-lease-file=/var/lib/dhclient/dhclient.leases \
+    --with-cli6-lease-file=/var/lib/dhclient/dhclient6.leases
+
+make -j1
+make DESTDIR="$1" install
+
+mv "$1/etc/dhcpd.conf.example" "$1/etc/dhcpd.conf"
+
+install -Dm644 doc/examples/dhcpd-dhcpv6.conf "$1/etc/dhcpd6.conf"

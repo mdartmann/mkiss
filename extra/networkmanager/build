@@ -1,0 +1,39 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+    ${MESON_OPTIONS/-D b_lto=true/} \
+    -D dbus_conf_dir=/usr/share/dbus-1/system.d \
+    -D dist_version="${2}-mkiss" \
+    -D session_tracking=elogind \
+    -D suspend_resume=elogind \
+    -D modify_system=true \
+    -D selinux=false \
+    -D iwd=true \
+    -D teamdctl=false \
+    -D nm_cloud_setup=true \
+    -D bluez5_dun=true \
+    -D ebpf=true \
+    -D config_plugins_default=keyfile \
+    -D netconfig=no \
+    -D config_dns_rc_manager_default=symlink \
+    -D vapi=true \
+    -D docs=true \
+    -D more_asserts=no \
+    -D more_logging=false \
+    -D qt=false \
+    -D systemd_journal=false \
+    -D systemdsystemunitdir=disabled \
+    -D modem_manager=false
+
+ninja -C build
+ninja -C build install
+
+cd "$1"
+install -d etc/NetworkManager/{conf,dnsmasq}.d
+install -dm700 etc/NetworkManager/system-connections
+install -m644 /dev/stdin usr/lib/NetworkManager/conf.d/20-connectivity.conf << EOF
+[connectivity]
+uri=http://ping.archlinux.org/nm-check.txt
+EOF
+

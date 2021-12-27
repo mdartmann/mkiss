@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+
+echo "#define USE_INTERP_RESULT 1" >> config.h
+
+./configure \
+    --prefix=/usr \
+    --with-gpm-support
+
+make
+make DESTDIR="$1" install
