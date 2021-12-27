@@ -1,0 +1,19 @@
+#!/bin/sh -uxe
+
+autoreconf -fiv
+
+./configure \
+    --prefix=/usr
+
+make
+make DESTDIR="$1" install
+cp -a include/* src/python/
+
+cd src/python
+
+export CFLAGS="$CFLAGS -I$1/usr/include"
+export CXXFLAGS="$CXXFLAGS -I$1/usr/include"
+export LDFLAGS="$LDFLAGS -I$1/usr/include"
+
+env VERSION_RELEASE=${2} python setup.py build
+env VERSION_RELEASE=${2} python setup.py install --root="$1" --prefix=/usr -O1 --skip-build

@@ -1,0 +1,21 @@
+#!/bin/sh -uxe
+
+NOCONFIGURE=1 ./autogen.sh
+export PKGDIR="$1"
+
+cp -r ${PWD}{,-none}
+cp -r ${PWD}{,-setuid}
+
+_build() {
+    pushd ${PWD}-$1
+
+    ./configure \
+        --prefix=/usr \
+        --with-priv-mode=$1
+    make
+    fakeroot make DESTDIR="$PKGDIR" install
+    popd
+}
+
+_build none
+_build setuid

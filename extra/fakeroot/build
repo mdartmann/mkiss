@@ -1,0 +1,14 @@
+#!/bin/sh -uxe
+
+
+./configure \
+    --prefix=/usr \
+    --libdir=/usr/lib/libfakeroot \
+    --disable-static \
+    --with-ipc=sysv
+
+make
+make DESTDIR="$1" install
+
+install -dm0755 "$1/etc/ld.so.conf.d/"
+echo '/usr/lib/libfakeroot' > "$1/etc/ld.so.conf.d/fakeroot.conf"

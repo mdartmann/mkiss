@@ -1,0 +1,13 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+    ${MESON_OPTIONS} \
+    -D gnome_distributor="MKiss Linux" \
+    -D gtk_doc=true \
+    -D debug_tools=false \
+    -D date_in_gnome_version=false \
+    -D systemd=disabled
+
+ninja -C build
+ninja -C build install
