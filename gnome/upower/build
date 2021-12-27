@@ -1,0 +1,14 @@
+#!/bin/sh -uxe
+
+NOCONFIGURE=1 ./autogen.sh
+
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --libexecdir=/usr/lib \
+    --disable-static \
+    --enable-gtk-doc
+
+make
+make DESTDIR="$1" install
