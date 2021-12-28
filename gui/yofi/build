@@ -1,0 +1,5 @@
+#!/bin/sh -uxe
+
+cargo build --release
+
+install -Dm755 target/release/yofi "$1/usr/bin/yofi"
