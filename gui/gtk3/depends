@@ -1,6 +1,7 @@
 atk
 at-spi2-atk
 cairo
+colord
 cups
 fontconfig
 freetype2
