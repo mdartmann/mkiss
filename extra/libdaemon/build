@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+
+./bootstrap.sh
+
+./configure \
+    --prefix=/usr \
+    --localstatedir=/var \
+    --disable-lynx
+
+make
+make DESTDIR="$1" install

@@ -1,0 +1,3 @@
+git+https://github.com/lathiat/avahi#VERSION
+patches/0001-Fix-avahi-browse-Invalid-service-type.patch
+patches/282.patch

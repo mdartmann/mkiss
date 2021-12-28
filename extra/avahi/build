@@ -1,0 +1,35 @@
+#!/bin/sh -uxe
+
+for i in *.patch; do
+    patch -Np1 -i $i
+done
+
+NOCONFIGURE=1 ./autogen.sh
+
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --sbindir=/usr/bin \
+    with_dbus_sys=/usr/share/dbus-1/system.d \
+    --disable-mono \
+    --enable-compat-libdns_sd \
+    --with-distro=none \
+    --with-avahi-priv-access-group=network \
+    --with-autoipd-user=avahi \
+    --with-autoipd-group=avahi \
+    --without-systemdsystemunitdir \
+    --disable-manpages
+
+sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
+
+make
+make DESTDIR="$1" install
+
+
+rmdir "$1/run"
+
+ln -s avahi-compat-libdns_sd/dns_sd.h "$1/usr/include/dns_sd.h"
+
+install -d "$1/usr/share/doc/avahi"
+mv "$1"/etc/avahi/services/{,sftp-}ssh.service "$1/usr/share/doc/avahi/"

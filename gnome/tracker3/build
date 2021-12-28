@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+    ${MESON_OPTIONS/-D b_lto=true/} \
+    -D stemmer=disabled \
+    -D systemd_user_services=false \
+    -D docs=false
+
+ninja -C build
+ninja -C build install

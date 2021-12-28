@@ -1,0 +1,14 @@
+#!/bin/sh -uxe
+
+autoconf
+
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc 
+
+make manpages
+make DESTDIR="$1" install
+make docs DESTDIR="$1"
+
+install -Dm644 asciidocapi.py \
+    "$1/$(python -c 'import sysconfig; print(sysconfig.get_paths()["platlib"])')"/asciidocapi.py

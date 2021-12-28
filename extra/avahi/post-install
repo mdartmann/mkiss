@@ -1,0 +1,3 @@
+#!/bin/sh
+
+useradd -rd / -s /usr/bin/nologin avahi

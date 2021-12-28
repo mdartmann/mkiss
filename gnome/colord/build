@@ -1,0 +1,16 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+zsh
+meson build \
+    ${MESON_OPTIONS} \
+    -D libcolordcompat=false \
+    -D sane=true \
+    -D vapi=true \
+    -D print_profiles=true \
+    -D daemon_user=colord  \
+    -D argyllcms_sensor=false \
+    -D systemd=false \
+    -D print_profiles=false
+
+ninja -C build
+ninja -C build install

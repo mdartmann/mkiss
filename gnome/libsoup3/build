@@ -1,0 +1,14 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+zsh
+meson build \
+    ${MESON_OPTIONS/-D b_lto=true/} \
+    -D gtk_doc=true \
+    -D autobahn=disabled \
+    -D sysprof=disabled \
+    -D http2_tests=disabled \
+    -D ntlm=disabled
+
+ninja -C build
+ninja -C build install

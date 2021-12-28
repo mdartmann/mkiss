@@ -1,0 +1,27 @@
+#!/bin/sh -uxe
+
+echo "${2}" > .tarball-version
+echo "${2}" > .version
+
+autoreconf -fiv
+
+./configure \
+    --prefix=/usr \
+    --disable-locking \
+    --disable-rpath \
+    --docdir="/usr/share/doc/sane" \
+    --enable-pthread \
+    --localstatedir=/var \
+    --sbindir=/usr/bin \
+    --sysconfdir=/etc \
+    --with-avahi \
+    --with-libcurl \
+    --with-pic \
+    --with-poppler-glib \
+    --without-systemd \
+    --with-usb
+
+sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
+
+make
+make DESTDIR="$1" install
