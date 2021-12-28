@@ -1,0 +1,6 @@
+https://download.gnome.org/sources/polkit-gnome/VERSION/polkit-gnome-VERSION.tar.xz
+patches/0004-Use-fresh-X11-timestamps-when-displaying-authenticat.patch
+patches/0003-Get-user-icon-from-accountsservice-instead-of-lookin.patch
+patches/0002-Auth-dialog-Make-the-label-wrap-at-70-chars.patch
+patches/0001-Select-the-current-user-to-authenticate-with-by-defa.patch
+files/polkit-gnome-authentication-agent-1.desktop
