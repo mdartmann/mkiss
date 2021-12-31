@@ -1,0 +1,23 @@
+#!/bin/sh -uxe
+
+patch -p1 -i xid-collision-debug.patch
+
+NOCONFIGURE=1 ./autogen.sh
+
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --with-xinput=yes \
+    --disable-gtk-doc
+
+sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
+
+make
+make DESTDIR="$1" install
+
+install -Dm644 /dev/stdin "$1/usr/share/gtk-2.0/gtkrc" << EOF
+gtk-icon-theme-name = "Adwaita"
+gtk-theme-name = "Adwaita"
+gtk-font-name = "Cantarell 11"
+EOF

@@ -1,0 +1,17 @@
+#!/bin/sh -uxe
+
+find . \( -name '*.py' -o -name '*.py.pin' \) -exec sed -i '1s|python$|&2|' {} +
+
+autoreconf -fiv
+
+export CPPFLAGS=" -Wno-deprecated-declarations"
+
+PYTHON=/usr/bin/python2 ./configure \
+    --prefix=/usr \
+    --disable-introspection
+
+sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
+
+make
+make DESTDIR="$1" install
+rm -r "$1/usr/share/gtk-doc"

@@ -1,0 +1,35 @@
+#!/bin/sh -uxe
+
+sed -i "s|-Werror||" {libindicator,tools}/Makefile.am
+autoreconf -fiv
+
+mkdir gtk2
+mkdir gtk3
+
+cd gtk3
+../configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --libexecdir=/usr/lib/libindicator \
+    --disable-{static,tests} \
+    --with-gtk=3
+
+sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
+
+make
+make DESTDIR="$1" install
+
+cd ../gtk2
+../configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --libexecdir=/usr/lib/libindicator \
+    --disable-{static,tests} \
+    --with-gtk=2
+
+sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
+
+make
+make DESTDIR="$1" install

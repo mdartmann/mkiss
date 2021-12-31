@@ -1,0 +1,8 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --with-autoconf-archive
+
+make
+make DESTDIR="$1" install

@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+zsh
+meson build \
+    ${MESON_OPTIONS} \
+    -D gtk_doc=true \
+    -D sysprof=disabled \
+    -D ntlm=disabled
+
+ninja -C build
+ninja -C build install

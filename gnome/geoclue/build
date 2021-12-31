@@ -1,0 +1,21 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+git fetch
+
+# don't claim the compass sensor when not needed
+git cherry-pick -n 34a67b676d24
+
+for i in *.patch; do
+    patch -Np1 -i $i
+done
+
+meson build \
+    ${MESON_OPTIONS/-D b_lto=true/} \
+    -D dbus-srv-user=geoclue \
+    -D dbus-sys-dir=/usr/share/dbus-1/system.d  \
+    -D 3g-source=false \
+    -D cdma-source=false \
+    -D modem-gps-source=false
+
+ninja -C build
+ninja -C build install

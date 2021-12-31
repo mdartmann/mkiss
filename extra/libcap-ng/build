@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+
+autoreconf -fiv
+
+./configure \
+    --prefix=/usr \
+    --enable-static=no \
+    --without-python \
+    --with-python3
+
+make
+make DESTDIR="$1" install

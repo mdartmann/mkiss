@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+sed -i "s|gnome|Adwaita|" icons/meson.build
+
+meson build \
+    ${MESON_OPTIONS} \
+    -D enable-installed-tests=false
+
+ninja -C build
+ninja -C build install

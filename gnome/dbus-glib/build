@@ -1,0 +1,17 @@
+#!/bin/sh -uxe
+
+patch -p1 -i 5.patch
+
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --libexecdir=/usr/lib \
+    --enable-gtk-doc \
+    --disable-static
+
+make
+
+_c=/usr/share/bash-completion/completions
+make DESTDIR="$1" install completiondir=$_c
+mv "$1$_c"/{dbus-bash-completion.sh,dbus-send}

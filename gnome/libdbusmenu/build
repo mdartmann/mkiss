@@ -1,0 +1,37 @@
+#!/bin/sh -uxe
+
+sed -i "s|-Werror||" libdbusmenu-*/Makefile.{am,in}
+
+mkdir gtk2
+mkdir gtk3
+
+export HAVE_VALGRIND_TRUE='#'
+export HAVE_VALGRIND_FALSE=''
+
+cd gtk3
+../configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --disable-{dumper,static,tests} \
+    --with-gtk=3
+
+make
+
+cd ../gtk2
+
+../configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --disable-{dumper,static,tests} \
+    --with-gtk=2
+
+make
+
+cd ..
+cd gtk3
+make -j1 -C libdbusmenu-glib DESTDIR="$1" install
+make -j1 -C libdbusmenu-gtk DESTDIR="$1" install
+cd ../gtk2
+make -j1 -C libdbusmenu-gtk DESTDIR="$1" install

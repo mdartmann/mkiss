@@ -1,0 +1,14 @@
+#!/bin/sh -uxe
+
+NOCONFIGURE=1 ./autogen.sh
+
+./configure \
+    --prefix=/usr \
+    --disable-fatal-warnings \
+    --disable-static \
+    --libdir=/usr/lib \
+    --sbindir=/usr/bin \
+    --localstatedir=/var
+
+make
+make DESTDIR="$1" install

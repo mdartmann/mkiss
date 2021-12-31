@@ -1,0 +1,4 @@
+git+https://gitlab.freedesktop.org/geoclue/geoclue.git#VERSION
+https://sources.debian.org/data/main/g/geoclue-2.0/2.5.7-3/debian/patches/fix-nowifi-query.patch
+https://sources.debian.org/data/main/g/geoclue-2.0/2.5.7-3/debian/patches/0003-service-Sync-in_use-property-when-apps-get-connected.patch
+https://sources.debian.org/data/main/g/geoclue-2.0/2.5.7-3/debian/patches/0003-Revert-Fixed-hang-on-startup-when-client-app-is-a-sy.patch
