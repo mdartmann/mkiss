@@ -1,0 +1,3 @@
+#!/bin/sh
+
+useradd -r -s /bin/nologin colord
