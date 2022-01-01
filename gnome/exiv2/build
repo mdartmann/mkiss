@@ -1,0 +1,18 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+cmake -B build -G Ninja \
+    -D CMAKE_BUILD_TYPE=Release \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D CMAKE_SKIP_RPATH=ON \
+    -D EXIV2_BUILD_SAMPLES=ON \
+    -D EXIV2_BUILD_UNIT_TESTS=ON \
+    -D EXIV2_ENABLE_VIDEO=ON \
+    -D EXIV2_ENABLE_NLS=ON \
+    -D EXIV2_ENABLE_XMP=ON \
+    -D EXIV2_ENABLE_CURL=ON \
+    -D EXIV2_ENABLE_WEBREADY=ON \
+    -D EXIV2_ENABLE_BMFF=ON
+
+ninja -C build
+ninja -C build install

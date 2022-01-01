@@ -1,0 +1,14 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+git fetch
+git cherry-pick -n ae752ea07895b918683f664fe78950255f7faab0
+git submodule update --init --recursive
+
+meson build \
+    ${MESON_OPTIONS/-D b_lto=true/} \
+    -D docs=true \
+    -D packagekit=false
+
+ninja -C build
+ninja -C build install
