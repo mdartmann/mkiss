@@ -1,5 +1,6 @@
 #!/bin/sh
 
 echo "Adding setuid to unix_chkpwd"...
-
 chmod +s /usr/bin/unix_chkpwd
+
+systemd-tmpfiles --create

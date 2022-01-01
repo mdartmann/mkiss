@@ -5,8 +5,8 @@ autoreconf -fiv
 ./configure \
     --prefix=/usr \
     --sysconfdir=/etc \
-    --without-systemdsystemuserdir \
-    --enable-libelogind \
+    --with-systemdsystemuserdir=/usr/lib/systemd/user \
+    --disable-libelogind \
     --enable-gtk_doc \
     --enable-examples \
     --with-os_type=redhat
@@ -16,3 +16,9 @@ make DESTDIR="$1" install
 
 install -dm750 "$1"/{etc,usr/share}/polkit-1/rules.d
 cp 50-default.rules "$1/usr/share/polkit-1/rules.d"
+
+
+install -Dm644 /dev/stdin "$1/usr/lib/sysusers.d/polkit.conf" <<END
+u polkitd 102 "PolicyKit daemon"
+m polkitd proc
+END

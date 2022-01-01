@@ -4,8 +4,7 @@ NOCONFIGURE=1 ./autogen.sh
 
 ./configure \
     --prefix=/usr \
-    --libexecdir=/usr/lib \
-    --disable-geoclue
+    --libexecdir=/usr/lib
 
 make
 make DESTDIR="$1" install

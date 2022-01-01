@@ -21,7 +21,7 @@ patch -Np1 -i libcanberra-multi-backend.patch
     --disable-oss \
     --enable-alsa \
     --enable-pulse \
-    --without-systemdsystemunitdir \
+    --with-systemdsystemunitdir=/usr/lib/systemd/system \
     --enable-gtk-doc
 
 make

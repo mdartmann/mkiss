@@ -19,10 +19,21 @@ export CONFIG_SHELL=/usr/bin/bash
     --with-default-locking-dir=/run/lock/lvm \
     --with-default-pid-dir=/run \
     --with-default-run-dir=/run/lvm \
-    --without-systemdsystemunitdir \
+    --with-systemdsystemunitdir=/usr/lib/systemd/system \
     --with-thin=internal \
     --with-udev-prefix=/usr
 
 make
 make DESTDIR="$1" install
+
+install -d -m0755 "${1}/usr/lib/systemd/system/sockets.target.wants"
+ln -sf ../dm-event.socket "${1}/usr/lib/systemd/system/sockets.target.wants/dm-event.socket"
+install -d -m0755 "${1}/usr/lib/systemd/system/sysinit.target.wants/"
+ln -sf ../lvm2-lvmpolld.socket "${1}/usr/lib/systemd/system/sysinit.target.wants/lvm2-lvmpolld.socket"
+ln -sf ../lvm2-monitor.service "${1}/usr/lib/systemd/system/sysinit.target.wants/lvm2-monitor.service"
+
+install -d "$1"/etc/lvm/{archive,backup}
+
+make DESTDIR="$1" install_systemd_units
+make DESTDIR="$1" install_systemd_generators
 

@@ -1,6 +1,5 @@
 alsa-lib
 elfutils
-eudev
 libbpf
 libjpeg-turbo
 mesa

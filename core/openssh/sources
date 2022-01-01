@@ -1,1 +1,5 @@
 https://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-VERSION.tar.gz
+files/sshd.conf
+files/sshdgenkeys.service
+files/sshd.pam
+files/sshd.service

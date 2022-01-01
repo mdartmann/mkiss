@@ -1,1 +1,1 @@
-git+https://gitlab.freedesktop.org/xorg/xserver.git#xorg-server-VERSION
+https://gitlab.freedesktop.org/xorg/xserver/-/archive/xorg-server-VERSION/xserver-xorg-server-VERSION.tar.gz

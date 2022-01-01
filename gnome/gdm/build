@@ -1,26 +1,16 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
 
-patch -p1 -i *.diff
-
 meson build \
     ${MESON_OPTIONS/-D b_lto=true/} \
     -D dbus-sys=/usr/share/dbus-1/system.d \
-    -D default-pam-config=exherbo \
-    -D user-display-server=false \
-    -D user=gdm \
-    -D group=gdm \
-    -D initial-vt=7 \
+    -D default-pam-config=arch \
     -D default-path="/usr/bin:" \
     -D gdm-xsession=true \
-    -D wayland-support=true \
     -D ipv6=true \
     -D plymouth=disabled \
     -D run-dir=/run/gdm \
-    -D selinux=disabled \
-    -D systemdsystemunitdir=no \
-    -D systemduserunitdir=no \
-    -D logind-provider=elogind
+    -D selinux=disabled 
 
 ninja -C build
 ninja -C build install
@@ -36,3 +26,7 @@ install -d "$1/var/lib/gdm/.local/share/applications"
 # https://src.fedoraproject.org/rpms/gdm/blob/master/f/default.pa-for-gdm
 install -t "$1/var/lib/gdm/.config/pulse" -m644 default.pa
 
+install -Dm644 /dev/stdin "$1"/usr/lib/sysusers.d/gdm.conf << EOF
+g gdm 120 -
+u gdm 120 "Gnome Display Manager" /var/lib/gdm
+EOF

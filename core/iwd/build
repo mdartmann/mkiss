@@ -12,7 +12,7 @@
 	--enable-pie \
 	--enable-static=yes \
 	--enable-tools \
-	--disable-systemd-service
+	--enable-systemd-service
 
 make
 

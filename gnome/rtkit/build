@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+
+meson build \
+    ${MESON_OPTIONS} \
+    -D installed_tests=false
+
+ninja -C build
+ninja -C build install
+
+echo 'u rtkit 133 "RealtimeKit" /proc' | install -Dm644 /dev/stdin "$1"/usr/lib/sysusers.d/rtkit.conf

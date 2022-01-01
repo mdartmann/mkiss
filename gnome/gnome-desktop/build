@@ -7,7 +7,7 @@ meson build \
     -D gtk_doc=true \
     -D debug_tools=false \
     -D date_in_gnome_version=false \
-    -D systemd=disabled
+    -D systemd=enabled
 
 ninja -C build
 ninja -C build install

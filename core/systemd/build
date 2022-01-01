@@ -1,0 +1,56 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+for i in *.patch; do
+    patch -Np1 -i $i
+done
+
+_timeservers=({0..3}.arch.pool.ntp.org)
+_nameservers=(
+    1.1.1.1#cloudflare-dns.net
+    9.9.9.10#dns.quad9.net
+    8.8.8.8#dns.google
+    2606:4700:4700::1111#cloudflare-dns.com
+    2620:fe::10#dns.quad9.net
+    2001:4860:4860::8888#dns.google
+)
+
+meson build \
+    ${MESON_OPTIONS/-D b_lto=true/} \
+    -D version-tag="${2}-mkiss" \
+    -D mode=release \
+    -D gnu-efi=true \
+    -D ima=false \
+    -D libidn2=true \
+    -D lz4=true \
+    -D man=true \
+    -D dbuspolicydir=/usr/share/dbus-1/system.d \
+    -D default-dnssec=no \
+    -D default-hierarchy=unified \
+    -D default-kill-user-processes=false \
+    -D default-locale=C \
+    -D dns-over-tls=openssl \
+    -D fallback-hostname="mkiss" \
+    -D nologin-path=/usr/bin/nologin \
+    -D ntp-servers="${_timeservers[*]}" \
+    -D dns-servers="${_nameservers[*]}" \
+    -D rpmmacrosdir=no \
+    -D sysvinit-path= \
+    -D sysvrcnd-path= \
+    -D sbat-distro='mkiss' \
+    -D sbat-distro-summary="MKiss Linux" \
+    -D sbat-distro-pkgname="systemd" \
+    -D sbat-distro-version='${2}' \
+    -D sbat-distro-url="https://github.com/mdartmann/mkiss"
+
+ninja -C build 
+ninja -C build install 
+
+echo 'disable *' > "$1"/usr/lib/systemd/system-preset/99-default.preset
+
+install -dm2755 "$1"/var/log/journal
+
+install -D -m0644 -t "$1"/usr/share/man/man8 \
+    build/man/{halt,poweroff,reboot,shutdown}.8
+
+install -Dm644 systemd-user.pam "$1"/etc/pam.d/systemd-user

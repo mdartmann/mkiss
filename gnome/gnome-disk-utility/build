@@ -3,7 +3,7 @@ export DESTDIR="$1"
 
 meson build \
     ${MESON_OPTIONS/-D b_lto=true/} \
-    -D logind=libelogind
+    -D logind=libsystemd
 
 ninja -C build
 ninja -C build install

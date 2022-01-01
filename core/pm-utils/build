@@ -1,9 +1,0 @@
-#!/bin/sh -uxe
-
-./configure \
-    --prefix=/usr \
-    --sbindir=/usr/bin \
-    --sysconfdir=/etc
-
-make
-make DESTDIR="$1" install

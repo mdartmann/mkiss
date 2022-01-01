@@ -1,6 +1,4 @@
 cairo
-elogind
-eudev
 gdk-pixbuf2
 glib2
 json-c

@@ -13,7 +13,7 @@
     --enable-hid2hci \
     --enable-experimental \
     --enable-library \
-    --disable-systemd \
+    --enable-systemd \
     --enable-manpages
 
 make 

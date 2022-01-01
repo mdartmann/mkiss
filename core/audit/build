@@ -6,8 +6,8 @@
 	--sysconfdir=/etc \
 	--libexecdir=/usr/lib/audit \
 	--enable-gssapi-krb5=yes \
-	--enable-systemd=no \
-	--with-libcap-ng=no
+	--enable-systemd=yes \
+	--with-libcap-ng=yes
 
 make
 

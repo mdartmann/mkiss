@@ -6,7 +6,7 @@ git submodule update
 
 meson build \
     ${MESON_OPTIONS/-D b_lto=true/} \
-    -D systemd=false \
+    -D systemd=true \
     -D wwan=false
 
 ninja -C build

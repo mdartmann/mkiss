@@ -49,3 +49,13 @@ perl -p -i -e 's:^(.*\s+bannertops\s*)$:#\1:' "$1"/usr/share/cups/mime/mime.conv
 # comment out unnecessary PageLogFormat entry
 sed -i -e 's:PageLogFormat:#PageLogFormat:' "$1"/etc/cups/cupsd.conf*
 
+install -Dm644 cups.sysusers "$1"/usr/lib/sysusers.d/cups.conf
+
+sed -i "s|#User 209|User 209|" "$1"/etc/cups/cups-files.conf{,.default}
+sed -i "s|#Group 209|Group 209|" "$1"/etc/cups/cups-files.conf{,.default}
+
+rm -rf "$1/etc/rc*.d"
+rm -rf "$1/etc/init.d"
+
+install -Dm644 cups.logrotate "$1"/etc/logrotate.d/cups
+install -Dm644 cups.pam "$1"/etc/pam.d/cups

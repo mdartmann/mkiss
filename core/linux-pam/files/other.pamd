@@ -7,9 +7,3 @@ password  required   pam_deny.so
 password  required   pam_warn.so
 session   required   pam_deny.so
 session   required   pam_warn.so
-
-auth      include    system-auth
-account   include    system-auth
-password  include    system-auth
-session   include    system-auth
-

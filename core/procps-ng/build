@@ -8,7 +8,7 @@
     --bindir=/usr/bin \
     --sbindir=/usr/bin \
     --enable-watch8bit \
-    --without-systemd \
+    --with-systemd \
     --disable-kill
 
 make

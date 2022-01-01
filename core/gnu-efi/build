@@ -1,0 +1,20 @@
+#!/bin/sh -uxe
+
+sed -i "s|-Werror||g" Make.defaults
+
+patch -Np1 -i gnu-efi-3.0.12-ldflags.patch
+
+CFLAGS+=" -ffat-lto-objects"
+
+make
+make -C lib
+make -C gnuefi 
+make -C inc
+
+LDFLAGS=""
+make -C apps
+
+make INSTALLROOT="$1" PREFIX="/usr" install
+
+install -dm755 "$1"/usr/share/gnu-efi/apps/$CARCH
+install -vDm 644 apps/*.efi "$1"/usr/share/gnu-efi/apps/$CARCH/

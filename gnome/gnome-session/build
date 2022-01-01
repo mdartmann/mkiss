@@ -4,9 +4,9 @@ export DESTDIR="$1"
 meson build \
     ${MESON_OPTIONS/-D b_lto=true/} \
     --buildtype plain \
-    -D systemd=false \
-    -D systemd_session=disable \
-    -D systemd_journal=false
+    -D systemd=true \
+    -D systemd_session=enable \
+    -D systemd_journal=true
 
 ninja -C build
 ninja -C build install

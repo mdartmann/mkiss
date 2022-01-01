@@ -6,7 +6,7 @@ meson build \
     --buildtype=plain \
     -D examples="disabled" \
     -D server="enabled" \
-    -D libseat-logind="disabled" \
+    -D libseat-logind="systemd" \
     -D man-pages="enabled" 
 
 ninja -C build

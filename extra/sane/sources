@@ -1,1 +1,5 @@
 https://gitlab.com/sane-project/backends/-/archive/VERSION/backends-VERSION.tar.gz
+files/saned.service
+files/saned.socket
+files/66-saned.rules
+files/sane.sysusers

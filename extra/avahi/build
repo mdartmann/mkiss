@@ -18,7 +18,7 @@ NOCONFIGURE=1 ./autogen.sh
     --with-avahi-priv-access-group=network \
     --with-autoipd-user=avahi \
     --with-autoipd-group=avahi \
-    --without-systemdsystemunitdir \
+    --with-systemdsystemunitdir=/usr/lib/systemd/system \
     --disable-manpages
 
 sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
@@ -33,3 +33,5 @@ ln -s avahi-compat-libdns_sd/dns_sd.h "$1/usr/include/dns_sd.h"
 
 install -d "$1/usr/share/doc/avahi"
 mv "$1"/etc/avahi/services/{,sftp-}ssh.service "$1/usr/share/doc/avahi/"
+
+echo 'u avahi - "Avahi mDNS/DNS-SD daemon"' | install -Dm644 /dev/stdin "$1"/usr/lib/sysusers.d/avahi.conf

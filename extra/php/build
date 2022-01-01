@@ -73,7 +73,7 @@ cd build
 ../configure ${phpconfig[@]} \
     --enable-cgi \
     --enable-fpm \
-    --without-fpm-systemd \
+    --with-fpm-systemd \
     --with-fpm-acl \
     --with-fpm-user=http \
     --with-fpm-group=http \
@@ -90,7 +90,7 @@ make
 cd ..
 
 cd build
-make -j1 INSTALL_ROOT="$1" PHP_SAPI=embed install-{modules,cli,build,headers,programs,pharcmd,cgi,sapi,phpdbg}
+make -j1 INSTALL_ROOT="$1" PHP_SAPI=embed install-{modules,cli,build,headers,programs,pharcmd,cgi,sapi,phpdbg,fpm}
 cd ..
 
 install -Dm644 'php.ini-production' "$1/etc/php/php.ini"
@@ -105,4 +105,5 @@ rmdir "$1/usr/include/php/include"
 
 install -Dm644 apache.conf "${1}"/etc/httpd/conf/extra/php_module.conf
 install -Dm755 build-apache/libs/libphp.so "${1}"/usr/lib/httpd/modules/libphp.so
-
+install -D -m644 build/sapi/fpm/php-fpm.service "${1}/usr/lib/systemd/system/php-fpm.service"
+install -D -m644 "php-fpm.tmpfiles" "${1}/usr/lib/tmpfiles.d/php-fpm.conf"

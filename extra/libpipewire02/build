@@ -1,6 +1,10 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
 
+for i in *.patch; do
+    patch -Np1 -i $i
+done
+
 meson build \
     ${MESON_OPTIONS} \
     -D gstreamer=disabled

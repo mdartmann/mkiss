@@ -18,8 +18,8 @@ autoreconf -fiv
     --sys=/etc \
     --sbindir=/usr/bin \
     --libdir=/usr/lib \
-    --disable-systemd \
-    --enable-elogind \
+    --enable-systemd \
+    --disable-elogind \
     --with-bundled-catch \
     --with-bundled-pegtl \
     --with-dbus \

@@ -10,7 +10,7 @@ meson build \
     -D wayland_eglstream=false \
     -D installed_tests=false \
     -D profiler=false \
-    -D systemd=false \
+    -D systemd=true \
     -D tests=false
 
 ninja -C build

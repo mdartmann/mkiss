@@ -7,7 +7,7 @@
 	--with-system-socket=/var/run/dbus/system_bus_socket \
 	--with-system-pid-file=/var/run/dbus/pid \
 	--with-console-auth-dir=/var/run/console \
-    --enable-elogind \
+    --enable-systemd \
 	--enable-assert \
 	--enable-doxygen-docs \
 	--enable-inotify \
@@ -17,5 +17,4 @@
 make
 make DESTDIR="$1" install
 
-ln -s /var/lib/dbus/machine-id "$1/etc"
-rm -rf "$1/usr/lib/systemd"
+echo 'u dbus 81 "System Message Bus"' | install -Dm644 /dev/stdin "$1"/usr/lib/sysusers.d/dbus.conf

@@ -15,7 +15,7 @@
 	--enable-mesg \
 	--disable-more \
 	--disable-makeinstall-chown \
-	--without-systemd \
+	--with-systemd \
 	--with-python=3
 
 # Remove nonexsistant warnflag caused by configure.
@@ -28,3 +28,21 @@ make DESTDIR="$1" install
 mv -f "$1/usr/sbin/"* "$1/usr/bin"
 rmdir "$1/usr/sbin"
 
+install -Dm0644 "util-linux.sysusers" \
+    "${1}/usr/lib/sysusers.d/util-linux.conf"
+
+install -Dm0644 "60-rfkill.rules" \
+    "${1}/usr/lib/udev/rules.d/60-rfkill.rules"
+
+install -Dm0644 "rfkill-unblock_.service" \
+    "${1}/usr/lib/systemd/system/rfkill-unblock@.service"
+install -Dm0644 "rfkill-block_.service" \
+    "${1}/usr/lib/systemd/system/rfkill-block@.service"
+
+install -Dm0644 "pam-common" "${1}/etc/pam.d/chfn"
+install -m0644 "pam-common" "${1}/etc/pam.d/chsh"
+install -m0644 "pam-login" "${1}/etc/pam.d/login"
+install -m0644 "pam-runuser" "${1}/etc/pam.d/runuser"
+install -m0644 "pam-runuser" "${1}/etc/pam.d/runuser-l"
+install -m0644 "pam-su" "${1}/etc/pam.d/su"
+install -m0644 "pam-su" "${1}/etc/pam.d/su-l"

@@ -3,8 +3,8 @@ export DESTDIR="$1"
 
 meson build \
     ${MESON_OPTIONS/-D b_lto=true/} \
-    -D stemmer=disabled \
-    -D systemd_user_services=false \
+    -D stemmer=enabled \
+    -D systemd_user_services=true \
     -D docs=false
 
 ninja -C build

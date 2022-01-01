@@ -1,6 +1,5 @@
 alsa-lib
 dbus
-eudev
 glib2
 gst-plugins-base
 gstreamer

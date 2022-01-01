@@ -3,34 +3,29 @@ export DESTDIR="$1"
 
 meson build \
     -D prefix=/usr \
-    -D docs=disabled \
     -D jack=disabled \
     -D libcamera=disabled \
     -D udevrulesdir=/usr/lib/udev/rules.d \
     -D roc=disabled \
     -D session-managers='media-session' \
-    -D systemd=disabled \
-    -D avahi=disabled \
+    -D systemd=enabled \
+    -D avahi=enabled \
     -D bluez5=enabled \
-    -D docs=disabled \
+    -D docs=enabled \
     -D man=enabled \
     -D alsa=enabled \
     -D pipewire-alsa=enabled || zsh
 ninja -C build
 ninja -C build install
 
-
-
 mkdir -p "$1/etc/alsa/conf.d"
+
 ln -st "$1/etc/alsa/conf.d" \
     /usr/share/alsa/alsa.conf.d/99-pipewire-default.conf
-
 ln -st "$1/etc/alsa/conf.d" \
     /usr/share/alsa/alsa.conf.d/50-pipewire.conf
 
-
 install -Dm644 /dev/null \
     "$1/usr/share/pipewire/media-session.d/with-alsa"
-
 install -Dm644 /dev/null \
     "$1/usr/share/pipewire/media-session.d/with-pulseaudio"

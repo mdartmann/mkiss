@@ -1,6 +1,6 @@
 #!/bin/sh 
 
-useradd -r -d /var/lib/gdm -s /sbin/nologin gdm
+systemd-sysusers
 
 chown -R gdm:gdm /var/lib/gdm
 

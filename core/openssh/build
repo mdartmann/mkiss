@@ -28,3 +28,8 @@ make
 make DESTDIR="$1" install
 install -m755 contrib/ssh-copy-id "$1/usr/bin/ssh-copy-id"
 install -m644 contrib/ssh-copy-id.1 "$1/usr/share/man/man8/ssh-copy-id.1"
+
+install -Dm644 sshdgenkeys.service "${1}"/usr/lib/systemd/system/sshdgenkeys.service
+install -Dm644 sshd.service "${1}"/usr/lib/systemd/system/sshd.service
+install -Dm644 sshd.conf "${1}"/usr/lib/tmpfiles.d/sshd.conf
+install -Dm644 sshd.pam "${1}"/etc/pam.d/sshd

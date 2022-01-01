@@ -1,0 +1,4 @@
+#!/bin/sh
+
+chmod +s /usr/bin/newuidmap
+chmod +s /usr/bin/newgidmap 

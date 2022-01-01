@@ -18,10 +18,30 @@ autoreconf -fiv
     --with-libcurl \
     --with-pic \
     --with-poppler-glib \
-    --without-systemd \
+    --with-systemd \
     --with-usb
 
 sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
 
 make
 make DESTDIR="$1" install
+
+# generate udev udev+hwdb
+install -vdm 755 "${1}/usr/lib/udev/rules.d/"
+tools/sane-desc -m udev+hwdb -s doc/descriptions/ > "${1}/usr/lib/udev/rules.d/65-sane.rules"
+tools/sane-desc -m udev+hwdb -s doc/descriptions-external/ >> "${1}/usr/lib/udev/rules.d/65-sane.rules"
+# generate udev hwdb
+install -vdm 755 "${1}/usr/lib/udev/hwdb.d/"
+tools/sane-desc -m hwdb -s doc/descriptions/ > "${1}/usr/lib/udev/hwdb.d/20-sane.hwdb"
+# NOTE: an empty new line is required between the two .desc collections
+printf "\n" >> "${1}/usr/lib/udev/hwdb.d/20-sane.hwdb"
+tools/sane-desc -m hwdb -s doc/descriptions-external/ >> "${1}/usr/lib/udev/hwdb.d/20-sane.hwdb"
+
+# systemd integration
+install -vDm 644 "saned.socket" \
+    -t "${1}/usr/lib/systemd/system/"
+install -vDm 644 "saned.service" \
+    "${1}/usr/lib/systemd/system/saned@.service"
+install -vDm 644 "66-saned.rules" "${1}/usr/lib/udev/rules.d/"
+# sysusers.d
+install -vDm 644 "sane.sysusers" "${1}/usr/lib/sysusers.d/sane.conf"
