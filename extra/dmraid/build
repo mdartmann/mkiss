@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+
+cd ${2}/dmraid/
+
+mv ../../*.patch  .
+
+./configure 
+
+CFLAGS="" make -j1
+
+make DESTDIR="$1" install

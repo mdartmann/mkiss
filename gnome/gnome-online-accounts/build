@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+    ${MESON_OPTIONS} \
+    -D media_server=true \
+    -D gtk_doc=true \
+    -D man=true
+
+ninja -C build
+ninja -C build install

@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+
+find . -name ".pyc" -delete
+
+export CFLAGS+=" $(python3.10-config --includes)"
+
+./configure \
+    --prefix=/usr
+
+make
+make DESTDIR="$1" install
+sed -i "/#include <config.h>/d" "$1"/usr/include/volume_key/libvolume_key.h

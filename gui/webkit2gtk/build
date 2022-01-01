@@ -1,0 +1,19 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+cmake -B build -G Ninja \
+    -D PORT=GTK \
+    -D CMAKE_BUILD_TYPE=Release \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D CMAKE_INSTALL_LIBDIR=lib \
+    -D CMAKE_INSTALL_LIBEXECDIR=lib \
+    -D CMAKE_SKIP_RPATH=ON \
+    -D USE_SOUP2=ON \
+    -D ENABLE_GTKDOC=OFF \
+    -D ENABLE_MINIBROWSER=ON \
+    -D USE_SYSTEMD=OFF
+
+ninja -C build
+ninja -C build install
+
+rm -rf "$1/usr/bin"

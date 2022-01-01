@@ -1,0 +1,29 @@
+#!/bin/sh -uxe
+
+bsdtar -xf *.zip
+export DTDDIR="usr/share/sgml/docbook-sgml-${2}"
+
+sed -i \
+    -e '/ISO 8879/d' \
+    -e '/gml/d' \
+    docbook.cat
+
+# Add support for previous versions.
+  cat >> docbook.cat << "EOF"
+
+  -- Begin Single Major Version catalog changes --
+
+PUBLIC "-//OASIS//DTD DocBook V4.4//EN" "docbook.dtd"
+PUBLIC "-//OASIS//DTD DocBook V4.3//EN" "docbook.dtd"
+PUBLIC "-//OASIS//DTD DocBook V4.2//EN" "docbook.dtd"
+PUBLIC "-//OASIS//DTD DocBook V4.1//EN" "docbook.dtd"
+PUBLIC "-//OASIS//DTD DocBook V4.0//EN" "docbook.dtd"
+
+  -- End Single Major Version catalog changes --
+
+EOF
+
+
+install -dm755 "$1/$DTDDIR"
+install -m644 docbook.cat "$1/$DTDDIR/catalog"
+install -m644 *.dtd *.mod *.dcl "$1/$DTDDIR"

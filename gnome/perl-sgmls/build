@@ -1,0 +1,19 @@
+#!/bin/sh -uxe
+
+find . -type f -exec chmod 0644 {} +
+
+export \
+    PERL_MM_USE_DEFAULT=1 \
+    PERL_AUTOINSTALL=--skipdeps \
+    PERL_MM_OPT="INSTALLDIRS=vendor DESTDIR='"$1"'" \
+    PERL_MB_OPT="--installdirs vendor --destdir '"$1"'" \
+    MODULEBUILDRC=/dev/nul
+
+perl Makefile.PL
+
+make
+make DESTDIR="$1" install
+
+find "$1" -name .packlist -o -name perllocal.pod -delete
+
+ln -sv /usr/bin/vendor_perl/sgmlspl.pl "$1/usr/bin/sgmlspl"

@@ -1,0 +1,28 @@
+#!/bin/sh -uxe
+
+export CONFIG_SHELL=/usr/bin/bash
+
+./configure \
+    CONFIG_SHELL=/usr/bin/bash \
+    --prefix=/usr \
+    --sbindir=/usr/bin \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --enable-cmdlib \
+    --enable-dmeventd \
+    --enable-pkgconfig \
+    --enable-readline \
+    --enable-udev_rules \
+    --enable-udev_sync \
+    --with-cache=internal \
+    --with-default-dm-run-dir=/run \
+    --with-default-locking-dir=/run/lock/lvm \
+    --with-default-pid-dir=/run \
+    --with-default-run-dir=/run/lvm \
+    --without-systemdsystemunitdir \
+    --with-thin=internal \
+    --with-udev-prefix=/usr
+
+make
+make DESTDIR="$1" install
+

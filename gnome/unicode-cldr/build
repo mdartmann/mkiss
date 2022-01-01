@@ -1,0 +1,7 @@
+#!/bin/sh -uxe
+
+bsdtar -xf cldr-common-${2}.zip
+
+cd common
+install -dm755 "$1/usr/share/unicode/cldr/common"
+cp -r * "$1/usr/share/unicode/cldr/common"

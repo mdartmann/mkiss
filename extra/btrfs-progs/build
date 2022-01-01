@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --with-crypto=libgcrypt
+
+make
+make DESTDIR="$1" install install_python
+
+install -Dm644 btrfs-completion "$1/usr/share/bash-completion/completions/btrfs"

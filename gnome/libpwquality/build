@@ -1,0 +1,16 @@
+#!/bin/sh -uxe
+
+NOCONFIGURE=1 ./autogen.sh
+
+sed "/mr_IN/d" -i po/LINGUAS
+
+./configure \
+    --prefix=/usr \
+    --localstatedir=/var \
+    --with-python-binary=python3
+
+sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
+
+make
+make DESTDIR="$1" install
+install -dm755 "$1/etc/security/pwquality.conf.d"

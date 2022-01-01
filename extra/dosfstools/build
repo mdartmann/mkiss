@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --libexecdir=/usr/lib \
+    --sbindir=/usr/bin \
+    --mandir=/usr/share/man \
+    --docdir=/usr/share/doc/dosfstools \
+    --enable-compat-symlinks
+
+make
+make DESTDIR="$1" install

@@ -1,0 +1,8 @@
+#!/bin/sh 
+
+useradd -r -d /var/lib/gdm -s /sbin/nologin gdm
+
+chown -R gdm:gdm /var/lib/gdm
+
+usermod -aG video,tty gdm
+

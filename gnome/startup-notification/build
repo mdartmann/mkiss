@@ -1,0 +1,15 @@
+#!/bin/sh -uxe
+
+sed -i "/AC_PATH_XTRA/d" configure.in
+
+autoreconf -fiv
+
+./configure \
+    --prefix=/usr \
+    --localstatedir=/var \
+    --sysconfdir=/etc
+
+sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
+
+make
+make DESTDIR="$1" install

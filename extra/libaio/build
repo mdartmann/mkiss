@@ -1,0 +1,5 @@
+#!/bin/sh -uxe
+
+CFLAGS="-march=${CARCH/_/-} -mtune=generic -O2 -pipe"
+make
+make DESTDIR="$1" install

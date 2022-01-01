@@ -1,0 +1,26 @@
+#!/bin/sh -uxe
+
+git fetch
+git cherry-pick -n 936a0e76df79d92a8bdc03e9205330fb84a2083e
+sed -i 's|$(libibus) $(libibus_emoji_dialog)|$(libibus_emoji_dialog) $(libibus)|' ui/gtk3/Makefile.am
+
+NOCONFIGURE=1 ./autogen.sh
+
+./configure \
+    --prefix=/usr \
+    --libexecdir=/usr/lib/ibus \
+    --sysconfdir=/etc \
+    --enable-dconf \
+    --enable-wayland \
+    --enable-gtk-doc \
+    --enable-gtk4 \
+    --disable-memconf \
+    --enable-ui \
+    --disable-python2 \
+    --with-python=python3 \
+    --with-ucd-dir=/usr/share/unicode
+
+sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
+
+make
+make DESTDIR="$1" install

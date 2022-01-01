@@ -1,0 +1,4 @@
+#!/bin/sh -uxe
+
+mkdir -p "$1"/usr/share/fonts/noto
+install -m644 fonts/NotoColorEmoji.ttf "$1"/usr/share/fonts/noto

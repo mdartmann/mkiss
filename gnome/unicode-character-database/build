@@ -1,0 +1,17 @@
+#!/bin/sh -uxe
+
+mkdir UCD Unihan
+
+bsdtar -C UCD -xf UCD.zip
+bsdtar -C Unihan -xf Unihan.zip
+
+for f in UCD Unihan; do
+    install -Dm644 $f.zip "$1/usr/share/unicode/$f.zip"
+    bsdtar -C "$1/usr/share/unicode" -x --no-same-owner --no-same-permissions -f $f.zip
+done
+
+ln -s . "$1/usr/share/unicode/ucd"
+
+for f in unicode-character-database unicode-data unidata; do
+    ln -s unicode "$1/usr/share/$f"
+done

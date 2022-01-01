@@ -1,0 +1,27 @@
+#!/bin/sh -uxe
+
+NOCONFIGURE=1 ./autogen.sh
+
+./configure \
+    --disable-zram \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --sbindir=/usr/bin \
+    --libexecdir=/usr/lib \
+    --localstatedir=/var \
+    --disable-static \
+    --enable-gtk-doc \
+    --enable-acl \
+    --enable-bcache \
+    --enable-btrfs \
+    --enable-daemon \
+    --disable-debug \
+    --enable-introspection \
+    --enable-lvm2 \
+    --enable-lvmcache \
+    --enable-man \
+    --enable-nls \
+    --enable-vdo
+
+make
+make DESTDIR="$1" install

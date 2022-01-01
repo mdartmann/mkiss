@@ -1,0 +1,9 @@
+#!/bin/sh -uxe
+
+sed -i "/^#include /s:ncursesw/::" gptcurses.cc
+
+make
+
+install -d "$1"/usr/{bin,share/{doc/fdisk,man/man8}}
+install -t "$1/usr/bin" {,c,s}gdisk fixparts
+install -m644 -t "$1/usr/share/man/man8" {{,c,s}gdisk,fixparts}.8

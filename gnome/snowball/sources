@@ -1,0 +1,2 @@
+git+https://github.com/snowballstem/snowball#VERSION
+patches/dynamiclib.patch

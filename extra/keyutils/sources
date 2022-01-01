@@ -1,0 +1,3 @@
+git+https://git.kernel.org/pub/scm/linux/kernel/git/dhowells/keyutils.git#vVERSION
+patches/reproducible.patch
+patches/request-key.conf.patch

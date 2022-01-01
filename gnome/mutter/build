@@ -1,0 +1,17 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+export CFLAGS+=" -fno-semantic-interposition"
+export LDFLAGS+=" -Wl,-Bsymbolic-functions"
+
+meson build \
+    ${MESON_OPTIONS} \
+    -D egl_device=true \
+    -D wayland_eglstream=false \
+    -D installed_tests=false \
+    -D profiler=false \
+    -D systemd=false \
+    -D tests=false
+
+ninja -C build
+ninja -C build install

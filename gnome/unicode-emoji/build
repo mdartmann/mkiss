@@ -1,0 +1,5 @@
+#!/bin/sh -uxe
+
+for f in sequences test zwj-sequences; do
+    install -Dm644 emoji-$f.txt "$1/usr/share/unicode/emoji/emoji-$f.txt"
+done

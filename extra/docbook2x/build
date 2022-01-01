@@ -2,14 +2,16 @@
 
 patch -p1 -i datadir.patch
 
-xslver="$(kiss l docbook-xsl | cut -d ' ' -f2 | cut -d '-' -f1)"
+sed -e "s/AM_CONFIG_HEADER(/AC_CONFIG_HEADERS(/" -i configure.ac
+autoreconf -fiv
 
 ./configure \
     --prefix=/usr \
     --mandir=/usr/share/man \
-    --program-transform-name 's/docbook2/db2x_docbook2'
+    --program-transform-name 's,docbook2,db2x_docbook2,'
 
-# Fix wrong docbook location.
-sed -i "s|usr/share/xml/docbook/stylesheet|usr/share/xml/docbook/xsl-stylesheets-${2}|g" Makefile
 make
 make DESTDIR="$1" install
+
+sed -i 's|http://docbook2x.sf.net/latest|/usr/share/docbook2X|g' \
+    "$1"/usr/bin/db2x_xsltproc

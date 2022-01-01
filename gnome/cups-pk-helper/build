@@ -1,0 +1,13 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --libexecdir=/usr/lib/cups-pk-helper
+
+make
+make DESTDIR="$1" install
+
+install -dm755 "$1"/usr/share/dbus-1/system.d
+mv "$1"/etc/dbus-1/system.d/* "$1"/usr/share/dbus-1/system.d
+rm -rf "$1/etc/dbus-1"

@@ -4,6 +4,7 @@ export DESTDIR="$1"
 # Fix build with meson >= 0.60.2
 patch -p1 -i *.patch
 
+zsh
 meson build \
     ${MESON_OPTIONS/-D b_lto=true/} \
     --buildtype release \

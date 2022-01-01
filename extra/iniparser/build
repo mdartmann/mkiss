@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+
+make
+
+install -Dm0644 src/iniparser.h "$1"/usr/include/iniparser.h
+install -Dm0644 src/dictionary.h "$1"/usr/include/dictionary.h
+install -Dm0644 libiniparser.so.1 "$1"/usr/lib/libiniparser.so.1
+install -Dm0644 LICENSE "$1"/usr/share/licenses/iniparser/LICENSE
+ln -sf libiniparser.so.1 "$1"/usr/lib/libiniparser.so
+chrpath -d "$1"/usr/lib/libiniparser.so

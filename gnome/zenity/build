@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+    ${MESON_OPTIONS} \
+    -D libnotify=true \
+    -D webkitgtk=true
+
+ninja -C build
+ninja -C build install

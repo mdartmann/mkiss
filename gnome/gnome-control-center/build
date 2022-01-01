@@ -1,0 +1,16 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+sed -i "/installdir/s/'icons'/'pixmaps'/" panels/info-overview/meson.build
+
+git submodule init
+git submodule update 
+
+patch -Np1 -i no-wwan-or-smb.patch
+
+meson build \
+    ${MESON_OPTIONS/-D b_lto=true/} \
+    -D cheese=false 
+
+ninja -C build
+ninja -C build install

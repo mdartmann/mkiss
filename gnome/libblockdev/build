@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+
+./autogen.sh
+
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --without-lvm_dbus
+
+make
+make DESTDIR="$1" install

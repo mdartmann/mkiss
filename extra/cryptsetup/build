@@ -1,0 +1,13 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --sbindir=/usr/bin \
+    --enable-libargon2 \
+    --disable-ssh-token \
+    --disable-static
+
+sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
+
+make
+make DESTDIR="$1" install

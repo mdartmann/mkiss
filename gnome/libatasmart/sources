@@ -1,0 +1,3 @@
+https://0pointer.de/public/libatasmart-VERSION.tar.xz
+patches/0001-Dont-test-undefined-bits.patch
+patches/0002-Drop-our-own-many-bad-sectors-heuristic.patch
