@@ -1,0 +1,9 @@
+#!/bin/sh -uxe
+
+install -dm755 "$1"/usr/lib/jvm/java-17-openjdk
+mv * "$1"/usr/lib/jvm/java-17-openjdk
+
+install -Dm644 /dev/stdin "$1/etc/profile.d/jre.sh" << EOF
+export PATH=\${PATH}:/usr/lib/jvm/java-17-openjdk/bin
+EOF
+
