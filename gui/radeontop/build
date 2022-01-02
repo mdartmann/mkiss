@@ -1,0 +1,8 @@
+#!/bin/sh -uxe
+
+sed -i "s|unknown|${2}|" -i getver.sh
+
+./getver.sh
+
+make
+make DESTDIR="$1" install
