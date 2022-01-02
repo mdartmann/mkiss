@@ -3,8 +3,20 @@ export DESTDIR="$1"
 export CFLAGS+=" -DG_DISABLE_CAST_CHECKS"
 
 meson build \
-    ${MESON_OPTIONS}
-
+    ${MESON_OPTIONS} \
+    -D broadway_backend=true \
+    -D cloudproviders=false \
+    -D tracker3=true \
+    -D colord=yes \
+    -D gtk_doc=true \
+    -D man=true
 
 ninja -C build
 ninja -C build install
+
+install -Dm644 /dev/stdin "$1"/usr/share/gtk-3.0/settings.ini <<EOF
+[Settings]
+gtk-icon-theme-name = Adwaita
+gtk-theme-name = Adwaita
+gtk-font-name = Cantarell 11
+EOF
