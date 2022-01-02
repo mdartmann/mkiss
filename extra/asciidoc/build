@@ -2,13 +2,15 @@
 
 autoconf
 
+sed -i '/pip install/s/\.$/--root $(DESTDIR) ./' Makefile.in
+
 ./configure \
     --prefix=/usr \
     --sysconfdir=/etc 
 
-make manpages
-make DESTDIR="$1" install
+make build
+make install DESTDIR="$1"
 make docs DESTDIR="$1"
 
-install -Dm644 asciidocapi.py \
-    "$1/$(python -c 'import sysconfig; print(sysconfig.get_paths()["platlib"])')"/asciidocapi.py
+install -Dm644 asciidoc/api.py \
+    "$1/$(python -c 'import sysconfig; print(sysconfig.get_paths()["platlib"])')"/asciidoc/api.py
