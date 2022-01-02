@@ -1,6 +1,10 @@
 #!/bin/sh -uxe
+export DESTDIR="$1"
 
-./configure --prefix=/usr
+cmake -B build -G Ninja \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D CMAKE_BUILD_TYPE='None' \
+    -Wno-dev
 
-make 
-make DESTDIR="$1" install
+ninja -C build
+ninja -C build install
