@@ -1,5 +1,7 @@
 #!/bin/sh -uxe
 
+sed -s "/init\.d/s|^|#|" misc/Makefile.in
+
 ./configure \
 	--prefix=/usr \
 	--with-root-prefix="" \
@@ -9,14 +11,20 @@
 	--disable-fsck \
 	--disable-uuid \
 	--disable-libuuid \
-	--disable-libblkid
+    --disable-libblkid
 
 make
-mkdir -p "$1/usr/share/man/man8" "$1/usr/share/man/man5" \
-       	"$1/usr/share/man/man3" "$1/usr/share/man/man1" \
-	"$1/etc/" "$1/usr/bin" "$1/usr/share/et" "$1/usr/share/ss" \
-	"$1/usr/lib/pkgconfig"	"$1/usr/include/et" "$1/usr/include/ss" \
-	"$1/usr/include/e2p" "$1/usr/include/ext2fs" 
-	
 
-make DESTDIR="$1" install
+find po/ -name '*.gmo' -delete
+
+make -C po update-gmo
+
+make -j1 DESTDIR="$1" install install-libs
+
+sed -i "s/^AWK=.*/AWK=awk/" "$1"/usr/bin/compile_et
+
+sed -i 's|SS_DIR=.*|SS_DIR="/usr/share/ss"|' "$1"/usr/bin/mk_cmds
+sed -i 's|SS_DIR=.*|SS_DIR="/usr/share/et"|' "$1"/usr/bin/compile_et
+
+rm -f "$1"/usr/lib/lib{com_err,e2p,ext2fs,ss}.a
+
