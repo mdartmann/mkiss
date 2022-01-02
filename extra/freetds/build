@@ -1,6 +1,5 @@
 #!/bin/sh -uxe
 
-
 ./configure \
    --prefix=/usr \
    --sysconfdir=/etc/freetds \
