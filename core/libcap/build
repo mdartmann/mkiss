@@ -1,4 +1,4 @@
 #!/bin/sh -uxe
 
-make DYNAMIC=yes KERNEL_HEADERS='/usr/include' lib='lib' prefix='/usr' sbindir='bin'
-make DESTDIR="$1" RAISE_SETFCAP='no' lib='lib' prefix='/usr' sbindir='bin' install
+make DYNAMIC=yes KERNEL_HEADERS='/usr/include' lib='lib' prefix='/usr' sbindir='bin' GOLANG=no
+make DESTDIR="$1" RAISE_SETFCAP='no' lib='lib' prefix='/usr' sbindir='bin' GOLANG=no install 
