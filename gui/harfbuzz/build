@@ -1,16 +1,12 @@
 #!/bin/sh -uxe
+export DESTDIR="$1"
 
 ./configure \
-    --enable-introspection \
-    --enable-static \
-    --with-libstdc=yes \
     --prefix=/usr \
-    --with-icu=yes \
-    --with-gobject=yes\
-    --with-glib=yes \
-    --with-graphite2=yes \
-    --with-cairo=yes 
+    --disable-static \
+    --with-graphite2 \
+    --with-gobject \
+    --enable-introspection 
 
 make
 make DESTDIR="$1" install
-    

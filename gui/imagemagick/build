@@ -1,0 +1,38 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --enable-shared \
+    --disable-static \
+    --with-dejavu-font-dir=/usr/share/fonts/TTF \
+    --with-gs-fonts-dir=/usr/share/fonts/gsfonts \
+    PSDelegate=/usr/bin/gs \
+    XPSDelegate=/usr/bin/gxps \
+    PCLDelegate=/usr/bin/gpcl6 \
+    --enable-hdri \
+    --enable-opencl \
+    --without-gslib \
+    --with-djve \
+    --with-jxl \
+    --with-lqr \
+    --with-modules \
+    --with-openexr \
+    --with-openjp2 \
+    --with-perl  \
+    --with-perl-options=INSTALLDIRS=vendor \
+    --with-rsvg \
+    --with-webp \
+    --with-wmf \
+    --with-xml \
+    --without-autotrace \
+    --without-dps \
+    --without-fftw \
+    --without-fpx \
+    --without-gcc-arch \
+    --without-gcs
+
+sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
+
+make
+make DESTDIR="$1" install
