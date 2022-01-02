@@ -3,7 +3,7 @@ export DESTDIR="$1"
 
 meson build \
     ${MESON_OPTIONS} \
-    -D man=false \
+    -D man=true \
     -D gtk_doc=disabled
 
 ninja -C build
