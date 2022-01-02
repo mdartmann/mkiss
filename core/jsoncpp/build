@@ -6,11 +6,10 @@ meson build \
 	${MESON_OPTIONS}
 
 ninja -C build
+ninja -C build install
 
 meson build-static \
 	--default-library static
 
 ninja -C build-static
-
-ninja -C build install
 ninja -C build-static install
