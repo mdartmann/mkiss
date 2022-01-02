@@ -1,0 +1,29 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+for i in *.patch; do
+    patch -p1 -i $i
+done
+
+pushd binary/bin
+client_id_asm=$(objdump -j '.text' --no-show-raw-insn -C --disassemble='Secrets::getMSAClientID(unsigned char)' MultiMC)
+client_id="$(grep -oP '[a-z0-9]{2}(?=,%r[89]d)' <<< ${client_id_asm} | tac | tr -d '\n')$(grep -oP '(push.+0x)\K[a-z0-9]{2}' <<< ${client_id_asm} | tac | tr -d '\n')"
+client_id="${client_id:0:8}-${client_id:8:4}-${client_id:12:4}-${client_id:16:4}-${client_id:20}"
+popd 
+
+sed -i 's|""|"'"${client_id}"'"|g' notsecrets/Secrets.cpp
+
+git submodule init
+git submodule update
+
+cmake -B build -G Ninja \
+    -D CMAKE_BUILD_TYPE=Release \
+    -D CMAKE_INSTALL_PREFIX="/usr" \
+    -D Launcher_LAYOUT=lin-system \
+    -D Launcher_APP_BINARY_NAME=multimc \
+    -D Launcher_SHARE_DESTDIR="share/multimc"
+
+ninja -C build
+ninja -C build install
+
+install -Dm644 multimc.desktop "$1"/usr/share/applications/multimc.desktop

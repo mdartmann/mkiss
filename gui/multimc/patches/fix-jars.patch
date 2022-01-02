@@ -1,0 +1,15 @@
+diff --git a/launcher/Application.cpp b/launcher/Application.cpp
+index 2d0c81bb..74f250fb 100644
+--- a/launcher/Application.cpp
++++ b/launcher/Application.cpp
+@@ -524,6 +524,10 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
+         FS::updateTimestamp(m_rootPath);
+ #endif
+ 
++#ifdef MULTIMC_JARS_LOCATION
++        m_jarsPath = TOSTRING(MULTIMC_JARS_LOCATION);
++#endif
++
+         qDebug() << BuildConfig.LAUNCHER_DISPLAYNAME << ", (c) 2013-2021 " << BuildConfig.LAUNCHER_COPYRIGHT;
+         qDebug() << "Version                    : " << BuildConfig.printableVersionString();
+         qDebug() << "Git commit                 : " << BuildConfig.GIT_COMMIT;
