@@ -1,1 +1,2 @@
-https://www2.graphviz.org/Packages/stable/portable_source/graphviz-VERSION.tar.gz
+https://gitlab.com/graphviz/graphviz/-/archive/VERSION/graphviz-VERSION.tar.gz
+patches/ghostscript918.patch

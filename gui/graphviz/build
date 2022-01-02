@@ -1,16 +1,13 @@
 #!/bin/sh -uxe
+export DESTDIR="$1"
 
 export CXXFLAGS="${CXXFLAGS} -fpermissive"
 export LIBPOSTFIX=/
 
-./configure \
-    --prefix=/usr \
-    --enable-python3=yes \
-    --disable-python \
-    --enable-lefty \
-    --disable-docs
+patch -p1 -i ghostscript918.patch
 
-sed -i "s/ -shared / ${LDFLAGS}\0/g" libtool
+cmake -B build -G Ninja \
+    -D CMAKE_INSTALL_PREFIX=/usr
 
-make
-make DESTDIR="$1" install
+ninja -C build
+ninja -C build install
