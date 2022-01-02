@@ -1,5 +1,7 @@
 https://apache.org/dist/httpd/httpd-VERSION.tar.bz2
 files/kiss.layout
-https://github.com/apache/apr/commit/0a763c5e500f4304b7c534fae0fad430d64982e8.patch
 patches/openssl-malloc-init.patch
-
+files/httpd.service
+files/httpd.logrotate
+files/kiss.layout
+files/apache.tmpfiles.conf

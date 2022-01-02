@@ -8,3 +8,5 @@ useradd -r -d /srv/http -s /bin/nologin http
 
 echo "Setting permissions..."
 chown -R http:http /var/run/httpd /var/cache/httpd /var/log/httpd
+
+systemd-tmpfiles --create

@@ -37,13 +37,11 @@ done
     --with-pcre=/usr
 
 make
-
 make DESTDIR="$1" install
 
 ln -fs /usr/lib/httpd/modules "$1/etc/httpd/modules"
 
 # set sane defaults
-
  sed -e 's#/usr/lib/httpd/modules/#modules/#' \
       -e 's|#\(LoadModule include_module \)|\1|' \
       -e 's|#\(LoadModule userdir_module \)|\1|' \
@@ -59,3 +57,6 @@ ln -fs /usr/lib/httpd/modules "$1/etc/httpd/modules"
 
 # create var dirs
 install -dm755 "$1/var/run/httpd" "$1/var/log/httpd" "$1/var/cache/httpd" "$1/run/httpd"
+install -Dm644 httpd.logrotate "$1"/etc/logrotate.d/httpd
+install -Dm644 httpd.service "$1"/usr/lib/systemd/system/httpd.service
+install -Dm644 apache.tmpfiles.conf "$1"/usr/lib/tmpfiles.d/apache.conf
