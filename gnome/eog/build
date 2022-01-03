@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+# Fix libportal >= 0.5
+patch -Np1 -i *.diff
+
+meson build \
+    ${MESON_OPTIONS/-D b_lto=true/}
+
+ninja -C build
+ninja -C build install
