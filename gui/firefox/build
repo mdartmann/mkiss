@@ -1,0 +1,100 @@
+#!/bin/sh -uxe
+
+for i in *.patch; do
+    patch -Np1 -i $i
+done
+
+cat > mozconfig << EOF
+ac_add_options --enable-application=browser
+export MOZ_MAKE_FLAGS="$CFLAGS $LDFLAGS"
+
+ac_add_options --prefix=/usr
+ac_add_options --enable-release
+ac_add_options --enable-hardening
+ac_add_options --enable-rust-simd
+ac_add_options --enable-linker=bfd
+ac_add_options --disable-elf-hack
+ac_add_options --disable-bootstrap
+
+ac_add_options --enable-official-branding
+ac_add_options --enable-update-channel=release
+ac_add_options --with-distribution-id=com.github.mdartmann.mkiss
+ac_add_options --with-unsigned-addon-scopes=app,system
+ac_add_options --allow-addon-sideload
+ac_add_options --with-system-nss
+ac_add_options --with-system-nspr
+ac_add_options --enable-alsa
+ac_add_options --disable-crashreporter
+ac_add_options --disable-updater
+ac_add_options --disable-tests
+ac_add_options --without-wasm-sandboxed-libraries
+ac_add_options --with-system-icu
+EOF
+
+export MOZ_NOSPAM=1
+export MOZ_ENABLE_FULL_SYMBOLS=1
+export MACH_USE_SYSTEM_PYTHON=1
+export MOZBUILD_STATE_PATH="$PWD/mozbuild"
+
+ulimit -n 4096
+yes y | ./mach build
+./mach buildsymbols
+DESTDIR="$1" ./mach install
+
+install -Dm644 /dev/stdin "$1"/usr/lib/firefox/browser/defaults/preferences/vendor.js << EOF
+// Use LANG environment variable to choose locale
+pref("intl.locale.requested", "");
+
+// Use system-provided dictionaries
+pref("spellchecker.dictionary_path", "/usr/share/hunspell");
+
+// Disable default browser checking
+pref("browser.shell.checkDefaultBrowser", false);
+
+// Don't disable extensions in application directory
+pref("extensions.autoDisableScopes", 11);
+EOF
+
+install -Dm644 /dev/stdin "$1"/usr/lib/firefox/distribution/distribution.ini << EOF
+[Global]
+id=mkiss
+version=1.0
+about=Mozilla Firefox on MKiss Linux
+
+[Preferences]
+app.distributor=mkiss
+app.distributor.channel=firefox
+EOF
+
+
+for i in 16 22 24 32 48 64 128 256; do
+  install -Dvm644 browser/branding/official/default$i.png \
+    "$1/usr/share/icons/hicolor/${i}x${i}/apps/firefox.png"
+done
+install -Dvm644 browser/branding/official/content/about-logo.png \
+  "$1/usr/share/icons/hicolor/192x192/apps/firefox.png"
+install -Dvm644 browser/branding/official/content/about-logo@2x.png \
+  "$1/usr/share/icons/hicolor/384x384/apps/firefox.png"
+install -Dvm644 browser/branding/official/content/about-logo.svg \
+  "$1/usr/share/icons/hicolor/scalable/apps/firefox.svg"
+install -Dvm644 identity-icons-brand.svg \
+  "$1/usr/share/icons/hicolor/symbolic/apps/firefox-symbolic.svg"
+
+install -Dvm644 firefox.desktop \
+  "$1/usr/share/applications/firefox.desktop"
+
+# Install a wrapper to avoid confusion about binary path
+install -Dvm755 /dev/stdin "$1/usr/bin/firefox" <<END
+#!/bin/sh
+exec /usr/lib/firefox/firefox "\$@"
+END
+
+# Replace duplicate binary with wrapper
+# https://bugzilla.mozilla.org/show_bug.cgi?id=658850
+ln -srfv "$1/usr/bin/firefox" "$1/usr/lib/firefox/firefox-bin"
+
+# Use system certificates
+nssckbi="$1/usr/lib/firefox/libnssckbi.so"
+if [[ -e $nssckbi ]]; then
+  ln -srfv "$1/usr/lib/libnssckbi.so" "$nssckbi"
+fi

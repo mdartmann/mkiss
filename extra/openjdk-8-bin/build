@@ -1,0 +1,5 @@
+#!/bin/sh -uxe
+
+install -dm755 "$1"/usr/lib/jvm/java-8-openjdk
+mv * "$1"/usr/lib/jvm/java-8-openjdk
+

@@ -1,0 +1,5 @@
+#!/bin/sh -uxe
+
+cargo fetch --locked --target x86_64-unknown-linux-gnu
+cargo build --release --frozen --all-targets
+install -Dt "$1"/usr/bin target/release/cbindgen
