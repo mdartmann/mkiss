@@ -1,7 +1,2 @@
-git+https://github.com/MultiMC/Launcher#VERSION
-https://files.multimc.org/downloads/mmc-stable-lin64.tar.gz binary
-patches/fix-jars.patch
-patches/mmc-brand.patch
-patches/0001-Readd-lin-system-and-LAUNCHER_LINUX_DATADIR.patch
-patches/modern-java.patch
+https://files.multimc.org/downloads/mmc-stable-lin64.tar.gz
 files/multimc.desktop

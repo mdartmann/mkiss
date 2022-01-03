@@ -1,0 +1,21 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+make docs
+
+cmake -B build-x11 -G Ninja \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D CMAKE_INSTALL_LIBDIR=lib \
+    -D BUILD_SHARED_LIBS=ON
+
+ninja -C build-x11
+ninja -C build-x11 install
+
+cmake -B build-wayland -G Ninja \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D CMAKE_INSTALL_LIBDIR=lib \
+    -D BUILD_SHARED_LIBS=ON \
+    -D GLFW_USE_WAYLAND=on
+
+ninja -C build-wayland
+ninja -C build-wayland install
