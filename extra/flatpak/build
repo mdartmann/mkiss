@@ -1,0 +1,27 @@
+#!/bin/sh -uxe
+
+git submodule init
+git submodule update
+
+sed -i "/locale\/C\./d" tests/make-test-runtime.sh
+
+NOCONFIGURE=1 ./autogen.sh
+
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --sbindir=/usr/bin \
+    --libexecdir=/usr/lib \
+    --disable-static \
+    --enable-gtk-doc \
+    --with-system-bubblewrap \
+    --with-system-dbus-proxy \
+    --with-dbus-config-dir=/usr/share/dbus-1/system.d
+
+make
+make DESTDIR="$1" install
+
+install -Dm644 flatpak-bindir.sh "$1"/etc/profile.d
+
+install -D flathub.flatpakrepo "$1"/etc/flatpak/remotes.d

@@ -1,0 +1,24 @@
+#!/bin/sh -uxe
+
+NOCONFIGURE=1 ./autogen.sh
+
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --sbindir=/usr/bin \
+    --libexecdir=/usr/lib \
+    --with-builtin-grub2-mkconfig \
+    --with-ed25519-libsodium \
+    --with-dracut \
+    --with-mkinitcpio \
+    --with-openssl \
+    --enable-experimental-api \
+    --disable-static \
+    --enable-gtk-doc
+
+sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
+
+make
+make DESTDIR="$1" install
+
