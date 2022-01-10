@@ -1,0 +1,4 @@
+https://www.kernel.org/pub/software/utils/i2c-tools/i2c-tools-VERSION.tar.xz
+files/i2c-tools.sysusers
+files/python-makefile.patch
+files/45-i2c-tools.rules

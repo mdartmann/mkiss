@@ -1,0 +1,9 @@
+#!/bin/sh -uxe
+
+patch -Np1 -i python-makefile.patch
+
+make EXTRA="eeprog py-smbus"
+make EXTRA="eeprog py-smbus" DESTDIR="$1" PREFIX="/usr" sbindir="/usr/bin" install
+
+install -Dm644 i2c-tools.sysusers "$1"/usr/lib/sysusers.d/i2c-tools.sysusers
+install -Dm644 45-i2c-tools.rules "$1"/usr/lib/udev/rules.d/45-i2c-tools.rules
