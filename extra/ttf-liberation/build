@@ -1,0 +1,7 @@
+#!/bin/sh -uxe
+
+make build
+
+install -Dm644 -t "$1"/usr/share/fonts/liberation \
+    liberation-fonts-ttf-${2}/*.ttf
+

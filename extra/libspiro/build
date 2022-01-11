@@ -1,0 +1,13 @@
+#!/bin/sh -uxe
+
+autoreconf -iv
+
+automake --foreign -Wall
+
+unset LDFLAGS
+
+./configure \
+    --prefix=/usr
+
+make
+make DESTDIR="$1" install

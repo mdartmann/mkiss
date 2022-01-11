@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+cmake -B build -G Ninja \
+    -D CMAKE_BUILD_TYPE=Release \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D ENABLE_MAINTAINER_TOOLS=TRUE \
+    -D ENABLE_FONTFORGE_EXTRAS=TRUE \
+    -D UNIX=TRUE 
+
+ninja -C build
+ninja -C build install
