@@ -5,13 +5,10 @@ export CFLAGS+=" -fno-semantic-interposition"
 export LDFLAGS+=" -Wl,-Bsymbolic-functions"
 
 meson build \
-    ${MESON_OPTIONS} \
+    ${MESON_OPTIONS/-D b_lto=true/} \
     -D egl_device=true \
     -D wayland_eglstream=false \
-    -D installed_tests=false \
-    -D profiler=false \
-    -D systemd=true \
-    -D tests=false
+    -D tests=false 
 
-ninja -C build
+ninja -C build 
 ninja -C build install
