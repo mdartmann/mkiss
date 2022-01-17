@@ -13,6 +13,9 @@ cmake -B build -G Ninja \
     -D INSTALL_SCRIPTDIR=bin \
     -D INSTALL_INCLUDEDIR=include/mysql \
     -D INSTALL_PLUGINDIR=lib/mysql/plugin \
+    -D INSTALL_SYSTEMD_UNITDIR=/usr/lib/systemd/system/ \
+    -D INSTALL_SYSTEMD_SYSURERSDIR=/usr/lib/sysuser.d/ \
+    -D INSTALL_SYSTEMD_TMPFILESDIR=/usr/lib/tmpfiles.d/ \
     -D INSTALL_SHAREDIR=share \
     -D INSTALL_SUPPORTFILESDIR=share/mysql \
     -D INSTALL_MYSQLSHAREDIR=share/mysql \
@@ -33,7 +36,7 @@ cmake -B build -G Ninja \
     -D WITH_PCRE=system \
     -D WITH_READLINE=ON \
     -D WITH_SSL=system \
-    -D WITH_SYSTEMD=no \
+    -D WITH_SYSTEMD=yes \
     -D WITH_UNIT_TESTS=OFF \
     -D WITH_ZLIB=system 
     
