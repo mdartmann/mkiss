@@ -1,0 +1,14 @@
+#!/bin/sh -uxe
+
+bsdtar -O -xf spotify-client_$2_amd64.deb data.tar.gz | bsdtar -C "$1" -xvJf -
+
+install -dm755 "$1"/usr/{share/{applications,pixmaps},bin}
+ln -sf /usr/share/spotify/spotify.desktop "$1"/usr/share/applications/spotify.desktop
+ln -sf /usr/share/spotify/icons/spotify-linux-512.png "$1"/usr/share/pixmaps/spotify-client.png
+
+for sz in 22 24 32 48 64 128 256 512; do
+    install -Dm755 "$1"/usr/share/spotify/icons/spotify-linux-${sz}.png \
+        "$1"/usr/share/icons/hicolor/${sz}x${sz}/apps/spotify.png
+done
+
+chmod -R go-w "$1"

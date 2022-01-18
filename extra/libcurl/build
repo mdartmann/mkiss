@@ -1,0 +1,24 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --disable-ldap \
+    --disable-ldaps \
+    --disable-manual \
+    --disable-versioned-symbols \
+    --enable-ipv6 \
+    --enable-threaded-resolver \
+    --with-gssapi \
+    --with-openssl \
+    --with-random="/dev/urandom" \
+    --without-ssl \
+    --with-gnutls=/usr
+
+make -C lib
+make -C lib DESTDIR="$1" install
+
+mv "$1"/usr/lib/libcurl{,-gnutls}.so.4.7.0
+rm "$1"/usr/lib/libcurl.{a,so}*
+for version in 3 4 4.0.0 4.1.0 4.2.0 4.3.0 4.4.0 4.5.0 4.6.0; do
+    ln -s libcurl-gnutls.so.4.7.0 "${1}"/usr/lib/libcurl-gnutls.so.${version}
+done
