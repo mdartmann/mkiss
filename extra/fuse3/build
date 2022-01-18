@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+    ${MESON_OPTIONS} \
+    -D examples=false
+
+ninja -C build
+# we add suid in post-install, use fakeroot to avoid error
+fakeroot ninja -C build install
+
+rm -rf "$1"/{etc/{init.d,fuse.conf},dev}

@@ -1,0 +1,22 @@
+#!/bin/sh -uxe
+
+autoreconf -fiv
+
+./configure \
+    --prefix=/usr \
+    --disable-rpath
+
+sed -i "s/ -shared / ${LDFLAGS}\0 /g" libtool
+
+make
+make DESTDIR="$1" install
+rm -r "$1"/usr/lib/udev
+
+cd "$1"/usr/lib/libgphoto2
+export LD_LIBRARY_PATH="$1/usr/lib:/usr/lib"
+export CAMLIBS="$PWD/${2}"
+
+./print-camera-list hwdb \
+    | install -Dm644 /dev/stdin "$1/usr/lib/udev/hwdb.d/20-gphoto.hwdb"
+./print-camera-list udev-rules version 201 \
+    | install -Dm644 /dev/stdin "$1/usr/lib/udev/rules.d/40-gphoto.rules"

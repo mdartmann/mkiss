@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# Add suid to fusermount3
+chmod u+s /usr/bin/fusermount3
