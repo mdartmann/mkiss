@@ -1,1 +1,2 @@
 git+https://github.com/rhinstaller/efivar.git#VERSION
+https://github.com/rhboot/efivar/pull/201/commits/197a0874ea4010061b98b4b55eff65b33b1cd741.patch
