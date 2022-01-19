@@ -5,7 +5,7 @@
 export GOARCH=amd64
 export GOAMD64=v1
 export GOROOT_FINAL=/usr/lib/go
-export GOROOT_BOOTSTRAP=/usr
+export GOROOT_BOOTSTRAP=/usr/lib/go
 export GOPATH="$PWD"
 export GOROOT="$PWD/go"
 
