@@ -1,9 +1,15 @@
 #!/bin/sh -uxe
 
+configParams=(
+--prefix=/usr
+--enable-pinentry-curses
+--enable-fallback-curses
+--enable-libsecret
+)
+
+kiss l gnome-keyring >/dev/null 2>&1 && configParams+=(--enable-pinentry-gnome3)
+
 ./configure \
-	--prefix=/usr \
-	--enable-pinentry-curses \
-	--enable-fallback-curses \
-	--enable-libsecret
+    ${configParams[@]}
 make
 make DESTDIR="$1" install
