@@ -1,5 +1,9 @@
 #!/bin/sh -uxe
 
+patch -Np1 -i patchset-13-all.patch
+
+autoreconf -fiv
+
 ./configure \
     --prefix=/usr \
     --enable-shared
