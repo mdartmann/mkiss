@@ -2,8 +2,6 @@
 
 sed -i "s|^modprobedir =.*|modprobedir = /usr/lib/modprobe.d/|" Makefile.am
 
-patch -p1 -i *.patch
-
 ./autogen.sh
 
 ./configure \
