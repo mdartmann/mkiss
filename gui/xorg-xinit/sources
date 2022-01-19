@@ -1,0 +1,6 @@
+https://xorg.freedesktop.org/releases/individual/app/xinit-VERSION.tar.bz2
+patches/fs25361.patch
+patches/fs46369.patch
+patches/06_move_serverauthfile_into_tmp.diff
+patches/use_uname_-n_instead_of_hostname.diff
+files/xserverrc

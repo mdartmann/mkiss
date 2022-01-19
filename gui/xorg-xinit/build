@@ -1,0 +1,17 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+for patch in *.patch; do
+    patch -Np1 -i $patch
+done
+
+sed -i -e 's/XSLASHGLOB.sh/XSLASHGLOB/' xinitrc.cpp
+
+autoreconf -fiv
+./configure \
+    --prefix=/usr \
+    --with-xinitdir=/etc/X11/xinit
+
+make
+make DESTDIR="$1" install
+install -m644 xserverrc "$1/etc/X11/xinit/xserverrc" 
