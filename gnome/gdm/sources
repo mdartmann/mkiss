@@ -1,3 +1,2 @@
 git+https://gitlab.gnome.org/GNOME/gdm.git#VERSION
-https://gitlab.gnome.org/GNOME/gdm/-/commit/462cc0f5346f5913cf7151044f1c232c5d21c1c3.diff
 files/default.pa
