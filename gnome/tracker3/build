@@ -3,9 +3,8 @@ export DESTDIR="$1"
 
 meson build \
     ${MESON_OPTIONS/-D b_lto=true/} \
-    -D stemmer=enabled \
-    -D systemd_user_services=true \
-    -D docs=false
+    -D docs=false \
+    -D man=false
 
 ninja -C build
 ninja -C build install
