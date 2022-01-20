@@ -1,6 +1,6 @@
 #!/bin/sh -uxe
-export KBUILD_BUILD_HOST="eileen"
-export KBUILD_BUILD_USER='mae'
+export KBUILD_BUILD_HOST=`hostname`
+export KBUILD_BUILD_USER=`id -nu`
 export CC=gcc
 export CXX=g++
 export BUILD_LD="ld.bfd"
