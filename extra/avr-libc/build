@@ -1,0 +1,22 @@
+#!/bin/sh -uxe
+
+# Stripping breaks AVR libs
+:>nostrip
+
+./bootstrap
+
+export CC=avr-gcc
+export CXX=avr-g++
+export LD=avr-ld
+export AS=avr-as
+export NM=avr-nm
+export AR=avr-ar
+export RANLIB=avr-ranlib
+
+./configure \
+    --build=$(./config.guess) \
+    --host=avr \
+    --prefix=/usr
+
+make
+make DESTDIR="$1" install

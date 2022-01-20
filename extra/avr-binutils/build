@@ -1,0 +1,42 @@
+#!/bin/sh -uxe
+
+patch -Np1 -i avr-size.patch
+
+config_guess=$(./config.guess)
+
+mkdir avrbuild
+cd avrbuild
+
+../configure \
+    --prefix=/usr \
+    --with-lib-path=/usr/lib:/usr/local/lib \
+    --with-bugurl=https://github.com/mdartmann/mkiss/issues \
+    --enable-ld=default \
+    --enable-gold \
+    --enable-plugins \
+    --enable-threads \
+    --with-pic \
+    --disable-werror \
+    --disable-multilib \
+    --build=${config_guess} \
+    --target=avr \
+
+
+# Check if the environment has everything we need
+make configure-host
+
+make tooldir=/usr
+
+make DESTDIR="$1" prefix=/usr tooldir=/usr install
+
+for bin in ar as nm objcopy objdump ranlib strip readelf; do
+    rm "$1"/usr/bin/${bin}
+done
+
+rm "$1"/usr/lib/bfd-plugins/libdep.so
+
+for info in as bfd binutils gprof ld; do
+    mv "$1"/usr/share/info/${info}.info "$1"/usr/share/info/avr-${info}.info
+done
+
+rm -r "$1"/usr/share/locale

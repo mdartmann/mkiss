@@ -1,0 +1,58 @@
+#!/bin/sh -uxe
+
+# Stripping breaks avr libaries.
+:>nostrip
+export CFLAGS=${CFLAGS/-Werror=format-security/}
+export CXXFLAGS=${CXXFLAGS/-Werror=format-security/}
+
+echo ${2} > gcc/BASE-VER
+
+mkdir avrbuild && cd avrbuild
+
+export CFLAGS_FOR_TARGET='-O2 -pipe'
+export CXXFLAGS_FOR_TARGET='-O2 -pipe'
+
+../configure \
+    --disable-install-libiberty \
+    --disable-libssp \
+    --disable-libstdcxx-pch \
+    --disable-libunwind-exceptions \
+    --disable-linker-build-id \
+    --disable-nls \
+    --disable-werror \
+    --disable-__cxa_atexit \
+    --enable-checking=release \
+    --enable-clocale=gnu \
+    --enable-gnu-unique-object \
+    --enable-gold \
+    --enable-languages=c,c++ \
+    --enable-ld=default \
+    --enable-lto \
+    --enable-plugin \
+    --enable-shared \
+    --infodir=/usr/share/info \
+    --libdir=/usr/lib \
+    --libexecdir=/usr/lib \
+    --mandir=/usr/share/man \
+    --prefix=/usr \
+    --target=avr \
+    --with-as=/usr/bin/avr-as \
+    --with-gnu-as \
+    --with-gnu-ld \
+    --with-ld=/usr/bin/avr-ld \
+    --with-plugin-ld=ld.gold \
+    --with-system-zlib \
+    --with-isl \
+    --enable-gnu-indirect-function
+
+make
+
+make -j1 DESTDIR="$1" install
+
+# Strip debug symbols to save space.
+find "$1"/usr/lib -type f -name "*.a" \
+    -exec /usr/bin/avr-strip --strip-debug {} +
+
+rm -r "$1"/usr/share/man/man7 
+rm -r "$1"/usr/share/info 
+rm "$1"/usr/lib/libcc1.*
