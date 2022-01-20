@@ -1,5 +1,4 @@
 https://archive.mozilla.org/pub/firefox/releases/VERSION/source/firefox-VERSION.source.tar.xz
 patches/0001-Use-remoting-name-for-GDK-application-names.patch
-patches/0002-Bug-1745560-Add-missing-stub-for-wl_proxy_marshal_fl.patch
 files/identity-icons-brand.svg
 files/firefox.desktop
