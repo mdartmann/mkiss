@@ -1,6 +1,12 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
 
+git fetch
+
+git cherry-pick -n \
+    827494d6415b696a \
+    effb1e09dee263cd
+
 meson build \
     ${MESON_OPTIONS/-D b_lto=true/} \
     -D gtk_doc=true \
