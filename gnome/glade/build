@@ -1,6 +1,8 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
 
+patch -Np1 -i 117.patch
+
 meson build \
     ${MESON_OPTIONS} \
     -D gtk_doc=true
