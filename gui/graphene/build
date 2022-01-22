@@ -1,0 +1,13 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+git submodule init
+git submodule update
+
+meson build \
+    ${MESON_OPTIONS/-D b_lto=true/} \
+    -D gtk_doc=true \
+    -D installed_tests=false
+
+ninja -C build
+ninja -C build install
