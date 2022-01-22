@@ -18,7 +18,6 @@ cd certs
 cd ..
 ./bundle.sh
 
-zsh
 cd nspr
 ./configure \
     --prefix=/usr \
