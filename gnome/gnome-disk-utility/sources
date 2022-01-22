@@ -1,1 +1,2 @@
 git+https://gitlab.gnome.org/GNOME/gnome-disk-utility.git#VERSION
+https://gitlab.gnome.org/GNOME/gnome-disk-utility/-/commit/46ed7d26873b9741dff61f9df8e7778a8dc6f5cc.patch

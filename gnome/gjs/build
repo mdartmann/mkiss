@@ -1,15 +1,10 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
 
-# Fix build with meson >= 0.60.2
-patch -p1 -i *.patch
-
-
 meson build \
     ${MESON_OPTIONS/-D b_lto=true/} \
     --buildtype release \
-    -D installed_tests=false \
-    -D profiler=disabled
+    -D installed_tests=false 
 
 ninja -C build
 ninja -C build install

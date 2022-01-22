@@ -1,1 +1,2 @@
 git+https://gitlab.gnome.org/GNOME/gnome-calendar.git#VERSION
+https://gitlab.gnome.org/GNOME/gnome-calendar/-/commit/e35dbc1acd03dd1751b755b6c8e1932a692ad4e1.patch

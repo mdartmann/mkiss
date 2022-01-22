@@ -11546,7 +11546,7 @@ deleted file mode 100644
 index 8c1b02f..0000000
 --- a/panels/wwan/meson.build
 +++ /dev/null
-@@ -1,61 +0,0 @@
+@@ -1,60 +0,0 @@
 -gcr_dep = [dependency('gcr-3')]
 -
 -deps = common_deps + network_manager_deps + gcr_dep + [polkit_gobject_dep]
@@ -11560,7 +11560,6 @@ index 8c1b02f..0000000
 -)
 -
 -i18n.merge_file(
--       desktop,
 -         type : 'desktop',
 -        input : desktop_in,
 -       output : desktop,

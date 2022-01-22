@@ -4,6 +4,8 @@ export DESTDIR="$1"
 git submodule init
 git submodule update
 
+# Fix build with meson >= 0.61
+patch -Np1 -i 65450a836ee9e0722a2d4c3327f52345eae293c6.patch
 meson build \
     ${MESON_OPTIONS/-D b_lto=true/} \
     -D gtk_doc=true \

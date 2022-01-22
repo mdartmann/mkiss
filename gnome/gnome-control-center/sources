@@ -1,2 +1,3 @@
 git+https://gitlab.gnome.org/GNOME/gnome-control-center.git#VERSION
+https://gitlab.gnome.org/GNOME/gnome-control-center/-/commit/37b29c32cbecfd89c9c5e0169e0f2876f00ef5eb.patch
 patches/no-wwan-or-smb.patch
