@@ -1,6 +1,6 @@
 #!/bin/sh -uxe
 
-zsh
+
 ./configure \
     --prefix=/usr \
     --disable-man

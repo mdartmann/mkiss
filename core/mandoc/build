@@ -16,7 +16,7 @@ CFLAGS="$CFLAGS"
 LDFLAGS="$LDFLAGS"
 LN="ln -sf"
 EOF
-zsh -i
+
 ./configure \
     --prefix=/usr
 

@@ -1,7 +1,6 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
 
-zsh
 meson build \
     ${MESON_OPTIONS/-D b_lto=true/} \
     -D admin_group=wheel \
