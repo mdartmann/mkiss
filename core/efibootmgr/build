@@ -1,6 +1,7 @@
 #!/bin/sh -uxe
-sed -e '/extern int efi_set_verbose/d' -i "src/efibootmgr.c"
 
+sed -e '/extern int efi_set_verbose/d' -i "src/efibootmgr.c"
+sed -i "s|Werror|Wno-error|g" Make.defaults
 
 make libdir=/usr/lib sbindir=/usr/bin EFIDIR="arch" -j1
 
