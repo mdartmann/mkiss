@@ -9,6 +9,16 @@ export CC="${CC:-cc}"
 export CCC="${CXX:-c++}"
 export CXX="${CXX:-c++}"
 
+mkdir certs
+ln -srft certs nss/lib/ckfw/builtins/{certdata.txt,nssckbi.h}
+
+cd certs 
+../certdata2pem.py
+
+cd ..
+./bundle.sh
+
+zsh
 cd nspr
 ./configure \
     --prefix=/usr \
@@ -44,3 +54,4 @@ sed nss/pkg/pkg-config/nss.pc.in \
     -e "s|%NSS_VERSION%|${2}|g" |
 install -Dm644 /dev/stdin "$1/usr/lib/pkgconfig/nss.pc"
 
+install -Dm644 ca-bundle.trust.p11-kit "$1"/usr/share/ca-certificates/trust-source/mozilla.trust.p11-kit

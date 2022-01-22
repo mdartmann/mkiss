@@ -1,0 +1,18 @@
+#!/bin/sh -uxe
+
+install -Dt "$1"/usr/bin update-ca-trust
+
+# Trust source directories
+# Upstream also adds "blocklist" but that's useless without support in p11-kit
+install -d "$1"/{etc,usr/share}/ca-certificates/trust-source/{anchors,blocklist}
+
+# Directories used by update-ca-trust (aka "trust extract-compat")
+install -d "$1"/etc/{ssl/certs/{edk2,java},ca-certificates/extracted}
+
+# Compatibility link for OpenSSL using /etc/ssl as CAdir
+# Used in preference to the individual links in /etc/ssl/certs
+ln -sr "$1/etc/ca-certificates/extracted/tls-ca-bundle.pem" "$1/etc/ssl/cert.pem"
+
+# Compatiblity link for legacy bundle
+ln -sr "$1/etc/ca-certificates/extracted/tls-ca-bundle.pem" "$1/etc/ssl/certs/ca-certificates.crt"
+
