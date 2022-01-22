@@ -19,3 +19,9 @@ meson build \
 
 ninja -C build
 ninja -C build install
+
+echo ' u geoclue - "Geoinformation service" /var/lib/geoclue' | \
+    install -Dm644 /dev/stdin "$1"/usr/lib/sysusers.d/geoclue.conf
+
+echo 'd /var/lib/geoclue 0755 geoclue geoclue' |  \
+    install -Dm644 /dev/stdin "$1"/usr/lib/tmpfiles.d/geoclue.conf

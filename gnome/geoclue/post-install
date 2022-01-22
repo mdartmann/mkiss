@@ -1,3 +1,4 @@
 #!/bin/sh
 
-useradd -r -s /usr/bin/nologin geoclue
+systemd-sysusers
+systemd-tmpfiles --create
