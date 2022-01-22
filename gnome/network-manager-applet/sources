@@ -1,1 +1,2 @@
 git+https://gitlab.gnome.org/GNOME/network-manager-applet.git#VERSION
+https://gitlab.gnome.org/GNOME/network-manager-applet/-/merge_requests/107.patch
