@@ -1,0 +1,9 @@
+#!/bin/sh -uxe
+
+sed -i '/pragma weak pthread_create/d' tests/glthread/thread.h
+
+./configure \
+    --prefix=/usr
+
+make
+make DESTDIR="$1" install
