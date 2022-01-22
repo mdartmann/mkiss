@@ -1,1 +1,2 @@
 git+https://gitlab.gnome.org/GNOME/gcr.git#VERSION
+https://gitlab.gnome.org/GNOME/gcr/-/commit/b3ca1d02bb0148ca787ac4aead164d7c8ce2c4d8.patch
