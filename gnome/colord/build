@@ -9,8 +9,11 @@ meson build \
     -D print_profiles=true \
     -D daemon_user=colord  \
     -D argyllcms_sensor=false \
-    -D systemd=false \
+    -D systemd=true \
     -D print_profiles=false
 
 ninja -C build
 ninja -C build install
+
+echo 'u colord - "Color management daemon" /var/lib/colord' | \
+   install -Dm644 /dev/stdin "$1"/usr/lib/sysusers.d/colord.conf
