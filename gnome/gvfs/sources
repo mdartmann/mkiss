@@ -1,1 +1,2 @@
 git+https://gitlab.gnome.org/GNOME/gvfs.git#VERSION
+patches/meson.patch
