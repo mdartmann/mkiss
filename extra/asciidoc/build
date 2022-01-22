@@ -1,5 +1,8 @@
 #!/bin/sh -uxe
 
+# Remove existing installation if it exists
+kiss l asciidoc 2>&1 > /dev/null && kiss r asciidoc 
+
 autoconf
 
 sed -i '/pip install/s/\.$/--root $(DESTDIR) ./' Makefile.in
