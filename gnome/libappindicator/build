@@ -14,7 +14,7 @@ cd gtk2
     --localstatedir=/var \
     --with-gtk=2 \
     --enable-gtk-doc \
-    --without-python
+    --disable-introspection
 
 sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
 
