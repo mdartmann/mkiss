@@ -31,3 +31,6 @@ install -m644 doc/docbook/*.5 "$1/usr/share/man/man5"
 install -m644 doc/docbook/*.8 "$1/usr/share/man/man8"
 
 rm -f "$1/usr/share/man/man8/wpa_"{priv,gui}.8
+
+install -dm755 "$1"/usr/lib/systemd/system
+install -m644 systemd/*.service "$1"/usr/lib/systemd/system

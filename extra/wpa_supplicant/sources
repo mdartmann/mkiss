@@ -3,4 +3,5 @@ https://w1.fi/security/2020-2/0001-P2P-Fix-copying-of-secondary-device-types-for
 patches/CVE-2019-16275.patch
 patches/roam-properties.patch
 patches/tls.patch
+patches/systemd.patch
 files/config
