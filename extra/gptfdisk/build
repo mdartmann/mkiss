@@ -1,5 +1,8 @@
 #!/bin/sh -uxe
 
+export CFLAGS="${CFLAGS/-Werror=format-security/}"
+export CXXFLAGS="${CXXFLAGS/-Werror=format-security/}"
+
 sed -i "/^#include /s:ncursesw/::" gptcurses.cc
 
 make
