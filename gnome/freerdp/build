@@ -1,0 +1,29 @@
+#!/bin/sh -uxe
+
+export DESTDIR="$1"
+
+# Fix manpage formatting
+patch -Np1 -i freerdp-2.0.0-manpage_formatting.patch
+
+cmake -B build -G Ninja \
+    -D CMAKE_INSTALL_PREFIX="/usr" \
+    -D CMAKE_INSTALL_LIBDIR=lib \
+    -D CMAKE_BUILD_TYPE=None \
+    -D PROXY_PLUGINDIR=/usr/lib/freerdp2/server/proxy/plugins \
+    -D WITH_DSP_FFMPEG=ON \
+    -D WITH_FFMPEG=ON \
+    -D WITH_PULSE=ON \
+    -D WITH_CUPS=ON \
+    -D WITH_PCSC=ON \
+    -D WITH_ICU=ON \
+    -D WITH_JPEG=ON \
+    -D WITH_SERVER=ON \
+    -D WITH_SWSCALE=ON \
+    -D WITH_CHANNELS=ON \
+    -D WITH_CLIENT_CHANNELS=ON \
+    -D WITH_SERVER_CHANNELS=ON \
+    -D CHANNEL_URBDRC_CLIENT=ON \
+    -Wno-dev
+
+ninja -C build
+ninja -C build install
