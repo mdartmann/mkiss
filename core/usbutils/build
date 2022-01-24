@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+
+autoreconf -fiv
+
+./configure \
+    --prefix=/usr \
+    --datadir=/usr/share/hwdata
+
+make
+make DESTDIR="$1" install
