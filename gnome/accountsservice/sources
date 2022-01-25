@@ -1,1 +1,1 @@
-https://gitlab.freedesktop.org/accountsservice/accountsservice/-/archive/VERSION/accountsservice-VERSION.tar.bz2
+git+https://gitlab.freedesktop.org/accountsservice/accountsservice.git#VERSION

@@ -1,8 +1,6 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
 
-patch -Np1 -i 46ed7d26873b9741dff61f9df8e7778a8dc6f5cc.patch
-
 meson build \
     ${MESON_OPTIONS/-D b_lto=true/} \
     -D logind=libsystemd
