@@ -1,4 +1,3 @@
-https://github.com/systemd/systemd/archive/refs/tags/vVERSION.tar.gz
-https://github.com/systemd/systemd/commit/7c3b51c469140cdbc1b7e9a232af3f250fea3884.patch
-https://github.com/systemd/systemd/commit/9c1b17c3dc1541df02118ee3aaf6dd5dd540cdc2.patch
+https://github.com/systemd/systemd-stable/archive/refs/tags/vVERSION.tar.gz
 files/systemd-user.pam
+patches/0001-Use-Arch-Linux-device-access-groups.patch

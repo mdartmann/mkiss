@@ -40,7 +40,7 @@ meson build \
     -D sbat-distro='mkiss' \
     -D sbat-distro-summary="MKiss Linux" \
     -D sbat-distro-pkgname="systemd" \
-    -D sbat-distro-version='${2}' \
+    -D sbat-distro-version="${2}" \
     -D sbat-distro-url="https://github.com/mdartmann/mkiss"
 
 ninja -C build 
