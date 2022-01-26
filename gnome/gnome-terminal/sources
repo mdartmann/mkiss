@@ -1,0 +1,2 @@
+git+https://gitlab.gnome.org/GNOME/gnome-terminal.git#VERSION
+https://gitlab.gnome.org/GNOME/gnome-terminal/-/commit/9a168cc23962ce9fa106dc8a40407d381a3db403.patch

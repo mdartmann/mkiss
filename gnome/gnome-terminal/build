@@ -1,0 +1,15 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+git fetch
+git cherry-pick -n 9a168cc2
+
+#FIXME nautilus extensions breaks with version 42.alpha
+
+meson build \
+    ${MESON_OPTIONS} \
+    -D nautilus_extension=false
+
+zsh
+ninja -C build
+ninja -C build install
