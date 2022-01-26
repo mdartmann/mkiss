@@ -10,6 +10,5 @@ meson build \
     ${MESON_OPTIONS} \
     -D nautilus_extension=false
 
-zsh
 ninja -C build
 ninja -C build install
