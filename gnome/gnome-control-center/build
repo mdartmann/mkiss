@@ -6,15 +6,8 @@ sed -i "/installdir/s/'icons'/'pixmaps'/" panels/info-overview/meson.build
 git submodule init
 git submodule update 
 
-# Fix build with meson <= 0.61
-patch -Np1 -i 37b29c32cbecfd89c9c5e0169e0f2876f00ef5eb.patch
-
-# Disable wwan and smb support
-patch -Np1 -i no-wwan-or-smb.patch || zsh
-
 meson build \
-    ${MESON_OPTIONS/-D b_lto=true/} \
-    -D cheese=false 
+    ${MESON_OPTIONS/-D b_lto=true/} 
 
 ninja -C build
 ninja -C build install
