@@ -1,0 +1,13 @@
+#!/bin/sh -uxe
+
+./configure \
+    -cyes \
+    --prefix=/usr \
+    --sysconfdir=/etc/samba \
+    --localstatedir=/var \
+    --bundled-libraries=NONE \
+    --builtin-libraries=replace \
+    --enable-talloc-compat1
+
+make
+make DESTDIR="$1" install

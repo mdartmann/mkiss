@@ -1,0 +1,15 @@
+#!/bin/sh -uxe
+
+NOCONFIGURE=1 ./autogen.sh
+
+./configure \
+    --prefix=/usr \
+    --libexecdir=/usr/lib \
+    --enable-gtk-doc \
+    --with-dbus-sys-dir=/usr/share/dbus-1/system.d \
+    --with-polkit=permissive \
+    --disable-Werror \
+    --enable-vala
+
+make
+make DESTDIR="$1" install

@@ -1,0 +1,14 @@
+#!/bin/sh -uxe
+
+sed -i "s|@PKGVER@|${2}|" lmdb.pc
+
+pushd libraries/liblmdb
+make prefix=/usr
+
+install -dm755 "$1"/usr/{bin,lib,include,man/man1,share}
+
+make DESTDIR="$1" prefix=/usr install
+
+mv "$1"/usr/man "$1"/usr/share/man
+popd
+install -Dm644 lmdb.pc "$1"/usr/lib/pkgconfig/lmdb.pc

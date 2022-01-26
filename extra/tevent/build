@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+
+./configure \
+    -cyes \
+    --prefix=/usr \
+    --bundled-libraries=NONE \
+    --builtin-libraries=replace \
+
+make
+make DESTDIR="$1" install

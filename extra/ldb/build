@@ -1,0 +1,14 @@
+#!/bin/sh -uxe
+
+./configure \
+    -cyes \
+    --prefix=/usr \
+    --disable-rpath \
+    --disable-rpath-install \
+    --bundled-libraries=replace \
+    --builtin-libraries=replace \
+    --with-modulesdir=/usr/lib/ldb/modules \
+    --with-privatelibdir=/usr/lib/ldb
+
+make
+make DESTDIR="$1" install

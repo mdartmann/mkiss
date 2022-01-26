@@ -1,0 +1,4 @@
+https://us1.samba.org/samba/ftp/stable/samba-VERSION.tar.gz
+files/samba.conf
+files/samba.pam
+files/samba.logrotate

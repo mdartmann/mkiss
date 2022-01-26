@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+autoreconf -fi
+
+./configure \
+    --prefix=/usr
+
+make
+make DESTDIR="$1" install

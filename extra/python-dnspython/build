@@ -1,0 +1,8 @@
+#!/bin/sh -uxe
+
+bsdtar -xf dnspython-${2}.zip
+
+cd dnspython-${2}
+
+python setup.py build
+python setup.py install --root="$1" --optimize=1 --skip-build
