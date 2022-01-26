@@ -3,7 +3,7 @@ export DESTDIR="$1"
 export CFLAGS+=" -DG_DISABLE_CAST_CHECKS"
 
 meson build \
-	$MESON_OPTIONS \
+	${MESON_OPTIONS/-D b_lto=true/} \
 	-D selinux=disabled 
 
 ninja -C build
