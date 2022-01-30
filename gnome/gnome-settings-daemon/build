@@ -4,6 +4,9 @@ export DESTDIR="$1"
 # Fix build with meson >= 0.61
 patch -Np1 -i d88484002b5a0c8d2adccb2a5886a7da0a247d27.patch
 
+# Build with libgweather 4
+patch -Np1 -i 280.patch
+
 git submodule init
 git submodule update
 

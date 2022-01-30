@@ -1,9 +1,6 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
 
-# Fix build with meson >= 0.61
-patch -Np1 -i e35dbc1acd03dd1751b755b6c8e1932a692ad4e1.patch
-
 meson build \
     ${MESON_OPTIONS/-D b_lto=true/}
 
