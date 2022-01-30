@@ -1,8 +1,80 @@
 #!/bin/sh -uxe
 
-./configure \
-	--prefix=/usr \
-	--libexecdir=/usr/lib
 
-make
-make DESTDIR="$1" install
+make \
+	prefix="/usr" \
+	gitexecdir="/usr/lib/git-core" \
+	perllibdir="$(/usr/bin/perl -MConfig -wle 'print $Config{installvendorlib}')" \
+	CFLAGS="$CFLAGS" \
+	INSTALL_SYMLINKS=1 \
+	MAN_BOLD_LITERAL=1 \
+	NO_PERL_CPAN_FALLBACKS=1 \
+	USE_LIBPCRE2=1 \
+	all man
+
+make -C contrib/credential/libsecret
+
+make -C contrib/subtree \
+	prefix="/usr" \
+	gitexecdir="/usr/lib/git-core" \
+	perllibdir="$(/usr/bin/perl -MConfig -wle 'print $Config{installvendorlib}')" \
+	all man
+
+make -C contrib/mw-to-git \
+	prefix="/usr" \
+	gitexecdir="/usr/lib/git-core" \
+	perllibdir="$(/usr/bin/perl -MConfig -wle 'print $Config{installvendorlib}')" \
+	all
+
+make -C contrib/diff-highlight \
+	prefix="/usr" \
+	gitexecdir="/usr/lib/git-core" \
+	perllibdir="$(/usr/bin/perl -MConfig -wle 'print $Config{installvendorlib}')" \
+
+make \
+	prefix="/usr" \
+	gitexecdir="/usr/lib/git-core" \
+	perllibdir="$(/usr/bin/perl -MConfig -wle 'print $Config{installvendorlib}')" \
+	CFLAGS="$CFLAGS" \
+	INSTALL_SYMLINKS=1 \
+	MAN_BOLD_LITERAL=1 \
+	NO_PERL_CPAN_FALLBACKS=1 \
+	USE_LIBPCRE2=1 \
+	DESTDIR="$1" \
+	install install-man
+
+# bash completion
+mkdir -p "$1"/usr/share/bash-completion/completions
+install -m0644 ./contrib/completion/git-completion.bash "$1"/usr/share/bash-completion/completions/git
+# git prompt
+mkdir -p "$1"/usr/share/git
+install -m0644 ./contrib/completion/git-prompt.sh "$1"/usr/share/git/git-prompt.sh
+# libsecret helper
+install -m0755 contrib/credential/libsecret/git-credential-libsecret \
+	"$1"/usr/lib/git-core/git-credential-libsecret
+
+make -C contrib/credential/libsecret clean
+
+# subtree
+make -C contrib/subtree \
+	prefix="/usr" \
+	gitexecdir="/usr/lib/git-core" \
+	perllibdir="$(/usr/bin/perl -MConfig -wle 'print $Config{installvendorlib}')" \
+	DESTDIR="$1" \
+	install install-man
+
+make -C contrib/mw-to-git \
+	prefix="/usr" \
+	gitexecdir="/usr/lib/git-core" \
+	perllibdir="$(/usr/bin/perl -MConfig -wle 'print $Config{installvendorlib}')" \
+	DESTDIR="$1" \
+	install
+
+find contrib/ -name '.gitignore' -delete
+
+cp -a ./contrib/* "$1"/usr/share/git
+
+install -Dm0644 git-daemon@.service "$1"/usr/lib/systemd/system/git-daemon@.service
+install -Dm0644 git-daemon.socket "$1"/usr/lib/systemd/system/git-daemon.socket
+
+install -Dm0644 git-sysusers.conf "$1"/usr/lib/sysusers.d/git.conf

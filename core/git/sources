@@ -1,1 +1,4 @@
 https://www.kernel.org/pub/software/scm/git/git-VERSION.tar.xz
+files/git-daemon@.service
+files/git-sysusers.conf
+files/git-daemon.socket
