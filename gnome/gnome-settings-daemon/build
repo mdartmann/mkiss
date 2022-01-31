@@ -10,13 +10,15 @@ patch -Np1 -i 280.patch
 # Use new screenshot UI
 patch -Np1 -i 267.patch
 
+# Fix gnome settings shortcut
+patch -Np1 -i 284.patch
+
 git submodule init
 git submodule update
 
 meson build \
     ${MESON_OPTIONS/-D b_lto=true/} \
-    -D systemd=true \
-    -D wwan=false
+    -D systemd=true 
 
 ninja -C build
 ninja -C build install

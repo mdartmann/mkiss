@@ -1,4 +1,5 @@
 git+https://gitlab.gnome.org/GNOME/gnome-settings-daemon.git#VERSION
+https://gitlab.gnome.org/GNOME/gnome-settings-daemon/-/merge_requests/284.patch
 https://gitlab.gnome.org/GNOME/gnome-settings-daemon/-/merge_requests/280.patch
 https://gitlab.gnome.org/GNOME/gnome-settings-daemon/-/merge_requests/267.patch
 https://gitlab.gnome.org/GNOME/gnome-settings-daemon/-/commit/d88484002b5a0c8d2adccb2a5886a7da0a247d27.patch
