@@ -1,0 +1,15 @@
+#!/bin/sh -uxe
+
+sed -i "s|prefix := /usr/local|prefix := /usr|g" Makefile
+
+rm man5/passwd.5
+rm man3/getspnam.3
+rm man5/tzfile.5 man8/{tzselect,zdump,zic}.8
+
+rm man3/crypt*.3
+
+make DESTDIR="$1" install
+
+pushd posix
+make DESTDIR="$1" install
+popd
