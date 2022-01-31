@@ -16,6 +16,12 @@ make DESTDIR="$1" INSTALL="install -p" install
 cd "$1"
 install -dm700 var/log/audit
 
+rm -rf etc/rc.d \
+    etc/sysconfig \
+    usr/lib/audit 
+
 sed -ri 's|/sbin|/usr/bin|' \
 	etc/audit/*.conf \
 	etc/audit/plugins.d/*.conf 
+
+chmod 644 usr/lib/systemd/system/auditd.service
