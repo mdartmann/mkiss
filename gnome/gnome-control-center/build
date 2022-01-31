@@ -3,11 +3,14 @@ export DESTDIR="$1"
 
 sed -i "/installdir/s/'icons'/'pixmaps'/" panels/info-overview/meson.build
 
+# Fix schema issue with new screenshot ui
+patch -Np1 -i 1172.patch
+
 git submodule init
 git submodule update 
 
 meson build \
-    ${MESON_OPTIONS/-D b_lto=true/} 
+    ${MESON_OPTIONS/-D b_lto=true/}  
 
 ninja -C build
 ninja -C build install

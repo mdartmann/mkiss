@@ -1,1 +1,2 @@
 git+https://gitlab.gnome.org/GNOME/gnome-control-center.git#VERSION
+https://gitlab.gnome.org/GNOME/gnome-control-center/-/merge_requests/1172.patch
