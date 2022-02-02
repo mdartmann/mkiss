@@ -1,0 +1,6 @@
+https://downloads.sourceforge.net/project/djvu/DjVuLibre/VERSION/djvulibre-VERSION.tar.gz
+patches/djvulibre-unsigned-short-overflow.patch
+patches/djvulibre-check-input-pool.patch
+patches/djvulibre-djvuport-stack-overflow.patch
+patches/djvulibre-check-image-size.patch
+patches/djvulibre-integer-overflow.patch

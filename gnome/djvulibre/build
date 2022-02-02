@@ -1,0 +1,17 @@
+#!/bin/sh -uxe
+
+for i in *.patch; do
+    patch -Np1 -i $i
+done
+
+./configure \
+    --prefix=/usr \
+    --disable-desktopfiles
+
+make
+make DESTDIR="$1" install
+
+for sz in 22 32 48 64; do
+    install -Dm644 desktopfiles/prebuilt-hi${sz}-djvu.png \
+        "${1}/usr/share/icons/hicolor/${sz}x${sz}/mimetypes/image-vnd.djvu.mime.png"
+done
