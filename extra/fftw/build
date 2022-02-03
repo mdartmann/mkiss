@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --enable-shared \
+    --enable-threads
+
+make
+make DESTDIR="$1" install
+

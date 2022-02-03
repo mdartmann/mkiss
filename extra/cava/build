@@ -1,0 +1,9 @@
+#!/bin/sh -uxe
+
+ ./autogen.sh
+
+./configure \
+    --prefix=/usr \
+
+make
+install -Dm755 cava "$1"/usr/bin/cava
