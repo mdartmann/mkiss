@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+patch -Np1 -i 0001-Fix-meson-deprecations.patch
+
+meson build \
+    ${MESON_OPTIONS} \
+    -D tracker=false
+
+
+ninja -C build
+ninja -C build install

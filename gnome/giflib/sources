@@ -1,0 +1,3 @@
+https://downloads.sourceforge.net/project/giflib/giflib-VERSION.tar.gz
+patches/giflib-5.1.9-fix-missing-quantize-API-symbols.patch
+patches/giflib-5.1.9-make-flags.patch

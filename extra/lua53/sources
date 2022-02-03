@@ -1,0 +1,3 @@
+https://www.lua.org/ftp/lua-VERSION.tar.gz
+patches/liblua.so.patch
+files/lua.pc

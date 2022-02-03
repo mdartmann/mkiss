@@ -1,0 +1,63 @@
+From cb443ef1beb6dc7f957d0a12c84dd1768e5dc891 Mon Sep 17 00:00:00 2001
+From: Mae Dartmann <mae@meanderingmind.me>
+Date: Wed, 2 Feb 2022 23:05:38 +0100
+Subject: [PATCH] Fix meson deprecations
+
+---
+ data/meson.build | 5 ++---
+ meson.build      | 8 ++++----
+ 2 files changed, 6 insertions(+), 7 deletions(-)
+
+diff --git a/data/meson.build b/data/meson.build
+index 25ff1e1..b5e2677 100644
+--- a/data/meson.build
++++ b/data/meson.build
+@@ -26,7 +26,7 @@ i18n.merge_file(
+     input: PROJECT_RDNN_NAME + '.desktop.in.in',
+     configuration: desktop_conf),
+   output: APPLICATION_ID + '.desktop',
+-  po_dir: join_paths(meson.source_root(), 'po'),
++  po_dir: join_paths(meson.current_source_dir(), 'po'),
+   install: true,
+   install_dir: join_paths(get_option('prefix'), get_option('datadir'), 'applications')
+ )
+@@ -47,14 +47,13 @@ appdata_conf.set('appid', APPLICATION_ID)
+ appdata_conf.set('package_url', PACKAGE_URL)
+ appdata_conf.set('package_url_bug', PACKAGE_URL_BUG)
+ i18n.merge_file(
+-  'appdata',
+   input: configure_file(
+     output: PROJECT_RDNN_NAME + '.appdata.xml.in',
+     input: PROJECT_RDNN_NAME + '.appdata.xml.in.in',
+     configuration: appdata_conf
+   ),
+   output: APPLICATION_ID + '.appdata.xml',
+-  po_dir: join_paths(meson.source_root(), 'po'),
++  po_dir: join_paths(meson.current_source_dir(), 'po'),
+   install: true,
+   install_dir: join_paths(get_option('prefix'), get_option('datadir'), 'metainfo')
+ )
+diff --git a/meson.build b/meson.build
+index 1c283df..a5cbb1b 100644
+--- a/meson.build
++++ b/meson.build
+@@ -96,12 +96,12 @@ configure_file(
+ local_config = configuration_data()
+ local_config.set('application_id', APPLICATION_ID)
+ local_config.set('rdnn_name', PROJECT_RDNN_NAME)
+-local_config.set('pkgdatadir', join_paths(meson.build_root(), 'data'))
++local_config.set('pkgdatadir', join_paths(meson.current_build_dir(), 'data'))
+ local_config.set('localedir', join_paths(get_option('prefix'), get_option('datadir'), 'locale'))
+-local_config.set('pythondir', meson.source_root())
+-local_config.set('schemasdir', join_paths(meson.build_root(), 'data'))
++local_config.set('pythondir', meson.current_source_dir())
++local_config.set('schemasdir', join_paths(meson.current_build_dir(), 'data'))
+ # Used for gfm
+-local_config.set('gfmlibdir', join_paths(meson.build_root(), 'subprojects', 'gfm'))
++local_config.set('gfmlibdir', join_paths(meson.current_build_dir(), 'subprojects', 'gfm'))
+ 
+ local_config.set('local_build', 'True')
+ 
+-- 
+2.34.1
+

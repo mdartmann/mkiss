@@ -1,0 +1,2 @@
+git+https://gitlab.gnome.org/GNOME/grilo-plugins.git#grilo-plugins-VERSION
+patches/0001-grl-lua-factory-Remove-a-bad-pop.patch

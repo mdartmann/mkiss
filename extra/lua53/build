@@ -1,0 +1,33 @@
+#!/bin/sh -uxe
+
+patch -Np1 -i liblua.so.patch
+
+sed "s|%VER%|${2%.*}|g;s|%REL%|${2}|g" -i lua.pc
+
+sed "s|^R= \$V.4|R= \$V.5|" -i Makefile
+
+sed -i "s|llua|llua5.3|;s|/include|/include/lua5.3|" lua.pc
+
+sed -r -e "/^LUA_(SO|A|T)=/ s/lua/lua5.3/" -e "/^LUAC_T=/ s/luac/luac5.3/" -i src/Makefile
+
+make MYCFLAGS="$CFLAGS -fPIC" MYLDFLAGS="$LDFLAGS" linux
+
+make \
+    TO_BIN='lua5.3 luac5.3' \
+    TO_LIB="liblua5.3.a liblua5.3.so liblua5.3.so.5.3 liblua5.3.so.${2}" \
+    INSTALL_DATA='cp -d' \
+    INSTALL_TOP="$1/usr" \
+    INSTALL_INC="$1"/usr/include/lua5.3 \
+    INSTALL_MAN="$1"/usr/share/man/man1 \
+    install
+
+ln -sf /usr/lib/liblua5.3.so "$1"/usr/lib/liblua.so.5.3
+ln -sf /usr/lib/liblua5.3.so "$1"/usr/lib/liblua.so.${2}
+
+install -Dm644 lua.pc "$1"/usr/lib/pkgconfig/lua53.pc
+ln -sf lua53.pc "$1"/usr/lib/pkgconfig/lua5.3.pc
+ln -sf lua53.pc "$1"/usr/lib/pkgconfig/lua-5.3.pc
+
+
+mv "$1"/usr/share/man/man1/{lua.1,lua5.3.1}
+mv "$1"/usr/share/man/man1/{luac.1,luac5.3.1}

@@ -1,0 +1,8 @@
+#!/bin/sh -uxe
+
+patch -Np1 -i giflib-5.1.9-fix-missing-quantize-API-symbols.patch
+patch -Np1 -i giflib-5.1.9-make-flags.patch
+
+make
+make PREFIX=/usr DESTDIR="$1" install
+
