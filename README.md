@@ -20,6 +20,7 @@ This repository includes three folders:
 - `core` for core system utilities, such as compilers, libc, coreutils and the kernel
 - `extra` for extra console utilities and libraries that aren't part of the core
 - `gui` for graphical applications, such as the Sway window manager, and their back-ends
+- `gnome` for the GNOME desktop environment and its programs and utilities
 
 ## Contributions
 
