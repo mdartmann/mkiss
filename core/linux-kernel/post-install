@@ -1,0 +1,18 @@
+#!/bin/sh
+
+dkmsrefresh() 
+{
+    # Get Linux and nvidia version.
+    local linver=$(cat /usr/src/linux/version)
+    local nvver=$(cat /var/db/kiss/installed/nvidia/version | cut -d ' ' -f1)
+    
+    # Build dkms module, don't depmod yet for performance
+    dkms install --no-depmod -m nvidia -v "${nvver}" -k "${linver}"
+    
+    #depmod
+    depmod "${linver}"
+}
+
+if kiss l | rg nvidia > /dev/null 2&>1; then
+    dkmsrefresh
+fi
