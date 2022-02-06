@@ -3,8 +3,17 @@
 cargo fetch \
 	--locked \
 	--target $CARCH-unknown-linux-gnu 
+
 cargo build \
 	--release \
 	--frozen \
 	--features notify-rust 
+
 install -Dm755 target/release/starship -t "$1/usr/bin"
+
+install -dm755 "$1"/usr/share/{bash-completion/completions,zsh/site-functions}/
+
+./target/release/starship completions bash > "$1"/usr/share/bash-completion/completions/starship
+
+./target/release/starship completions zsh > "$1"/usr/share/zsh/site-functions/_starship
+
