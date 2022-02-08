@@ -4,6 +4,9 @@ export DESTDIR="$1"
 export CFLAGS+=" -fno-semantic-interposition"
 export LDFLAGS+=" -Wl,-Bsymbolic-functions"
 
+# Fix freeze of screenshot-ui on Wayland
+patch -Np1 -i 2271.patch
+
 meson build \
     ${MESON_OPTIONS/-D b_lto=true/} \
     -D egl_device=true \

@@ -19,7 +19,6 @@ autoreconf -fiv
     --sbindir=/usr/bin \
     --libdir=/usr/lib \
     --enable-systemd \
-    --disable-elogind \
     --with-bundled-catch \
     --with-bundled-pegtl \
     --with-dbus \
@@ -37,5 +36,3 @@ install -Dpm600 usbguard-daemon.conf rules.conf -t "$1/etc/usbguard"
 install -Dpm644 scripts/bash_completion/usbguard -t "$1/usr/share/bash-completion/completions" 
 
 install -Dpm644 scripts/usbguard-zsh-completion "$1/usr/share/zsh/site-functions/_usbguard"
-
-

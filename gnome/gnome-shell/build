@@ -8,7 +8,8 @@ meson build \
     ${MESON_OPTIONS/-D b_lto=true/} \
     -D gtk_doc=true \
     -D systemd=true \
-    -D tests=false
+    -D tests=false \
+    --buildtype release
 
 ninja -C build
 ninja -C build install
