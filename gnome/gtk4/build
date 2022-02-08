@@ -6,13 +6,12 @@ export CFLAGS+=" -DG_DISABLE_CAST_CHECKS"
 meson build \
     ${MESON_OPTIONS/-D b_lto=true/} \
     -D broadway-backend=true \
-    -D cloudproviders=disabled \
+    -D cloudproviders=enabled \
     -D tracker=enabled \
     -D colord=enabled \
     -D gtk_doc=false \
     -D man-pages=true \
-    --buildtype plain \
-    -D vulkan=enabled
+    --buildtype plain 
 
 ninja -C build
 ninja -C build install
