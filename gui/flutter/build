@@ -1,0 +1,18 @@
+#!/bin/sh -uxe
+
+bin/flutter doctor
+
+rm -rf bin/cache .pub-cache
+install -Dm755 flutter.sh "$1"/etc/profile.d/flutter.sh
+
+install -dm755 "$1"/opt/flutter
+install -dm755 "$1"/usr/bin
+
+cp -ra . "$1"/opt/flutter
+
+find "$1"/opt/flutter -type d -exec chmod a+rx {} +
+find "$1"/opt/flutter -type f -exec chmod a+r {} +
+
+chmod a+rw "$1"/opt/flutter/version
+
+ln -s "$1"/opt/flutter/bin/flutter "$1"/usr/bin/flutter
