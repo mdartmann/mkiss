@@ -1,4 +1,8 @@
 #!/bin/sh
 
-systemd-sysusers
+chmod +s /bin/sudo
+
 systemd-tmpfiles --create
+
+
+

@@ -4,6 +4,7 @@
 	--prefix=/usr \
 	--sysconfdir=/etc \
 	--localstatedir=/var \
+    --runstatedir=/run \
 	--with-system-socket=/var/run/dbus/system_bus_socket \
 	--with-system-pid-file=/var/run/dbus/pid \
 	--with-console-auth-dir=/var/run/console \

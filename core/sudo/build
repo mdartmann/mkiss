@@ -4,7 +4,7 @@
 	--prefix=/usr \
 	--sbindir=/usr/bin \
 	--libexecdir=/usr/lib \
-	--with-rundir=/var/run/sudo \
+	--with-rundir=/run/sudo \
 	--with-vardir=/var/db/sudo \
 	--with-logfac=auth \
 	--enable-tmpfiles.d \
@@ -16,6 +16,6 @@
 	--with-all-insults
 
 make
-make DESTDIR="$1" install
+fakeroot make DESTDIR="$1" install
 
 install -Dm644 sudo.pam "$1/etc/pam.d/sudo"
