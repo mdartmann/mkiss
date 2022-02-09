@@ -1,8 +1,5 @@
 #!/bin/sh -uxe
 
-# Source rustup if available
-source ~/.cargo/env || true
-
 export DESTDIR="$1"
 
 # Move credential helpers from libexec to lib
