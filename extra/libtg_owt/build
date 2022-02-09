@@ -9,6 +9,9 @@ git submodule update --recursive
 # I hate this static link, but the maintainers are... special
 # So for now it's the only option.
 
+export CFLAGS+=" -flto -ffat-lto-objects"
+export CXXFLAGS+=" -flto -ffat-lto-objects -I/usr/include/libdrm"
+
 cmake -B build -G Ninja \
     -D CMAKE_BUILD_TYPE=Release \
     -D CMAKE_INSTALL_PREFIX=/usr \
