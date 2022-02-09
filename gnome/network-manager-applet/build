@@ -6,8 +6,7 @@ patch -Np1 -i 107.patch
 
 meson build \
     ${MESON_OPTIONS/-D b_lto=true/} \
-    -D selinux=false \
-    -D wwan=false
+    -D selinux=false 
 
 ninja -C build
 ninja -C build install

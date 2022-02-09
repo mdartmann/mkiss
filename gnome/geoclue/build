@@ -12,10 +12,7 @@ done
 meson build \
     ${MESON_OPTIONS/-D b_lto=true/} \
     -D dbus-srv-user=geoclue \
-    -D dbus-sys-dir=/usr/share/dbus-1/system.d  \
-    -D 3g-source=false \
-    -D cdma-source=false \
-    -D modem-gps-source=false
+    -D dbus-sys-dir=/usr/share/dbus-1/system.d  
 
 ninja -C build
 ninja -C build install
