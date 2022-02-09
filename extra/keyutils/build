@@ -4,4 +4,4 @@ patch -Np0 -i request-key.conf.patch
 patch -Np1 -i reproducible.patch
 
 make CFLAGS="$CFLAGS" LDFLAGS="$LDFLAGS" BINDIR="/usr/bin" SBINDIR="/usr/bin"
-make DESTDIR="$1" CFLAGS="$CFLAGS" LDFLAGS="$LDFLAGS" BINDIR="/usr/bin" SBINDIR="/usr/bin" USTLIBDIR="/usr/lib" install
+make DESTDIR="$1" CFLAGS="$CFLAGS" LDFLAGS="$LDFLAGS" BINDIR="/usr/bin" SBINDIR="/usr/bin" LIBDIR="/usr/lib" USTLIBDIR="/usr/lib" install
