@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+
+autoreconf -fiv
+
+./configure \
+    --prefix=/usr \
+    --disable-static \
+    --enable-examples
+
+make
+make DESTDIR="$1" install

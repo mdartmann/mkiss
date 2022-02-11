@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+
+./autogen.sh
+
+./configure \
+    --prefix=/usr \
+    --enable-x86simd \
+    --disable-static
+
+make
+make DESTDIR="$1" install

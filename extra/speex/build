@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --disable-static \
+    --enable-binaries
+
+make
+make DESTDIR="$1" install

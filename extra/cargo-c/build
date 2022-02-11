@@ -1,0 +1,14 @@
+#!/bin/sh -uxe
+
+cargo fetch 
+
+cargo build \
+    --release \
+    --frozen
+
+cargo install \
+    --frozen \
+    --offline \
+    --no-track \
+    --path "$PWD" \
+    --root "$1"/usr

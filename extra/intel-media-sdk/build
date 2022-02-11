@@ -1,0 +1,21 @@
+#!/bin/sh -uxe
+
+export DESTDIR="$1"
+
+export CFLAGS+=" -flto -ffat-lto-objects"
+export CXXFLAGS+=" -flto -ffat-lto-objects"
+
+cmake -B build -G Ninja \
+    -D BUILD_ALL=ON \
+    -D BUILD_TOOLS=ON \
+    -D CMAKE_BUILD_TYPE=None \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D ENABLE_ITT=OFF \
+    -D ENABLE_OPENCL=OFF \
+    -D ENABLE_WAYLAND=ON \
+    -D ENABLE_X11_DRI3=ON \
+    -D MFX_APPS_DIR=/usr/lib/mfx \
+    -Wno-dev
+
+ninja -C build
+ninja -C build install

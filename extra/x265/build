@@ -1,0 +1,43 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+patch -Np1 -i fix-cmake.patch
+
+cmake -S source -B build-12 -G Ninja \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D HIGH_BIT_DEPTH=TRUE \
+    -D MAIN12=TRUE \
+    -D EXPORT_C_API=FALSE \
+    -D ENABLE_CLI=FALSE \
+    -D ENABLE_SHARED=FALSE \
+    -Wno-dev
+
+ninja -C build-12
+
+cmake -S source -B build-10 -G Ninja \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D HIGH_BIT_DEPTH=TRUE \
+    -D EXPORT_C_API=FALSE \
+    -D ENABLE_CLI=FALSE \
+    -D ENABLE_SHARED=FALSE \
+    -Wno-dev
+
+ninja -C build-10
+
+cmake -S source -B build -G Ninja \
+    -D CMAKE_BUILD_TYPE=None \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D ENABLE_SHARED=TRUE \
+    -D STATIC_LINK_CRT=FALSE \
+    -D ENABLE_HDR10_PLUS=TRUE \
+    -D EXTRA_LIB='x265_main10.a;x265_main12.a' \
+    -D EXTRA_LINK_FLAGS='-L .' \
+    -D LINKED_10BIT=TRUE \
+    -D LINKED_12BIT=TRUE \
+    -Wno-dev
+
+ln -s ../build-10/libx265.a build/libx265_main10.a
+ln -s ../build-12/libx265.a build/libx265_main12.a
+  
+ninja -C build
+ninja -C build install

@@ -1,0 +1,19 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+cmake -B build -G Ninja \
+    -D CMAKE_BUILD_TYPE=None \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -Wno-dev
+
+ninja -C build
+ninja -C build install
+
+install -Dm644 avisynthplus.xml "$1"/usr/share/mime/packages
+
+while read -r -d '' _icon
+do
+    _res="$(sed 's/[[:alpha:]]*\([0-9]\+\)\.png/\1/' <<< "${_icon##*/}")"
+    [ -n "$_res" ] && install -D -m644 "$_icon" \
+        "${1}/usr/share/icons/hicolor/${_res}x${_res}/mimetypes/avisynthplus-script.png"
+done < <(find "distrib/Icons/Rastered" -type f -name 'AvsPlusIcon*.png' -print0)

@@ -5,31 +5,59 @@
     --disable-debug \
     --disable-static \
     --disable-stripping \
+    --enable-amf \
+    --enable-avisynth \
     --enable-cuda-llvm \
     --enable-lto \
     --enable-fontconfig \
+    --enable-gmp \
+    --enable-gnutls \
     --enable-gpl \
     --enable-ladspa \
+    --enable-libaom \
     --enable-libass \
+    --enable-libbluray \
     --enable-libdav1d \
     --enable-libdrm \
     --enable-libfreetype \
     --enable-libfribidi \
+    --enable-libgsm \
+    --enable-libiec61883 \
+    --enable-libmfx \
+    --enable-libmodplug \
     --enable-libmp3lame \
+    --enable-libopencore_amrnb \
+    --enable-libopencore_amrwb \
     --enable-libopenjpeg \
     --enable-libopus \
     --enable-libpulse \
+    --enable-librav1e \
     --enable-librsvg \
+    --enable-libspeex \
+    --enable-libsrt \
+    --enable-libssh \
     --enable-libsvtav1 \
+    --enable-libtheora \
     --enable-libv4l2 \
+    --enable-libvidstab \
+    --enable-libvmaf \
     --enable-libvorbis \
     --enable-libvpx \
     --enable-libwebp \
     --enable-libx264 \
+    --enable-libx265 \
     --enable-libxcb \
     --enable-libxml2 \
+    --enable-libxvid \
+    --enable-libzimg \
+    --enable-nvdec \
+    --enable-nvenc \
     --enable-shared \
-    --enable-version3
+    --enable-version3 
 
+sed -i "s|-Werror|-Wno-error|g" ffbuild/config.mak
 make
-make DESTDIR="$1" install
+make tools/qt-faststart
+make doc/ff{mpeg,play}.1
+
+make DESTDIR="$1" install install-man

@@ -12,4 +12,4 @@ meson build \
 ninja -C build
 ninja -C build install
 
-rm -rf "$1/usr/bin" "$1/etc"
+rm -rf "$1/usr/bin" "$1/etc" "$1/usr/lib/systemd"

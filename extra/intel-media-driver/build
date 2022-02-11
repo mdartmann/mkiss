@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+cmake -B build -G Ninja \
+	-D CMAKE_INSTALL_PREFIX=/usr \
+	-D CMAKE_INSTALL_LIBDIR=lib \
+	-D INSTALL_DRIVER_SYSCONF=OFF \
+	-D MEDIA_BUILD_FATAL_WARNINGS=OFF \
+	-Wno-dev
+
+ninja -C build
+ninja -C build install

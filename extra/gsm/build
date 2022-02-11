@@ -1,0 +1,13 @@
+#!/bin/sh -uxe
+
+patch -p0 -i gsm-shared.patch
+
+make CCFLAGS="-c ${CFLAGS} -fPIC"
+
+install -dm755 "$1"/usr/{bin,lib,include/gsm,share/man/man{1,3}}
+
+make -j1 INSTALL_ROOT="$1/usr" \
+	GSM_INSTALL_INC="$1/usr/include/gsm" \
+	GSM_INSTALL_MAN="$1/usr/share/man/man3" \
+	TOAST_INSTALL_MAN="$1/usr/share/man/man1" \
+	install

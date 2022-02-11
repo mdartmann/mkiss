@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+cd libvmaf
+meson build \
+    ${MESON_OPTIONS/-D b_lto=true/}
+
+ninja -C build
+ninja -C build install
+
+install -Dm755 build/tools/vmaf_{feature,rc} -t "$1"/usr/bin

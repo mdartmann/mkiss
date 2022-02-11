@@ -1,0 +1,2 @@
+git+https://bitbucket.org/multicoreware/x265_git#f0c1022b6be121a753ff02853fbe33da71988656
+patches/fix-cmake.patch

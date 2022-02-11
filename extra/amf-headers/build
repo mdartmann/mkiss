@@ -1,0 +1,4 @@
+#!/bin/sh -uxe
+
+install -dm755 "$1"/usr/include
+cp -drv --no-preserve=ownership amf/public/include "$1"/usr/include/AMF

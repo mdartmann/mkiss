@@ -1,0 +1,16 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+cmake -B build -G Ninja \
+    -D CMAKE_BUILD_TYPE=Release \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D BUILD_EXAMPLES=OFF \
+    -D BUILD_SHARED_LIBS=ON \
+    -D WITH_AVFFT=ON \
+    -D WITH_LSR_BINDINGS=ON \
+    -D WITH_OPENMP=ON \
+    -D WITH_PFFFT=ON \
+    -Wno-dev
+
+ninja -C build
+ninja -C build install

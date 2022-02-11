@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+
+cargo fetch --locked
+
+cargo build --release --frozen
+
+cargo cbuild --release --frozen --prefix=/usr
+
+cargo install --frozen --offline --no-track --path "$PWD" --root "$1"/usr
+
+cargo cinstall --release --frozen --prefix /usr --destdir "$1"

@@ -1,0 +1,36 @@
+diff --git a/source/CMakeLists.txt b/source/CMakeLists.txt
+index a407271..b84db37 100755
+--- a/source/CMakeLists.txt
++++ b/source/CMakeLists.txt
+@@ -669,7 +669,6 @@ if(ENABLE_SHARED)
+         endif()
+     endif()
+     set_target_properties(x265-shared PROPERTIES SOVERSION ${X265_BUILD})
+-    if(X265_LATEST_TAG)
+         if(WINDOWS)
+             set_target_properties(x265-shared PROPERTIES VERSION ${X265_LATEST_TAG})
+         endif()
+@@ -678,7 +677,6 @@ if(ENABLE_SHARED)
+                 LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+                 ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
+                 RUNTIME DESTINATION ${BIN_INSTALL_DIR})
+-    endif()
+     if(ENABLE_HDR10_PLUS)
+         install(TARGETS hdr10plus-shared
+             LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+@@ -691,7 +689,6 @@ if(ENABLE_SHARED)
+     endif()
+ endif()
+ 
+-if(X265_LATEST_TAG)
+     # convert lists of link libraries into -lstdc++ -lm etc..
+     foreach(LIB ${CMAKE_CXX_IMPLICIT_LINK_LIBRARIES} ${PLATFORM_LIBS})
+         if(IS_ABSOLUTE ${LIB} AND EXISTS ${LIB})
+@@ -714,7 +711,6 @@ if(X265_LATEST_TAG)
+     configure_file("x265.pc.in" "x265.pc" @ONLY)
+     install(FILES       "${CMAKE_CURRENT_BINARY_DIR}/x265.pc"
+             DESTINATION "${LIB_INSTALL_DIR}/pkgconfig")
+-endif()
+ 
+ configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/cmake_uninstall.cmake.in"
+                "${CMAKE_CURRENT_BINARY_DIR}/cmake/cmake_uninstall.cmake"

@@ -1,0 +1,23 @@
+diff --git a/spa/plugins/ffmpeg/ffmpeg.c b/spa/plugins/ffmpeg/ffmpeg.c
+index 8e3f5be..4d2e19b 100644
+--- a/spa/plugins/ffmpeg/ffmpeg.c
++++ b/spa/plugins/ffmpeg/ffmpeg.c
+@@ -84,14 +84,16 @@ int spa_handle_factory_enum(const struct spa_handle_factory **factory, uint32_t
+ 	static struct spa_handle_factory f;
+ 	static char name[128];
+ 
++#if LIBAVCODEC_VERSION_INT < AV_VERSION_INT(58,10,100)
+ 	av_register_all();
++#endif
+ 
+ 	if (*index == 0) {
+-		c = av_codec_next(NULL);
++		c = av_codec_iterate(NULL);
+ 		ci = 0;
+ 	}
+ 	while (*index > ci && c) {
+-		c = av_codec_next(c);
++		c = av_codec_iterate(&c);
+ 		ci++;
+ 	}
+ 	if (c == NULL)
