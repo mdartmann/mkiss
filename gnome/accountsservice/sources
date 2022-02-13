@@ -1,1 +1,2 @@
 git+https://gitlab.freedesktop.org/accountsservice/accountsservice.git#VERSION
+patches/0001-build-Properly-apply-modes-in-meson_post_install.py.patch
