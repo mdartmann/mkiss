@@ -1,4 +1,11 @@
+gcr
+glib2
+gtk2
 libassuan
 libcap
 libgpg-error
+libsecret
+libx11
 ncurses
+qt5-base
+qt5-x11extras

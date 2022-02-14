@@ -1,0 +1,9 @@
+dbus
+expat
+gcc
+gdbm
+glib2
+gtk3
+libcap
+libdaemon
+libevent

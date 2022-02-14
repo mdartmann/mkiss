@@ -1,1 +1,5 @@
+acl
+attr
+gmp
+libcap
 openssl

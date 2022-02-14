@@ -1,0 +1,7 @@
+e2fsprogs
+libgcrypt
+lzo
+systemd
+util-linux
+zlib
+zstd

@@ -1,9 +1,11 @@
+apr
+apr-util
 brotli
-krb5
-libidn2
+curl
+jansson
 libnghttp2
-libpsl
+libxml2
 openldap
 openssl
+pcre
 zlib
-zstd

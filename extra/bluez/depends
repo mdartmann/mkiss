@@ -1,0 +1,6 @@
+alsa-lib
+dbus
+glib2
+json-c
+readline
+systemd

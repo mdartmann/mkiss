@@ -1,0 +1,6 @@
+argon2
+json-c
+lvm2
+openssl
+popt
+util-linux

@@ -1,4 +1,7 @@
 curl
 expat
+glib2
+libsecret
 openssl
+pcre2
 zlib

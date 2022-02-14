@@ -1,0 +1,8 @@
+apr
+db
+expat
+gdbm
+nss
+openldap
+openssl
+sqlite

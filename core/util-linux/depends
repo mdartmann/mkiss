@@ -1,4 +1,6 @@
+libcap-ng
 linux-pam
 ncurses
 readline
+systemd
 zlib

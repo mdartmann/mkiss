@@ -1,6 +1,9 @@
 acl
+avahi
 dbus
 gnutls
+libpaper
 libusb
 linux-pam
+systemd
 zlib

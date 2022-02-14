@@ -1,3 +1,6 @@
+db
 elfutils
+iptables
 libbpf
 libcap
+libmnl

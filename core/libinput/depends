@@ -1,2 +1,9 @@
+cairo
+glib2
+gtk4
 libevdev
+libwacom
+libx11
 mtdev
+systemd
+wayland
