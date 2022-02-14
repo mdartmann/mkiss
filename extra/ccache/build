@@ -27,3 +27,8 @@ for link in \
 do
     ln -s /usr/bin/ccache "$1/usr/lib/ccache/bin/$link"
 done
+
+mkdir -p "$1"/etc/profile.d
+cat > "$1"/etc/profile.d/ccache.sh << EOF
+export PATH="/usr/lib/ccache/bin:\$PATH"
+EOF
