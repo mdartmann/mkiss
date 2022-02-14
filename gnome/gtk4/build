@@ -3,6 +3,9 @@ export DESTDIR="$1"
 
 export CFLAGS+=" -DG_DISABLE_CAST_CHECKS"
 
+# Fix nautilus alpha issues
+patch -Np1 -i 1a64eeb88ed69b38c36cb8b143b05a0eaf5c461c.patch
+
 meson build \
     ${MESON_OPTIONS/-D b_lto=true/} \
     -D broadway-backend=true \
