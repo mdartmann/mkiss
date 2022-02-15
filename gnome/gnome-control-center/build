@@ -3,9 +3,6 @@ export DESTDIR="$1"
 
 sed -i "/installdir/s/'icons'/'pixmaps'/" panels/info-overview/meson.build
 
-# Fix schema issue with new screenshot ui
-patch -Np1 -i 1172.patch
-
 git submodule init
 git submodule update 
 

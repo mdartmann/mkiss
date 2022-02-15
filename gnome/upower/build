@@ -1,14 +1,18 @@
 #!/bin/sh -uxe
+export DESTDIR="$1"
 
-NOCONFIGURE=1 ./autogen.sh
+#./configure \
+    #--prefix=/usr \
+    #--sysconfdir=/etc \
+    #--localstatedir=/var \
+    #--libexecdir=/usr/lib \
+    #--disable-static \
+    #--enable-gtk-doc
 
-./configure \
-    --prefix=/usr \
-    --sysconfdir=/etc \
-    --localstatedir=/var \
-    --libexecdir=/usr/lib \
-    --disable-static \
-    --enable-gtk-doc
+meson build \
+    ${MESON_OPTIONS/-D b_lto=true/} \
+    -D gtk-doc=true \
+    -D idevice=disabled
 
-make
-make DESTDIR="$1" install
+ninja -C build
+ninja -C build install
