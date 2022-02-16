@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+
+install -dm755 "$1"/usr/share/wordlists/
+
+# needed for kiss to not break itself (lol)
+rm -rf Payloads/File-Names/max-length
+
+for i in Discovery Fuzzing IOCs Miscellaneous Passwords Pattern-Matching Payloads Usernames Web-Shells; do
+    cp -av $i "$1"/usr/share/wordlists/"$i"
+done
+
