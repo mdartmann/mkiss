@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+
+sed -i "s|-w |-w -linkmode external |" Makefile
+
+export CGO_CFLAGS="${CFLAGS}"
+export CGO_LDFLAGS="${LDFLAGS}"
+export CGO_CXXFLAGS="${CXXFLAGS}"
+export GOFLAGS="-buildmode=pie -trimpath -mod=readonly -modcacherw -ldflags=-linkmode=external"
+
+go build .
+install -Dm755 gobuster "$1"/usr/bin/gobuster
