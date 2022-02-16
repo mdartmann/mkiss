@@ -1,2 +1,2 @@
 
-git+https://github.com/c-ares/c-ares#cares-VERSION
+git+https://github.com/c-ares/c-ares#cares-MAJOR_MINOR_PATCH
