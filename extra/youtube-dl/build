@@ -1,0 +1,14 @@
+#!/bin/sh -uxe
+
+sed -i "s|etc/bash_completion.d|share/bash-completion/completions|" setup.py
+
+python setup.py build
+python setup.py install --root="$1" --optimize=1 --skip-build
+
+mv "$1"/usr/share/bash-completion/completions/youtube-dl.bash-completion \
+   "$1"/usr/share/bash-completion/completions/youtube-dl
+
+install -Dm644 youtube-dl.zsh "$1"/usr/share/zsh/site-functions/_youtube-dl
+rm -rf "$1"/etc/fish
+
+
