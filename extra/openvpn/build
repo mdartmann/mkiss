@@ -1,0 +1,35 @@
+#!/bin/sh -uxe
+
+sed -i "/&CONFIGURE_DEFINES=/s/set/env/g" configure.ac
+
+patch -Np1 -i 0001-unprivileged.patch
+
+autoreconf -fiv
+
+./configure \
+    --prefix=/usr \
+    --sbindir=/usr/bin \
+    --enable-pkcs11 \
+    --enable-plugins \
+    --enable-systemd \
+    --enable-x509-alt-username
+
+make
+make DESTDIR="$1" install
+
+install -Dm655 sysusers.conf "$1"/usr/lib/sysusers.d/openvpn.conf
+install -Dm655 tmpfiles.conf "$1"/usr/lib/tmpfiles.d/openvpn.conf
+
+
+install -d -m0755 "${1}"/usr/share/openvpn
+cp -r sample/sample-config-files "${1}"/usr/share/openvpn/examples
+
+  for FILE in $(find contrib -type f); do
+    case "$(file --brief --mime-type --no-sandbox "${FILE}")" in
+      "text/x-shellscript")
+        install -D -m0755 "${FILE}" "${1}/usr/share/openvpn/${FILE}" ;;
+      *)
+        install -D -m0644 "${FILE}" "${1}/usr/share/openvpn/${FILE}" ;;
+    esac
+  done
+

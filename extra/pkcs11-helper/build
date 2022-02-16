@@ -1,0 +1,13 @@
+#!/bin/sh -uxe
+
+libtoolize
+aclocal
+autoheader
+automake --add-missing
+autoreconf -v
+
+./configure \
+    --prefix=/usr
+
+make
+make DESTDIR="$1" install
