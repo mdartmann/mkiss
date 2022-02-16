@@ -1,0 +1,18 @@
+#!/bin/sh -uxe
+
+rm -rf liblua libpcap libpcre macosx mwin32 libssh2 libz
+
+autoreconf -fiv
+
+./configure \
+    --prefix=/usr \
+    --with-libpcap=/usr \
+    --with-libpcre=/usr \
+    --with-zlib=/usr \
+    --with-libssh2=/usr \
+    --with-liblua=/usr \
+    --without-ndiff \
+    --without-zenmap
+
+make 
+make DESTDIR="$1" install
