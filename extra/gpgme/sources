@@ -1,3 +1,1 @@
 https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-VERSION.tar.bz2
-patches/python310.patch
-https://src.fedoraproject.org/rpms/gpgme/raw/rawhide/f/0001-core-Support-closefrom-also-for-glibc.patch

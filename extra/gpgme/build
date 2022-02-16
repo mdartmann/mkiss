@@ -1,9 +1,5 @@
 #!/bin/sh -uxe
 
-for i in *.patch; do
-    patch -Np1 -i $i
-done
-
 ./configure \
     --prefix=/usr \
     --disable-fd-passing \
