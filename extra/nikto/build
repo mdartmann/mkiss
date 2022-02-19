@@ -1,0 +1,14 @@
+#!/bin/sh -uxe
+
+find . -type f ! -name nikto.pl -exec chmod 0644 {} +
+
+install -d "$1"/usr/share/nikto
+cp -a program/* "$1"/usr/share/nikto
+
+install -Dm755 nikto.sh "$1"/usr/bin/nikto
+
+install -Dm 644 program/nikto.conf "${1}/etc/nikto.conf"
+install -Dm 644 documentation/nikto.1 "${1}/usr/share/man/man1/nikto.1"
+install -Dm 644 program/docs/nikto_manual.html "${1}/usr/share/doc/nikto/manual.html"
+install -Dm 644 README.md "${1}/usr/share/doc/nikto/README"
+

@@ -1,0 +1,57 @@
+#!/bin/sh -uxe
+
+options=(
+   --prefix=/usr
+   --mandir=/usr/share/man
+   --datadir=/usr/share/postgresql
+   --sysconfdir=/etc
+   --with-gssapi
+   --with-libxml
+   --with-openssl
+   --with-perl
+   --with-python
+   --without-tcl
+   --with-pam
+   --with-system-tzdata=/usr/share/zoneinfo
+   --with-uuid=e2fs
+   --with-icu
+   --with-systemd
+   --with-ldap
+   --with-llvm
+   --with-libxslt
+   --enable-nls
+   --enable-thread-safety
+   --disable-rpath)
+
+./configure \
+    "${options[@]}" \
+    PYTHON=/usr/bin/python
+
+# install libs and non-server binaries
+
+for dir in src/interfaces src/bin/pg_config src/bin/pg_dump src/bin/psql src/bin/scripts; do
+make -C ${dir} DESTDIR="${1}" install
+done
+
+for util in pg_config pg_dump pg_dumpall pg_restore psql \
+  clusterdb createdb createuser dropdb dropuser pg_isready reindexdb vacuumdb; do
+install -Dm 644 doc/src/sgml/man1/${util}.1 "${1}"/usr/share/man/man1/${util}.1
+done
+
+cd src/include
+
+install -d "${1}"/usr/include/{libpq,postgresql/internal/libpq}
+
+# these headers are needed by the public headers of the interfaces
+install -m 644 pg_config.h "${1}/usr/include"
+install -m 644 pg_config_os.h "${1}/usr/include"
+install -m 644 pg_config_ext.h "${1}/usr/include"
+install -m 644 postgres_ext.h "${1}/usr/include"
+install -m 644 libpq/libpq-fs.h "${1}/usr/include/libpq"
+install -m 644 pg_config_manual.h "${1}/usr/include"
+
+# these he aders are needed by the not-so-public headers of the interfaces
+install -m 644 c.h "${1}/usr/include/postgresql/internal"
+install -m 644 port.h "${1}/usr/include/postgresql/internal"
+install -m 644 postgres_fe.h "${1}/usr/include/postgresql/internal"
+install -m 644 libpq/pqcomm.h "${1}/usr/include/postgresql/internal/libpq"

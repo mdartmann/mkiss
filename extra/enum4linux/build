@@ -1,0 +1,6 @@
+#!/bin/sh -uxe
+
+sed -i "s|polenum.py|polenum|" enum4linux.pl
+
+install -Dm755 enum4linux.pl "$1"/usr/bin/enum4linux
+install -Dm644 share-list.txt "$1"/usr/share/enum4linux/share-list.txt

@@ -1,0 +1,13 @@
+diff --git a/odict.py b/odict.py
+index de0aa4e..2940e6a 100644
+--- a/odict.py
++++ b/odict.py
+@@ -3,7 +3,7 @@ try:
+ 	from UserDict import DictMixin
+ except ImportError:
+ 	from collections import UserDict
+-	from collections import MutableMapping as DictMixin
++	from collections.abc import MutableMapping as DictMixin
+ 
+ class OrderedDict(dict, DictMixin):
+ 

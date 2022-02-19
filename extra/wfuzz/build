@@ -1,0 +1,9 @@
+#!/bin/sh -uxe
+
+install -dm755 "$1/usr/share/wfuzz/wordlists"
+cp -prt "$1/usr/share/wfuzz/wordlists" wordlist/*
+
+install -Dm644 *_bash_completion "$1/etc/bash_completion.d/wfuzz"
+
+python setup.py install --prefix=/usr --root="${1}" --optimize=1
+

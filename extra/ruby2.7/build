@@ -1,0 +1,19 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --program-suffix=-2.7 \
+    --with-soname=ruby-2.7 \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --sharedstatedir=/var/lib \
+    --libexecdir=/usr/lib/ruby \
+    --enable-shared \
+    --disable-rpath \
+    --with-dbm-type=gdbm_compat \
+    --disable-install-doc
+
+make
+make DESTDIR="$1" install
+
+rm -rf "$1"/usr/share/man

@@ -1,0 +1,9 @@
+#!/bin/sh -uxe
+
+perl Makefile.PL INSTALLDIRS=vendor
+
+make
+make DESTDIR="$1" install
+
+install -dm755 "$1"/usr/share/perl-image-exiftool
+cp -r fmt_files config_files arg_files "$1"/usr/share/perl-image-exiftool

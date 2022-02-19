@@ -1,0 +1,7 @@
+#!/bin/sh -uxe
+
+patch -Np1 -i xxhash-man-symlinks.patch
+
+make PREFIX=/usr
+
+make PREFIX=/usr DESTDIR="$1" install

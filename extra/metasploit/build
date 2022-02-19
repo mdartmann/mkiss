@@ -1,0 +1,38 @@
+#!/bin/sh -uxe
+
+# https://github.com/bundler/bundler/issues/6882
+sed -e '/BUNDLED WITH/,+1d' -i Gemfile.lock
+
+bundle-2.7 config build.nokogiri --use-system-libraries
+sed 's|git ls-files|find -type f|' -i metasploit-framework.gemspec
+
+CFLAGS+=" -I/usr/include/libxml2"
+bundle-2.7 install -j"$(nproc)" --no-cache --deployment
+find vendor/bundle/ruby -exec chmod o+r '{}' \;
+find vendor/bundle/ruby \( -name gem_make.out -or -name mkmf.log \) -delete 
+
+install -d "${1}/opt/metasploit" "${1}/usr/bin"
+cp -r . "${1}/opt/metasploit"
+
+for f in "${1}"/opt/metasploit/msf*; do
+_msffile="${1}/usr/bin/`basename "${f}"`"
+echo -e "#!/bin/sh\nBUNDLE_GEMFILE=/opt/metasploit/Gemfile bundle-2.7 exec ruby-2.7 /opt/metasploit/`basename "${f}"` \"\$@\"" > "${_msffile}"
+chmod 755 "${_msffile}"
+done
+
+(cd "${1}/opt/metasploit"
+for f in tools/*/*.rb; do
+  install -Dm 755 "${f}" ".${f}"
+  echo -e "#!/bin/sh\nBUNDLE_GEMFILE=/opt/metasploit/Gemfile bundle-2.7 exec ruby-2.7 /opt/metasploit/."${f}" \"\$@\"" > "${f}"
+  chmod 755 "${f}"
+done
+)
+
+install -Dm 644 external/zsh/_* -t "${1}/usr/share/zsh/site-functions"
+install -Dm 644 LICENSE COPYING -t "${1}/usr/share/licenses/metasploit"
+install -d "${1}/usr/share/doc"
+mv "${1}/opt/metasploit/documentation" "${1}/usr/share/doc/metasploit"
+rm "${1}/usr/bin/msfupdate"
+rm -r "${1}"/opt/metasploit/vendor/bundle/ruby/*/cache
+sed -e '/^BUNDLE_JOBS/d' -i "${1}/opt/metasploit/.bundle/config"
+find "${1}/opt/metasploit/vendor/bundle/ruby/" -name Makefile -ls -delete

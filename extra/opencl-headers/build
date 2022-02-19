@@ -1,0 +1,9 @@
+#!/bin/sh -uxe
+
+cd CL
+install -dm755 "$1"/usr/include/CL
+
+cp *.h "$1"/usr/include/CL/
+
+rm "$1"/usr/include/CL/{cl_d3d,cl_dx9}*.h
+

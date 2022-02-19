@@ -1,0 +1,24 @@
+#!/bin/sh -uxe
+
+autoreconf -iv
+
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --sbindir=/usr/bin \
+    --mandir=/usr/share/man \
+    --enable-ucd-snmp-compatibility \
+    --enable-ipv6 \
+    --with-python-modules \
+    --with-default-snmp-version="3" \
+    --with-sys-contact="root@localhost" \
+    --with-sys-location="Unknown" \
+    --with-logfile="/var/log/snmp.log" \
+    --with-mib-modules="host misc/ipfwacc ucd-snmp/diskio tunnel" \
+    --with-persistent-directory=/var/net-snmp 
+
+make NETSNMP_DONT_CHECK_VERSION=1
+
+sed -i "s|install --basedir=\$\$dir|install --basedir=\$\$dir --root=${1}|" Makefile
+
+make DESTDIR="$1" INSTALL_PREFIX="$1" INSTALLDIRS=vendor install -j1 

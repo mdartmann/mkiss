@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+
+install -dm755 "$1"/usr/share/snmpenum
+for i in *.txt *.pl; do
+    cp $i "$1"/usr/share/snmpenum/$i
+done
+
+sed -i "s|/usr/local/bin|/usr/bin|" "$1"/usr/share/snmpenum/snmpenum.pl
+chmod +x "$1"/usr/share/snmpenum/snmpenum.pl
+
+install -dm755 "$1"/usr/bin
+ln -s /usr/share/snmpenum/snmpenum.pl "$1"/usr/bin/snmpenum

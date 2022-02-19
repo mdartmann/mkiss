@@ -1,0 +1,5 @@
+#!/bin/sh -uxe
+
+make prefix=/usr CFLAGS="$CFLAGS" mkpasswd
+
+make prefix=/usr BASEDIR="$1" install-mkpasswd

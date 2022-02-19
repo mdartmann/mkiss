@@ -1,0 +1,18 @@
+#!/bin/sh -uxe
+
+make \
+    PREFIX=/usr \
+    SHARED=1 \
+    USE_SYSTEM_XXHASH=1 \
+    USE_SYSTEM_OPENCL=1 \
+    USE_SYSTEM_ZLIB=1 
+
+make \
+    DESTDIR="$1" \
+    PREFIX=/usr \
+    SHARED=1 \
+    USE_SYSTEM_XXHASH=1 \
+    USE_SYSTEM_OPENCL=1 \
+    USE_SYSTEM_ZLIB=1  \
+    install
+

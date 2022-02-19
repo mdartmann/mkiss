@@ -1,0 +1,9 @@
+#!/bin/sh -uxe
+
+cargo build \
+    --release \
+    --locked \
+    --all-features \
+    --target-dir=target
+
+install -Dm755 target/release/rustscan "$1"/usr/bin/rustscan

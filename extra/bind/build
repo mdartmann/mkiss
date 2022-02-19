@@ -1,0 +1,25 @@
+#!/bin/sh -uxe
+
+export CFLAGS+=' -DDIG_SIGCHASE -fcommon'
+
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --sbindir=/usr/bin \
+    --localstatedir=/var \
+    --disable-static \
+    --enable-fixed-rrset \
+    --enable-full-report \
+    --enable-dnsrps \
+    --with-python=/usr/bin/python \
+    --without-maxminddb \
+    --disable-geoip \
+    --with-openssl \
+    --with-libidn2 \
+    --with-json-c \
+    --with-libxml2 \
+    --with-lmdb \
+    --with-libtool
+
+make
+make DESTDIR="$1" install
