@@ -5,3 +5,16 @@
 
 make 
 make DESTDIR="$1" install
+
+cd contrib/minizip
+cp Makefile Makefile.orig
+
+autoreconf -iv
+
+./configure \
+    --prefix=/usr \
+    --enable-static=no
+make 
+make DESTDIR="$1" install
+
+rm "$1"/usr/include/minizip/crypt.h
