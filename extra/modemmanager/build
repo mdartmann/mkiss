@@ -1,15 +1,13 @@
 #!/bin/sh -uxe
+export DESTDIR="$1"
 
-NOCONFIGURE=1 ./autogen.sh
+meson build \
+    ${MESON_OPTIONS/-D b_lto=true/} \
+    -D dbus_policy_dir=/usr/share/dbus-1/system.d \
+    -D gtk_doc=true \
+    -D plugin_qcom_soc=disabled \
+    -D polkit=permissive \
+    -D vapi=true
 
-./configure \
-    --prefix=/usr \
-    --libexecdir=/usr/lib \
-    --enable-gtk-doc \
-    --with-dbus-sys-dir=/usr/share/dbus-1/system.d \
-    --with-polkit=permissive \
-    --disable-Werror \
-    --enable-vala
-
-make
-make DESTDIR="$1" install
+ninja -C build
+ninja -C build install
