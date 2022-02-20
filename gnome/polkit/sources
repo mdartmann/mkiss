@@ -1,2 +1,2 @@
-https://gitlab.freedesktop.org/polkit/polkit/-/archive/VERSION/polkit-VERSION.tar.gz
-files/50-default.rules
+git+https://gitlab.freedesktop.org/polkit/polkit#VERSION
+patches/meson-0.61.patch
