@@ -1,8 +1,5 @@
 #!/bin/sh -uxe
 
-git fetch
-git switch ligature
-
 cargo build --release
 
 install -Dm755 target/release/alacritty "$1/usr/bin/alacritty"
