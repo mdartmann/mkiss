@@ -1,8 +1,6 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
 
-patch -Np1 -i 0001-build-Properly-apply-modes-in-meson_post_install.py.patch
-
 meson build \
     ${MESON_OPTIONS/-D b_lto=true/} \
     -D admin_group=wheel \
