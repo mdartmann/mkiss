@@ -1,10 +1,26 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
 
-# glslang uses super specific versions of SPIRV headers/tools, so we need to use
-# their vendored version
-cp -r SPIRV-Tools External/spirv-tools
-cp -r SPIRV-Headers External/spirv-tools/external/spirv-headers
+# Get commits from known_good.json
+export SPIRV_TOOLS_COMMIT=$(jq -r '.commits[0].commit' < known_good.json)
+export SPIRV_HEADERS_COMMIT=$(jq -r '.commits[1].commit' < known_good.json)
+
+# Clone commits into subdirectories
+mkdir External/spirv-tools
+pushd External/spirv-tools
+git init
+git remote add origin https://github.com/KhronosGroup/Spirv-Tools 
+git fetch --depth=1 origin $SPIRV_TOOLS_COMMIT
+git reset --hard FETCH_HEAD
+popd
+
+mkdir External/spirv-tools/external/spirv-headers
+pushd External/spirv-tools/external/spirv-headers
+git init
+git remote add origin https://github.com/KhronosGroup/Spirv-Headers 
+git fetch --depth=1 origin $SPIRV_HEADERS_COMMIT
+git reset --hard FETCH_HEAD
+popd
 
 cmake -B build-shared -G Ninja \
     -D CMAKE_INSTALL_PREFIX=/usr \
