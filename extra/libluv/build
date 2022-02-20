@@ -6,7 +6,8 @@ cmake -B build -G Ninja \
 	-D LUA_BUILD_TYPE=System \
 	-D BUILD_MODULE=OFF \
 	-D BUILD_SHARED_LIBS=ON \
-	-D CMAKE_INSTALL_PREFIX=/usr 
+	-D CMAKE_INSTALL_PREFIX=/usr \
+    -Wno-dev
 
 ninja -C build
 ninja -C build install
