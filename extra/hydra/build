@@ -1,0 +1,5 @@
+#!/bin/sh -uxe
+
+./configure --fhs
+make
+make DESTDIR="$1" MANDIR=/share/man/man1 DATADIR=/share/hydra install
