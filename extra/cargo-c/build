@@ -4,8 +4,7 @@ cargo fetch
 
 cargo build \
     --release \
-    --frozen \
-    --locked
+    --frozen
 
 cargo install \
     --frozen \
