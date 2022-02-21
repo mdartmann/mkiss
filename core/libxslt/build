@@ -2,12 +2,6 @@
 
 git fetch
 
-# Fix build with libxml libxml2-2.9.12
-git cherry-pick -n 9ae2f94df1721e002941b40665efb762aefcea1a
-git cherry-pick -n 824657768aea2cce9c23e72ba8085cb5e44350c7
-git cherry-pick -n 77c26bad0433541f486b1e7ced44ca9979376908
-
-
 NOCONFIGURE=1 ./autogen.sh
 
 ./configure \
