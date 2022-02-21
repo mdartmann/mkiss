@@ -1,1 +1,1 @@
-https://luajit.org/download/LuaJIT-VERSION.tar.gz
+git+https://repo.or.cz/luajit-2.0.git#VERSION

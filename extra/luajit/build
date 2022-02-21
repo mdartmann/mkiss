@@ -2,3 +2,6 @@
 
 make amalg PREFIX=/usr
 make DESTDIR="$1" PREFIX=/usr install
+
+ln -sf luajit-2.1.0-beta3 "$1"/usr/bin/luajit
+
