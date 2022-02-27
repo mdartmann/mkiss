@@ -1,0 +1,14 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+cmake -B build -G Ninja \
+    -D CMAKE_BUILD_TYPE=None \
+    -D CMAKE_CXX_FLAGS="${CXXFLAGS} -DNDEBUG" \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D CMAKE_INSTALL_LIBDIR=lib \
+    -D BUILD_SHARED_LIBS=ON \
+    -D BENCHMARK_ENABLE_LTO=ON \
+    -D BENCHMARK_ENABLE_GTEST_TESTS=OFF 
+
+ninja -C build 
+ninja -C build install

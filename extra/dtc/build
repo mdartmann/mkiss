@@ -1,0 +1,9 @@
+#!/bin/sh -uxe
+
+patch -Np1 -i python310.patch
+
+sed -i "s/-Werror//" Makefile
+
+make
+
+make DESTDIR="$1" SETUP_PREFIX="/usr" PREFIX="/usr" install

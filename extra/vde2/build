@@ -1,0 +1,19 @@
+#!/bin/sh -uxe
+
+patch -Np1 -i vde_cryptcab-compile-against-openssl-1.1.0.patch
+patch -Np2 -i format-security.patch
+
+./configure \
+    --prefix=/usr \
+    --sbindir=/usr/bin \
+    --sysconfdir=/etc \
+    --libexecdir=/usr/lib/vde2 \
+    --enable-experimental
+
+make -j1
+make DESTDIR="$1" prefix=/usr sysconfdir=/etc sbindir=/usr/bin libexecdir=/usr/lib/vde2 install 
+
+install -Dm644 vde-config.sample "$1"/etc/vde/vde-config.sample
+install -Dm644 vde-connection.sample "$1"/etc/vde/vde-connection.sample
+install -Dm644 dhcpd.conf.sample "$1"/usr/share/vde2/dhcpd.conf.sample
+install -Dm644 iptables.rules.sample "$1"/usr/share/vde2/iptables.rules.sample

@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+
+autoreconf -fiv
+
+./configure \
+    --prefix=/usr \
+    --enable-frame-pointers
+
+make
+make DESTDIR="$1" install

@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+
+git fetch
+git cherry-pick -n fd0acfbe79444687c73dea182c2d1a5fa1c77324
+
+meson build \
+    ${MESON_OPTIONS}
+
+ninja -C build
+ninja -C build install

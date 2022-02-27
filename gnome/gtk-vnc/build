@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+git submodule init
+git submodule update
+
+meson build \
+    ${MESON_OPTIONS}
+
+ninja -C build
+ninja -C build install

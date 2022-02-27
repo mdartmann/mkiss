@@ -1,5 +1,18 @@
 #!/bin/sh -uxe
 
+for i in *.patch; do
+    patch -Np1 -i $i
+done
+
+rm -f config/config.{guess,stub}
+rm  -f config/lt{config,main.sh} config/libtool.m4
+
+libtoolize -c
+aclocal -I config
+automake -ac
+autoheader
+autoconf
+
 ./configure --prefix=/usr \
     --sbin=/usr/bin \
     --mandir=/usr/share/man \
@@ -21,6 +34,9 @@
     --enable-login \
     --enable-ntlm \
     --disable-passdss \
+    --enable-sql \
+    --with-mysql=/usr \
+    --with-pgsql=/usr/lib \
     --with-sqlite3=/usr/lib \
     --enable-ldapdb \
     --disable-macos-framework \
@@ -32,5 +48,11 @@
     --sysconfdir=/etc \
     --with-devrandom=/dev/urandom
 
+sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
+
 make
 make DESTDIR="$1" install
+
+install -Dm644 saslauthd.conf.d "$1"/etc/conf.d/saslauthd
+install -Dm644 saslauthd.service "$1"/usr/lib/systemd/system/saslauthd.service
+install -Dm644 tmpfiles.conf "$1"/usr/lib/tmpfiles.d/saslauthd.conf

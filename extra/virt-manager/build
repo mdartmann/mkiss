@@ -1,0 +1,8 @@
+#!/bin/sh -uxe
+
+python setup.py configure --default-hvs qemu,lxd
+python setup.py build
+
+python setup.py --no-update-icon-cache --no-compile-schemas install --root "$1"
+python -m compileall "$1"/usr/share/virt-manager
+python -O -m compileall "$1"/usr/share/virt-manager

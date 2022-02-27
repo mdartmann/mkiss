@@ -1,0 +1,14 @@
+git+https://github.com/coreboot/seabios#rel-VERSION
+files/config.vga.bochs-display
+files/config.vga.cirrus
+files/config.seabios-256k
+files/config.vga.vmware
+files/config.seabios-128k
+files/config.vga.qxl
+files/config.csm
+files/config.vga.virtio
+files/config.vga.stdvga
+files/config.coreboot
+files/config.vga.ramfb
+files/config.vga.isavga
+patches/reproducible-version.patch

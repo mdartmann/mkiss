@@ -1,0 +1,6 @@
+git+https://github.com/google/snappy#VERSION
+https://github.com/google/snappy/commit/114df35e84ad95b6d5afbcf69aa85a14ff029000.patch
+https://github.com/google/snappy/commit/516fdcca6606502e2d562d20c01b225c8d066739.patch
+https://github.com/google/snappy/pull/128/commits/0c716d435abe65250100c2caea0e5126ac4e14bd.patch
+patches/cmake_add_pkgconfig.patch
+files/snappy.pc.in

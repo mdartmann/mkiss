@@ -1,0 +1,20 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+for i in *.patch; do
+    patch -Np1 -i $i
+done
+
+CXXFLAGS+=" -DNDEBUG"
+
+cmake -B build -G Ninja \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D CMAKE_INSTALL_LIBDIR=/usr/lib \
+    -D BUILD_SHARED_LIBS=yes \
+    -D SNAPPY_USE_BUNDLED_GTEST=OFF \
+    -D SNAPPY_USE_BUNDLED_BENCHMARK_LIB=OFF \
+    -Wno-dev
+
+
+ninja -C build
+ninja -C build install

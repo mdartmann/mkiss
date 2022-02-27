@@ -1,0 +1,32 @@
+#!/bin/sh -uxe
+
+:>nostrip
+
+build_bios(){
+    make clean distclean
+
+    cp $1 .config
+    make oldnoconfig V=1
+
+    make V=1 $4
+
+    cp out/$2 binaries/$3
+}
+
+patch -Np1 -i reproducible-version.patch
+
+rm -rf binaries && mkdir binaries
+
+echo "MKiss $2" > .version
+
+build_bios config.csm Csm16.bin bios-csm.bin ''
+build_bios config.coreboot bios.bin.elf bios-coreboot.bin ''
+build_bios config.seabios-128k bios.bin bios.bin ''
+build_bios config.seabios-256k bios.bin bios-256k.bin ''
+
+for i in config.vga.*; do
+    name=${i#*config.vga.}
+    build_bios ${i} vgabios.bin vgabios-${name}.bin out/vgabios.bin
+done
+
+install -Dm644 -t "$1"/usr/share/qemu binaries/*.bin

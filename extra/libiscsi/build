@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+
+NOCONFIGURE=1 ./autogen.sh
+
+./configure \
+    --prefix=/usr \
+    --disable-static \
+    --libdir=/usr/lib \
+    --disable-werror
+
+make
+make DESTDIR="$1" install

@@ -1,0 +1,22 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+# Fix weird glibc/statx issue. Thanks again to Hanna Reitz from Red Hat!
+patch -Np1 -i af793a16dece023611b054ce1bf36ecd4499b871.patch
+
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --libexecdir=/usr/lib/qemu \
+    --smbd=/usr/bin/smbd \
+    --enable-modules \
+    --enable-sdl \
+    --enable-slirp=system \
+    --disable-werror
+
+ninja -C build
+ninja -C build  install
+
+install -Dm644 65-kvm.rules "$1"/usr/lib/udev/rules.d/65-kvm.rules
+install -Dm644 qemu-guest-agent.service -t "$1"/usr/lib/systemd/system

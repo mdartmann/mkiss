@@ -1,0 +1,37 @@
+#!/bin/sh -uxe
+
+export copts="-DHAVE_DNSSEC -DHAVE_DBUS -DHAVE_LIBIDN2 -DHAVE_CONNTRACK"
+
+make \
+    CFLAGS="$CFLAGS" \
+    LDFLAGS="$LDFLAGS" \
+    COPTS="$copts" \
+    PREFIX=/usr \
+    BINDIR=/usr/bin \
+    all-i18n
+
+pushd contrib/lease-tools
+make \
+    CFLAGS="$CFLAGS" \
+    LDFLAGS="$LDFLAGS" \
+    COPTS="$copts" \
+    all
+popd
+make \
+    COPTS="$copts" \
+    PREFIX=/usr \
+    BINDIR=/usr/bin \
+    DESTDIR="$1" \
+    install install-i18n
+
+install -Dm644 dbus/dnsmasq.conf -t "$1"/usr/share/dbus-1/system.d/
+install -Dm644 dnsmasq.conf.example "$1"/etc/dnsmasq.conf
+install -Dm644 dnsmasq.service "$1"/usr/lib/systemd/system/dnsmasq.service
+install -Dm644 dnsmasq-sysusers.conf "$1"/usr/lib/sysusers.d/dnsmasq.conf
+
+sed -i "s|%%PREFIX%%|/usr|" "$1"/etc/dnsmasq.conf
+install -Dm644 trust-anchors.conf "$1"/usr/share/dnsmasq/trust-anchors.conf
+
+install -Dm755 -t "$1"/usr/bin/ "contrib/lease-tools/dhcp_"{release{,6},lease_time}
+install -Dm644 -t "$1"/usr/share/man/man1/ "contrib/lease-tools/dhcp_"{release{,6},lease_time}.1
+

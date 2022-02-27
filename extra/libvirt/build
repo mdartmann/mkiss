@@ -1,0 +1,62 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+sed -i "s|/sysconfig/|/conf.d/|g" \
+    src/remote/libvirtd.service.in \
+    tools/{libvirt-guests.service,libvirt-guests.sh,virt-pki-validate}.in \
+    src/locking/virtlockd.service.in \
+    src/logging/virtlogd.service.in
+
+sed -i "s|/usr/libexec/qemu-bride-helper|/usr/lib/qemu/qemu-bridge-helper|g" \
+    src/qemu/qemu.conf \
+    src/qemu/test_libvirtd_qemu.aug.in
+
+for i in *.patch; do
+    patch -Np1 -i $i
+done
+
+zsh
+meson build \
+    ${MESON_OPTIONS/-D b_lto=true/} \
+    -D runstatedir=/run \
+    -D qemu_group=kvm \
+    -D netcf=disabled \
+    -D openwsman=disabled \
+    -D apparmor=disabled \
+    -D apparmor_profiles=disabled \
+    -D selinux=disabled \
+    -D wireshark_dissector=disabled \
+    -D driver_bhyve=disabled \
+    -D driver_hyperv=disabled \
+    -D driver_libxl=disabled \
+    -D driver_vz=disabled \
+    -D sanlock=disabled \
+    -D secdriver_apparmor=disabled \
+    -D secdriver_selinux=disabled \
+    -D storage_sheepdog=disabled \
+    -D storage_vstorage=disabled \
+    -D dtrace=disabled \
+    -D numad=disabled \
+    -D storage_zfs=enabled \
+    -D storage_rbd=enabled \
+    -D glusterfs=disabled \
+    -D storage_gluster=disabled \
+    -D libiscsi=disabled \
+    -D storage_iscsi=disabled \
+    -D storage_iscsi_direct=disabled \
+    -D storage_rbd=disabled 
+
+ninja -C build
+ninja -C build install
+
+mv "$1"/etc/{sysconfig,conf.d}
+
+mkdir "$1"/usr/lib/{sysusers,tmpfiles}.d
+cat  > "$1"/usr/lib/sysusers.d/libvirt.conf << EOF
+u libvirt-qemu - "Libvirt QEMU user"
+g libvirt - -
+EOF
+echo "z /var/lib/libvirt/qemu 0751" > "$1"/usr/lib/tmpfiles.d/libvirt.conf
+
+rm -rf "$1/run" "$1/var/lib/libvirt/qemu" "$1"/etc/logorate.d/libvirt.libxl 
+rm -f "$1"/etc/libvirt/qemu/networks/autostart/default.xml
