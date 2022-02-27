@@ -4,6 +4,7 @@ export DESTDIR="$1"
 meson build \
     ${MESON_OPTIONS/-D b_lto=true/} \
     -D dbus_policy_dir=/usr/share/dbus-1/system.d \
+    -D dist_version="\"$2-1\"" \
     -D gtk_doc=true \
     -D plugin_qcom_soc=disabled \
     -D polkit=permissive \
