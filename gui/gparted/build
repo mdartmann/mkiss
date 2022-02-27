@@ -1,0 +1,13 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --libexecdir=/usr/lib \
+    --enable-online-resize \
+    --enable-libparted-dmraid \
+    --enable-xhost-root
+
+make
+make DESTDIR="$1" install 
+
+install -Dm644 org.gnome.gparted.policy -t "$1"/usr/share/polkit-1/actions/
