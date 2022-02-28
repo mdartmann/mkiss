@@ -1,0 +1,14 @@
+#!/bin/sh -uxe
+
+export KCONFIG_NOTIMESTAMP=1 
+
+cp config .config
+make
+
+install -Dm0755 busybox "$1"/usr/bin/busybox
+install -dm755 "$1"/usr/share/busybox/bin
+
+"$1"/usr/bin/busybox --list | while read -r bin; do
+    ln -s /usr/bin/busybox "$1"/usr/share/busybox/$bin
+done
+
