@@ -28,11 +28,14 @@ meson build \
     -D glx=dri \
     -D libunwind=enabled \
     -D llvm=enabled \
+    -D shared-llvm=enabled \
     -D osmesa=true \
     -D shared-glapi=enabled \
     -D microsoft-clc=disabled \
     -D valgrind=enabled \
     ${MESON_OPTIONS/-D b_lto=true}
+
+meson configure build
 
 ninja -C build
 ninja -C build install
