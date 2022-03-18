@@ -3,9 +3,6 @@ export DESTDIR="$1"
 
 git submodule update --init --recursive
 
-# Fix clipboard 
-patch -Np1 -i 759.patch
-
 meson build \
     ${MESON_OPTIONS/-D b_lto=true/} \
     -D docs=true \

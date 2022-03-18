@@ -8,7 +8,9 @@ cmake -B build -G Ninja \
     -D ENABLE_INTROSPECTION=ON \
     -D ENABLE_VALA_BINDINGS=ON \
     -D ENABLE_GTK_DOC=OFF \
-    -D WITH_PHONENUMBER=OFF
+    -D WITH_PHONENUMBER=OFF \
+    -D ENABLE_WEATHER=OFF
+    # [FIXME] renamed to libgweather4, so cmake fails
 
 ninja -C build
 ninja -C build install

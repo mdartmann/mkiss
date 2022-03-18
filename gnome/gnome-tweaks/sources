@@ -1,2 +1,1 @@
-git+https://github.com/GNOME/gnome-tweaks.git#VERSION
-patches/0001-meson-Fix-incorrect-positional-argument.patch
+git+https://gitlab.gnome.org/GNOME/gnome-tweaks.git#VERSION

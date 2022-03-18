@@ -1,9 +1,6 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
 
-# Fix build with meson >= 0.60
-patch -Np1 -i 0001-meson-Fix-incorrect-positional-argument.patch
-
 meson build \
     ${MESON_OPTIONS}
 

@@ -1,2 +1,1 @@
 git+https://gitlab.gnome.org/GNOME/gnome-music.git#VERSION
-patches/0001-Fix-meson-deprecations.patch

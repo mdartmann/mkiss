@@ -1,16 +1,11 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
 
-# Fix build with meson >= 0.61
-git fetch
-git cherry-pick -n 17a067b9
-
 meson build \
     ${MESON_OPTIONS/-D b_lto=true/} \
     -D afp=false \
     -D afc=false \
     -D bluray=false \
-    -D smb=false \
     -D cdda=false \
     -D nfs=false
 

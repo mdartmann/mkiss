@@ -1,6 +1,7 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
 
+zsh
 meson build \
     ${MESON_OPTIONS}
 
