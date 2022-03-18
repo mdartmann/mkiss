@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+    ${MESON_OPTIONS/-D b_lto=true/} \
+    --libexecdir /usr/lib/gamemode \
+    -D with-examples=false \
+    -D with-pam-group=gamemode \
+    -D with-systemd-user-unit-dir=/usr/lib/systemd/user 
+
+ninja -C build
+ninja -C build install
