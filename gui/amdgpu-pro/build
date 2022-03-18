@@ -1,0 +1,81 @@
+#!/bin/sh -uxe
+# vim:fdm=marker
+
+export _srcdir=$PWD
+export _destdir="$1"
+export _version=$2
+export _amdminor="1384495"
+
+# {{{util 
+
+# extract debian package
+# @param $1 deb file to extract
+extract_deb() {
+    local tmpdir="$(basename "${1%.deb}")"
+    rm -rf $tmpdir
+    mkdir $tmpdir
+    pushd $tmpdir
+    ar x $_srcdir/"$1"
+    bsdtar -C "${_destdir}" -xpvf data.tar.xz
+    popd
+}
+
+# move libdirs from ubuntu-specific to our own
+# @param $1 debian libdir
+# @param $2 new libdir
+move_libdir() {
+    local deb_libdir="$1"
+    local new_libdir="$2"
+    
+    if [ -d "$_destdir"/$deb_libdir ]; then
+        [ ! -d "$_destdir"/$new_libdir ] && mkdir -p "$_destdir"/$new_libdir
+        mv -t "$_destdir"/$new_libdir "$_destdir"/$deb_libdir/*
+    fi
+}
+
+#}}}
+
+# {{{ vulkan
+
+extract_deb vulkan-amdgpu-pro_${_version}-${_amdminor}_amd64.deb
+move_libdir "opt/amdgpu-pro/lib/x86_64-linux-gnu" "usr/lib"
+mkdir -p "$_destdir"/usr/share/vulkan/icd.d
+mv "$_destdir/opt/amdgpu-pro/etc/vulkan/icd.d/amd_icd64.json" \
+   "$_destdir/usr/share/vulkan/icd.d/amd_pro_icd64.json"
+sed -i "s|/opt/amdgpu-pro/lib/x86_64-linux-gnu/amdvlk64.so|/usr/lib/amdvlkpro64.so|" \
+    "${_destdir}"/usr/share/vulkan/icd.d/amd_pro_icd64.json
+
+# }}}
+
+# {{{ amf
+echo $PWD
+extract_deb amf-amdgpu-pro_1.4.24-${_amdminor}_amd64.deb
+extract_deb libamdenc-amdgpu-pro_1.0-${_amdminor}_amd64.deb
+move_libdir "opt/amdgpu-pro/lib/x86_64-linux-gnu" "usr/lib"
+
+# }}}
+
+# {{{ libgl
+
+extract_deb libegl1-amdgpu-pro_${_version}-${_amdminor}_amd64.deb
+extract_deb libgl1-amdgpu-pro-appprofiles_${_version}-${_amdminor}_all.deb
+extract_deb libgl1-amdgpu-pro-dri_${_version}-${_amdminor}_amd64.deb
+extract_deb libgl1-amdgpu-pro-ext_${_version}-${_amdminor}_amd64.deb
+extract_deb libgl1-amdgpu-pro-glx_${_version}-${_amdminor}_amd64.deb
+extract_deb libglapi1-amdgpu-pro_${_version}-${_amdminor}_amd64.deb
+extract_deb libgles2-amdgpu-pro_${_version}-${_amdminor}_amd64.deb
+
+move_libdir usr/lib/x86_64-linux-gnu usr/lib
+move_libdir opt/amdgpu-pro/lib/x86_64-linux-gnu usr/lib/amdgpu-pro
+move_libdir opt/amdgpu-pro/lib/xorg usr/lib/amdgpu-pro/xorg
+move_libdir opt/amdgpu/share/drirc.d usr/share/drirc.d
+sed -i "s|/opt/amdgpu-pro/lib/x64_64-linux/gnu|#/usr/lib/amdgpu-pro # comment to avoid issues with booting, use progl script instead|" "$_destdir/etc/ld.so.conf.d/10-amdgpu-pro-x86_64.conf"
+
+install -Dm755 progl "$1"/usr/bin/progl
+install -Dm755 progl.bash-completion "$1"/usr/share/bash-completion/completions/progl
+
+# avoid crash if not using driver
+mv "$_destdir"/usr/share/drirc.d/10-amdgpu-pro.conf{,.hide}
+# }}}
+
+rm -rf "$_destdir"/opt

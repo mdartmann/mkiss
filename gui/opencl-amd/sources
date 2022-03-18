@@ -1,0 +1,33 @@
+# LIBDRM
+https://repo.radeon.com/amdgpu/21.50.2/ubuntu/pool/main/libd/libdrm-amdgpu/libdrm-amdgpu-amdgpu1_2.4.107.50002-1384495_amd64.deb
+# ROCM
+https://repo.radeon.com/rocm/apt/5.0.2/pool/main/r/rocm-core/rocm-core_5.0.2.50002-72_amd64.deb
+https://repo.radeon.com/rocm/apt/5.0.2/pool/main/c/comgr/comgr_2.4.0.50002-72_amd64.deb
+https://repo.radeon.com/rocm/apt/5.0.2/pool/main/h/hip-dev/hip-dev_5.0.13601.50002-72_amd64.deb
+https://repo.radeon.com/rocm/apt/5.0.2/pool/main/h/hip-doc/hip-doc_5.0.13601.50002-72_amd64.deb
+https://repo.radeon.com/rocm/apt/5.0.2/pool/main/h/hip-samples/hip-samples_5.0.13601.50002-72_amd64.deb
+https://repo.radeon.com/rocm/apt/5.0.2/pool/main/h/hsakmt-roct-dev/hsakmt-roct-dev_20211222.1.5.50002-72_amd64.deb
+https://repo.radeon.com/rocm/apt/5.0.2/pool/main/h/hsa-rocr/hsa-rocr_1.5.0.50002-72_amd64.deb
+https://repo.radeon.com/rocm/apt/5.0.2/pool/main/h/hsa-rocr-dev/hsa-rocr-dev_1.5.0.50002-72_amd64.deb
+https://repo.radeon.com/rocm/apt/5.0.2/pool/main/r/rocminfo/rocminfo_1.0.0.50002-72_amd64.deb
+https://repo.radeon.com/rocm/apt/5.0.2/pool/main/h/hip-runtime-amd/hip-runtime-amd_5.0.13601.50002-72_amd64.deb
+https://repo.radeon.com/rocm/apt/5.0.2/pool/main/r/rocm-device-libs/rocm-device-libs_1.0.0.50002-72_amd64.deb
+https://repo.radeon.com/rocm/apt/5.0.2/pool/main/r/rocm-language-runtime/rocm-language-runtime_5.0.2.50002-72_amd64.deb
+https://repo.radeon.com/rocm/apt/5.0.2/pool/main/r/rocm-hip-runtime/rocm-hip-runtime_5.0.2.50002-72_amd64.deb
+https://repo.radeon.com/rocm/apt/5.0.2/pool/main/r/rocm-ocl-icd/rocm-ocl-icd_2.0.0.50002-72_amd64.deb
+https://repo.radeon.com/rocm/apt/5.0.2/pool/main/r/rocm-opencl/rocm-opencl_2.0.0.50002-72_amd64.deb
+https://repo.radeon.com/rocm/apt/5.0.2/pool/main/r/rocm-opencl-dev/rocm-opencl-dev_2.0.0.50002-72_amd64.deb
+https://repo.radeon.com/rocm/apt/5.0.2/pool/main/r/rocm-opencl-runtime/rocm-opencl-runtime_5.0.2.50002-72_amd64.deb
+https://repo.radeon.com/rocm/apt/5.0.2/pool/main/r/rocm-clang-ocl/rocm-clang-ocl_0.5.0.50002-72_amd64.deb
+https://repo.radeon.com/rocm/apt/5.0.2/pool/main/o/openmp-extras/openmp-extras_13.50.0.50002-72_amd64.deb
+https://repo.radeon.com/rocm/apt/5.0.2/pool/main/r/rocm-smi-lib/rocm-smi-lib_5.0.0.50002-72_amd64.deb
+https://repo.radeon.com/rocm/apt/5.0.2/pool/main/r/rocm-cmake/rocm-cmake_0.6.1.50002-72_amd64.deb
+https://repo.radeon.com/rocm/apt/5.0.2/pool/main/r/rocm-dbgapi/rocm-dbgapi_0.62.1.50002-72_amd64.deb
+https://repo.radeon.com/rocm/apt/5.0.2/pool/main/r/rocm-debug-agent/rocm-debug-agent_2.0.1.50002-72_amd64.deb
+https://repo.radeon.com/rocm/apt/5.0.2/pool/main/r/rocm-gdb/rocm-gdb_11.1.50002-72_amd64.deb
+https://repo.radeon.com/rocm/apt/5.0.2/pool/main/r/rocm-utils/rocm-utils_5.0.2.50002-72_amd64.deb
+https://repo.radeon.com/rocm/apt/5.0.2/pool/main/r/rocprofiler-dev/rocprofiler-dev_1.0.0.50002-72_amd64.deb
+https://repo.radeon.com/rocm/apt/5.0.2/pool/main/r/roctracer-dev/roctracer-dev_1.0.0.50002-72_amd64.deb
+https://repo.radeon.com/rocm/apt/5.0.2/pool/main/r/rocm-dev/rocm-dev_5.0.2.50002-72_amd64.deb
+https://repo.radeon.com/rocm/apt/5.0.2/pool/main/h/hsa-amd-aqlprofile/hsa-amd-aqlprofile_1.0.0.50002-72_amd64.deb
+https://repo.radeon.com/amdgpu/21.50.2/ubuntu/pool/proprietary/o/opencl-legacy-amdgpu-pro/opencl-legacy-amdgpu-pro-icd_21.50.2-1384495_amd64.deb

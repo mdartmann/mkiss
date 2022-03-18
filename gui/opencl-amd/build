@@ -1,0 +1,98 @@
+#!/bin/sh -uxe
+amdgpu_pro="$PWD/opt/amdgpu-pro/lib/x86_64-linux-gnu"
+amdgpu="$PWD/opt/amdgpu/lib/x86_64-linux-gnu"
+src=$PWD
+
+# extract .xz files
+exz() {
+    ar x $1
+    tar xJf data.tar.xz
+    rm data.tar.xz
+}
+
+# extract .gz files
+egz(){
+    ar x $1
+    tar xfx data.tar.gz
+    rm data.tar.gz
+}
+
+gzars=(
+    rocm-core_5.0.2.50002-72_amd64.deb
+    comgr_2.4.0.50002-72_amd64.deb
+    hip-dev_5.0.13601.50002-72_amd64.deb
+    hip-doc_5.0.13601.50002-72_amd64.deb
+    hip-samples_5.0.13601.50002-72_amd64.deb
+    hsakmt-roct-dev_20211222.1.5.50002-72_amd64.deb
+    hsa-rocr_1.5.0.50002-72_amd64.deb
+    hsa-rocr-dev_1.5.0.50002-72_amd64.deb
+    rocminfo_1.0.0.50002-72_amd64.deb
+    hip-runtime-amd_5.0.13601.50002-72_amd64.deb
+    rocm-device-libs_1.0.0.50002-72_amd64.deb
+    rocm-language-runtime_5.0.2.50002-72_amd64.deb
+    rocm-hip-runtime_5.0.2.50002-72_amd64.deb
+    rocm-ocl-icd_2.0.0.50002-72_amd64.deb
+    rocm-opencl_2.0.0.50002-72_amd64.deb
+    rocm-opencl-dev_2.0.0.50002-72_amd64.deb
+    rocm-opencl-runtime_5.0.2.50002-72_amd64.deb
+    rocm-clang-ocl_0.5.0.50002-72_amd64.deb
+    rocm-smi-lib_5.0.0.50002-72_amd64.deb
+    rocm-cmake_0.6.1.50002-72_amd64.deb
+    rocm-dbgapi_0.62.1.50002-72_amd64.deb
+    rocm-debug-agent_2.0.1.50002-72_amd64.deb
+    rocm-utils_5.0.2.50002-72_amd64.deb
+    rocprofiler-dev_1.0.0.50002-72_amd64.deb
+    roctracer-dev_1.0.0.50002-72_amd64.deb
+    rocm-dev_5.0.2.50002-72_amd64.deb
+    hsa-amd-aqlprofile_1.0.0.50002-72_amd64.deb
+)
+xzars=(
+	libdrm-amdgpu-amdgpu1_2.4.107.50002-1384495_amd64.deb
+	openmp-extras_13.50.0.50002-72_amd64.deb
+	rocm-gdb_11.1.50002-72_amd64.deb
+	opencl-legacy-amdgpu-pro-icd_21.50.2-1384495_amd64.deb
+)
+
+for i in ${gzars[@]}; do
+    egz $i
+done
+
+for i in ${xzars[@]}; do
+    exz $i
+done
+
+cd ${amdgpu_pro}
+sed -i "s|libdrm_amdgpu|libdrm_amdgpo|g" libamdocl-orca64.so
+
+cd ${amdgpu}
+rm "libdrm_amdgpu.so.1"
+mv "libdrm_amdgpu.so.1.0.0" "libdrm_amdgpo.so.1.0.0"
+ln -s "libdrm_amdgpo.so.1.0.0" "libdrm_amdgpo.so.1"	
+
+# legacy
+mkdir -p ${1}/usr/lib
+mv "${amdgpu_pro}/libamdocl-orca64.so" "${1}/usr/lib/"
+mv "${amdgpu}/libdrm_amdgpo.so.1.0.0" "${1}/usr/lib/"
+mv "${amdgpu}/libdrm_amdgpo.so.1" "${1}/usr/lib/"
+
+cd $src
+mv "opt/" "${1}/"
+ln -s "/opt/rocm-5.0.2" "$1/opt/rocm"
+ln -s "/opt/rocm-5.0.2/hip/bin/.hipVersion" "$1/opt/rocm-5.0.2/bin/.hipVersion"
+
+mkdir -p "${1}/opt/amdgpu/share/libdrm"
+cd "${1}/opt/amdgpu/share/libdrm"
+ln -s /usr/share/libdrm/amdgpu.ids amdgpu.ids		
+
+mkdir -p ${1}/etc/OpenCL/vendors	
+echo libamdocl64.so > "${1}/etc/OpenCL/vendors/amdocl64.icd"
+echo libamdocl-orca64.so > "${1}/etc/OpenCL/vendors/amdocl-orca64.icd"
+
+mkdir -p ${1}/etc/ld.so.conf.d
+echo /opt/rocm-5.0.2/opencl/lib > "$1/etc/ld.so.conf.d/opencl-amd.conf"
+echo /opt/rocm-5.0.2/lib >> "$1/etc/ld.so.conf.d/opencl-amd.conf"
+echo /opt/rocm-5.0.2/hip/lib >> "$1/etc/ld.so.conf.d/opencl-amd.conf"
+
+mkdir -p ${1}/etc/profile.d
+echo export PATH="\${PATH}:/opt/rocm-5.0.2/bin:/opt/rocm-5.0.2/hip/bin" > "$1/etc/profile.d/opencl-amd.sh"
+

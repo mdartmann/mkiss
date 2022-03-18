@@ -1,0 +1,19 @@
+#!/bin/sh -uxe
+
+export DESTDIR="$1"
+export CC=clang
+export CXX=clang++
+
+cmake -B build -G Ninja -S llvm \
+    -D CMAKE_INSTALL_PREFIX='/opt/rocm/llvm' \
+    -D CMAKE_BUILD_TYPE=Release \
+    -D LLVM_HOST_TRIPLE=$CHOST \
+    -D LLVM_BUILD_UTILS=ON \
+    -D LLVM_ENABLE_BINDINGS=OFF \
+    -D LLVM_ENABLE_OCAMLDOC=OFF \
+    -D LLVM_ENABLE_PROJECTS="llvm;clang;compiler-rt;lld" \
+    -D LLVM_TARGETS_TO_BUILD='AMDGPU;X86' \
+    -D OCAMLFIND=NO
+
+ninja -C build
+ninja -C build install

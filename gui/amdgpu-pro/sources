@@ -1,0 +1,12 @@
+http://repo.radeon.com/amdgpu/VERSION/ubuntu/pool/proprietary/a/amf-amdgpu-pro/amf-amdgpu-pro_1.4.24-1384495_amd64.deb
+http://repo.radeon.com/amdgpu/VERSION/ubuntu/pool/proprietary/liba/libamdenc-amdgpu-pro/libamdenc-amdgpu-pro_1.0-1384495_amd64.deb
+http://repo.radeon.com/amdgpu/VERSION/ubuntu/pool/proprietary/o/opengl-amdgpu-pro/libegl1-amdgpu-pro_VERSION-1384495_amd64.deb
+http://repo.radeon.com/amdgpu/VERSION/ubuntu/pool/proprietary/a/appprofiles-amdgpu-pro/libgl1-amdgpu-pro-appprofiles_VERSION-1384495_all.deb
+http://repo.radeon.com/amdgpu/VERSION/ubuntu/pool/proprietary/o/opengl-amdgpu-pro/libgl1-amdgpu-pro-dri_VERSION-1384495_amd64.deb
+http://repo.radeon.com/amdgpu/VERSION/ubuntu/pool/proprietary/o/opengl-amdgpu-pro/libgl1-amdgpu-pro-ext_VERSION-1384495_amd64.deb
+http://repo.radeon.com/amdgpu/VERSION/ubuntu/pool/proprietary/o/opengl-amdgpu-pro/libgl1-amdgpu-pro-glx_VERSION-1384495_amd64.deb
+http://repo.radeon.com/amdgpu/VERSION/ubuntu/pool/proprietary/o/opengl-amdgpu-pro/libglapi1-amdgpu-pro_VERSION-1384495_amd64.deb
+http://repo.radeon.com/amdgpu/VERSION/ubuntu/pool/proprietary/o/opengl-amdgpu-pro/libgles2-amdgpu-pro_VERSION-1384495_amd64.deb
+http://repo.radeon.com/amdgpu/VERSION/ubuntu/pool/proprietary/v/vulkan-amdgpu-pro/vulkan-amdgpu-pro_VERSION-1384495_amd64.deb
+files/progl
+files/progl.bash-completion
