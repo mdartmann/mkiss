@@ -26,6 +26,7 @@ autoreconf -v
 
 make
 make DESTDIR="$1" install
+
 install -m755 contrib/ssh-copy-id "$1/usr/bin/ssh-copy-id"
 install -m644 contrib/ssh-copy-id.1 "$1/usr/share/man/man8/ssh-copy-id.1"
 
