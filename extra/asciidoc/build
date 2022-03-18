@@ -5,15 +5,13 @@ kiss l asciidoc 2>&1 > /dev/null && kiss r asciidoc
 
 autoconf
 
-sed -i '/pip install/s/\.$/--root $(DESTDIR) ./' Makefile.in
-
 ./configure \
     --prefix=/usr \
     --sysconfdir=/etc 
 
 make build
 make install DESTDIR="$1"
-make docs DESTDIR="$1"
 
 install -Dm644 asciidoc/api.py \
     "$1/$(python -c 'import sysconfig; print(sysconfig.get_paths()["platlib"])')"/asciidoc/api.py
+
