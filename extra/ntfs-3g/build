@@ -1,0 +1,17 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --sbin=/usr/bin \
+    --mandir=/usr/share/man \
+    --disable-ldconfig \
+    --disable-static \
+    --with-fuse=external \
+    --enable-xattr-mappings \
+    --enable-posix-acls \
+    --enable-extras \
+    --enable-crypto
+
+make
+make DESTDIR="$1" rootbindir=/usr/bin rootsbindir=/usr/bin rootlibdir=/usr/lib install
+ln -s /usr/bin/ntfs-3g "$1"/usr/bin/mount.ntfs
