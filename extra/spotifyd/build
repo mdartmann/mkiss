@@ -1,0 +1,9 @@
+#!/bin/sh -uxe
+
+cargo build --release
+
+cargo install --locked --root "$1"/usr --path .
+
+rm "$1"/usr/.crates*
+
+install -Dm755 target/release/spotifyd "$1"/usr/bin/spotifyd
