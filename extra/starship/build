@@ -6,8 +6,7 @@ cargo fetch \
 
 cargo build \
 	--release \
-	--frozen \
-	--features notify-rust 
+	--frozen 
 
 install -Dm755 target/release/starship -t "$1/usr/bin"
 
