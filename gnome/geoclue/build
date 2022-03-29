@@ -1,13 +1,5 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
-git fetch
-
-# don't claim the compass sensor when not needed
-git cherry-pick -n 34a67b676d24
-
-for i in *.patch; do
-    patch -Np1 -i $i
-done
 
 meson build \
     ${MESON_OPTIONS/-D b_lto=true/} \
@@ -17,7 +9,7 @@ meson build \
 ninja -C build
 ninja -C build install
 
-echo ' u geoclue - "Geoinformation service" /var/lib/geoclue' | \
+echo 'u geoclue - "Geoinformation service" /var/lib/geoclue' | \
     install -Dm644 /dev/stdin "$1"/usr/lib/sysusers.d/geoclue.conf
 
 echo 'd /var/lib/geoclue 0755 geoclue geoclue' |  \
