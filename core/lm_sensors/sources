@@ -1,0 +1,5 @@
+git+https://github.com/groeck/lm-sensors.git#VERSION
+files/sensord.conf
+files/healthd
+files/healthd.service
+files/healthd.conf

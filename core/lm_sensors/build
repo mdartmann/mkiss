@@ -1,0 +1,14 @@
+#!/bin/sh -uxe
+
+sed -i "s|/etc/sysconfig|/etc/conf.d|" prog/{detect/sensors-detect,init/{sensord,lm_sensors}.service}
+sed -i "s|EnvironmentFile=|EnvironmentFile=-|" prog/init/lm_sensors.service
+
+make PREFIX=/usr
+
+make PROG_EXTRA=sensord BUILD_STATIC_LIB=0 \
+    PREFIX=/usr SBINDIR=/usr/bin MANDIR=/usr/share/man DESTDIR="$1" install
+
+install -Dm755 healthd "$1"/usr/bin/healthd
+
+install -Dm644 healthd.conf "$1"/etc/healthd.conf
+install -Dm644 sensord.conf "$1"/etc/conf.d/sensord

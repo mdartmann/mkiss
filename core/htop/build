@@ -8,7 +8,8 @@ autoreconf -fiv
 	--enable-delayacct \
 	--enable-openvz \
 	--enable-unicode \
-	--enable-vserver 
+	--enable-vserver \
+    --enable-sensors
 
 make
 make DESTDIR="$1" install

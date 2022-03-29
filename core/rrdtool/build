@@ -1,0 +1,26 @@
+#!/bin/sh -uxe
+
+sed 's|$(RUBY) ${abs_srcdir}/ruby/extconf.rb|& --vendor|' -i bindings/Makefile.am
+
+autoreconf -fiv
+
+LUA=/usr/bin/lua5.3 \
+    LUA_CFLAGS="-I/usr/include/lua5.3 -llua5.3" LUA_INSTALL_CMOD="/usr/lib/lua/5.3" \
+    ./configure \
+    --prefix=/usr \
+    --localstatedir=/var \
+    --disable-rpath \
+    --enable-perl \
+    --enable-perl-site-install \
+    --with-perl-options="INSTALLDIRS=vendor" \
+    --enable-ruby \
+    --enable-ruby-site-install \
+    --enable-python \
+    --enable-lua \
+    --enable-lua-site-install \
+    --enable-tcl \
+    --disable-libwrap
+
+make
+make DESTDIR="$1" includedir=/usr/include install
+
