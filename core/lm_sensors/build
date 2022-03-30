@@ -12,3 +12,6 @@ install -Dm755 healthd "$1"/usr/bin/healthd
 
 install -Dm644 healthd.conf "$1"/etc/healthd.conf
 install -Dm644 sensord.conf "$1"/etc/conf.d/sensord
+
+install -Dm644 healthd.service -t "$1"/usr/lib/systemd/system
+install -Dm644 prog/init/*.service "$1"/usr/lib/systemd/system/
