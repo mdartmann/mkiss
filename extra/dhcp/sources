@@ -1,3 +1,1 @@
 https://downloads.isc.org/isc/dhcp/VERSION/dhcp-VERSION.tar.gz
-patches/0003-117-fixed-gcc-10-compilation-issues.patch
-patches/0002-iproute2.patch
