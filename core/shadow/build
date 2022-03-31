@@ -1,24 +1,22 @@
 #!/bin/sh -uxe
 
-patch -Np1 -i fix-libpam.patch
-autoreconf -fsiv
-
 ./configure \
     --prefix=/usr \
     --bindir=/usr/bin \
     --sbindir=/usr/bin \
     --libdir=/usr/lib \
     --mandir=/usr/share/man \
-    --localstatedir=/var/run \
     --sysconfdir=/etc \
     --disable-account-tools-setuid \
     --with-libpam \
     --with-group-name-max-length=32 \
     --with-audit \
-    --without-selinux 
+    --without-selinux \
+    --without-su
 
 make
 make DESTDIR="$1" install
+make DESTDIR="$1" -C man install
 
 # Fix broken --sbindir.
 mv -f "$1/usr/sbin/"* "$1/usr/bin"
@@ -30,7 +28,6 @@ rm "$1"/usr/bin/logoutd
 
 # Remove utilities provided by util-linux
 rm "$1"/usr/bin/login
-rm "$1"/usr/bin/su
 rm "$1"/usr/bin/chsh
 rm "$1"/usr/bin/chfn
 rm "$1"/usr/bin/sg
