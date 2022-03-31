@@ -1,4 +1,4 @@
 #!/bin/sh -uxe
 
 make
-make PREFIX=/usr DESTDIR="$1" install
+make prefix=/usr DESTDIR="$1"/usr install
