@@ -20,7 +20,7 @@ export LINKFORSHARED="$LDFLAGS"
 ./configure \
 --prefix=/usr \
 --enable-shared \
---with-ensurepip \
+--with-ensurepip=install \
 --enable-big-digits \
 --without-lto \
 --enable-ipv6 \
@@ -31,7 +31,7 @@ export LINKFORSHARED="$LDFLAGS"
 --with-doc-strings \
 ax_cv_c_float_words_bigendian=no
 
-make
+make DESTDIR="$1"
 make DESTDIR="$1" install
 
 ln -s python3 "$1/usr/bin/python"
