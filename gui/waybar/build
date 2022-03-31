@@ -6,7 +6,8 @@ meson build \
     --buildtype=plain \
     --auto-features=enabled \
     --wrap-mode=nodownload \
-    -D systemd=enabled
+    -D systemd=enabled \
+    -D tests=disabled
 
 ninja -C build
 ninja -C build install
