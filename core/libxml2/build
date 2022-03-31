@@ -1,21 +1,8 @@
 #!/bin/sh -uxe
 
-git fetch
-# Work around lxml API abuse
-git cherry-pick -n 85b1792e37b131e7a51af98a37f92472e8de5f3f
-# Fix regression in xmlNodeDumpOutputInternal
-git cherry-pick -n 13ad8736d294536da4cbcd70a96b0a2fbf47070c
-# Fix XPath recursion limit
-git cherry-pick -n 3e1aad4fe584747fd7d17cc7b2863a78e2d21a77
-# Fix whitespace when serializing empty HTML documents
-git cherry-pick -n 92d9ab4c28842a09ca2b76d3ff2f933e01b6cd6f
-
-
 for i in *.patch; do 
 	patch -Np1 -i $i
 done
-
-sed -e '/cd fuzz;/d' -e 's/fuzz //g' -i Makefile.am
 
 autoreconf -fiv
 
@@ -25,6 +12,14 @@ autoreconf -fiv
 	--with-history \
 	--with-python \
 	--with-icu
+
+sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
+
 make
+
+find doc -type f -exec chmod -c 0644 {} +
+
 make DESTDIR="$1" install
 
+python -m compileall -d /usr/lib "$1"/usr/lib
+python -O -m compileall -d /usr/lib "$1"/usr/lib
