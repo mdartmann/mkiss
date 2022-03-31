@@ -15,7 +15,7 @@ meson build \
     ${MESON_OPTIONS/-D b_lto=true/} \
     -D runstatedir=/run \
     -D qemu_group=kvm \
-    -D qemu_user=libvirt \
+    -D qemu_user=libvirt-qemu \
     -D netcf=disabled \
     -D openwsman=disabled \
     -D apparmor=disabled \
