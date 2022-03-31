@@ -9,7 +9,7 @@ meson build \
     -D cloudproviders=enabled \
     -D tracker=enabled \
     -D colord=enabled \
-    -D gtk_doc=false \
+    -D gtk_doc=true \
     -D man-pages=true \
     --buildtype plain 
 
