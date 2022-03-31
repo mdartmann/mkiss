@@ -1,0 +1,3 @@
+#!/bin/sh -uxe
+
+python setup.py install --root="$1" --optimize=1
