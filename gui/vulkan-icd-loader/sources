@@ -1,2 +1,1 @@
 https://github.com/KhronosGroup/Vulkan-Loader/archive/vVERSION.tar.gz
-patches/0001-Dont-call-ToolProps-on-drivers-without-support.patch

@@ -1,11 +1,6 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
 
-for i in *.patch; do
-    patch -Np1 -i $i
-done
-
-rm -rf build
 cmake -B build -G Ninja \
     -D CMAKE_INSTALL_PREFIX=/usr \
     -D VULKAN_HEADERS_INSTALL_DIR=/usr \
