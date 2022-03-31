@@ -1,10 +1,11 @@
 #!/bin/sh -uxe
 
-patch -p0 < readline81-001
+for i in readline81-*; do
+    patch -p0 -i $i
+done
 
 ./configure \
 --prefix=/usr
 
 make SHLIB_LIBS=-lncurses
 make DESTDIR="$1" install
-
