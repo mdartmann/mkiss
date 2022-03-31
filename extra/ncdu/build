@@ -1,7 +1,18 @@
 #!/bin/sh -uxe
 
-./configure \
-    --prefix=/usr 
+zig build-exe \
+    -target x86_64-linux.5.10-gnu.2.34 -mcpu baseline \
+    -L /usr/lib \
+    -isystem /usr/include \
+    ./src/main.zig ./src/ncurses_refs.c \
+    -lc -lncursesw \
+    -OReleaseSafe \
+    --name ncdu \
+    -D _DEFAULT_SOURCE -D _XOPEN_SOURCE=600 \
+    -fPIE \
+    -z relro -z now \
+    -fno-each-lib-rpath
 
-make
-make DESTDIR="$1" install
+install -Dm755 ./ncdu "$1"/usr/bin/ncdu
+
+make install-doc PREFIX="$1"/usr
