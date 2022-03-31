@@ -1,9 +1,6 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
 
-# Fix weird glibc/statx issue. Thanks again to Hanna Reitz from Red Hat!
-patch -Np1 -i af793a16dece023611b054ce1bf36ecd4499b871.patch
-
 ./configure \
     --prefix=/usr \
     --sysconfdir=/etc \

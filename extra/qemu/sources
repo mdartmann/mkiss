@@ -1,4 +1,3 @@
 git+https://gitlab.com/qemu-project/qemu#VERSION
-https://gitlab.com/hreitz/qemu/-/commit/af793a16dece023611b054ce1bf36ecd4499b871.patch
 files/qemu-guest-agent.service
 files/65-kvm.rules
