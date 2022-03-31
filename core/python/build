@@ -18,20 +18,20 @@ rm -r Modules/_decimal/libmpdec
 export LINKFORSHARED="$LDFLAGS"
 
 ./configure \
---prefix=/usr \
---enable-shared \
---with-ensurepip=install \
---enable-big-digits \
---without-lto \
---enable-ipv6 \
---with-system-expat \
---with-system-ffi \
---with-computed-gotos \
---enable-optimizations \
---with-doc-strings \
-ax_cv_c_float_words_bigendian=no
+    --prefix=/usr \
+    --enable-shared \
+    --with-ensurepip \
+    --enable-big-digits \
+    --without-lto \
+    --enable-ipv6 \
+    --with-system-expat \
+    --with-system-ffi \
+    --with-computed-gotos \
+    --enable-optimizations \
+    --with-doc-strings \
+    ax_cv_c_float_words_bigendian=no
 
-make DESTDIR="$1"
+make
 make DESTDIR="$1" install
 
 ln -s python3 "$1/usr/bin/python"
