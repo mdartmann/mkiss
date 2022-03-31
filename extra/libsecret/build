@@ -1,8 +1,7 @@
 #!/bin/sh -uxe
 
 meson build \
-    ${MESON_OPTIONS/-D b_lto=true/} \
-    -D vapi=false
+    ${MESON_OPTIONS/-D b_lto=true/} 
 
 ninja -C build
 ninja -C build install
