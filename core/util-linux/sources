@@ -1,4 +1,4 @@
-https://www.kernel.org/pub/linux/utils/util-linux/v2.37/util-linux-VERSION.tar.xz
+https://www.kernel.org/pub/linux/utils/util-linux/vMAJOR.MINOR/util-linux-VERSION.tar.xz
 files/pam-su
 files/pam-runuser
 files/rfkill-unblock_.service
