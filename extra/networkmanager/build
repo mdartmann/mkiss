@@ -24,8 +24,7 @@ meson build \
     -D more_asserts=no \
     -D more_logging=false \
     -D qt=false \
-    -D systemd_journal=true \
-    -D modem_manager=false
+    -D systemd_journal=true 
 
 ninja -C build
 ninja -C build install
