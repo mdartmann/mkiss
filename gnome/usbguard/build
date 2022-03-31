@@ -3,12 +3,6 @@
 git submodule init
 git submodule update --recursive
 
-for i in *.patch; do
-    patch -Np1 -i $i
-done
-
-sed -i "s|/usr/include/catch|/usr/include/catch2|g" configure.ac
-
 autoreconf -fiv
 
 ./configure \
@@ -27,7 +21,7 @@ autoreconf -fiv
 
 make
 touch rules.conf
-make DESTDIR="$1" install
+make INSTALL='install -p' DESTDIR="$1" install
 
 chmod 750 "$1/etc/usbguard"
 
