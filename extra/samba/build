@@ -5,7 +5,7 @@ _samba4_pdb_modules=pdb_tdbsam,pdb_ldap,pdb_ads,pdb_smbpasswd,pdb_wbc_sam,pdb_sa
 _samba4_auth_modules=auth_unix,auth_wbc,auth_server,auth_netlogond,auth_script,auth_samba4
 
 ./configure \
-    -cyes \
+    --color=yes \
     --enable-fhs \
     --prefix=/usr \
     --sysconfdir=/etc \
