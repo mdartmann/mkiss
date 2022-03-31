@@ -4,9 +4,7 @@ NOCONFIGURE=1 ./autogen.sh
 
 ./configure \
     --prefix=/usr \
-    --disable-static \
-    --disable-vala \
-    --enable-gtk-doc
+    --disable-static 
 
 export CARGO_PROFILE_RELEASE_LTO=true CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
 
