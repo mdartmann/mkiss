@@ -1,4 +1,4 @@
-git+https://invent.kde.org/qt/qt/qtbase#vVERSION
+git+https://invent.kde.org/qt/qt/qtbase#vVERSION-lts-lgpl
 patches/qt5-base-nostrip.patch
 patches/qt5-base-fix-limits-h.patch
 patches/qt5-base-cflags.patch
