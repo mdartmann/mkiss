@@ -15,6 +15,7 @@ meson build \
     -D man=enabled \
     -D alsa=enabled \
     -D pipewire-alsa=enabled || zsh
+
 ninja -C build
 ninja -C build install
 
