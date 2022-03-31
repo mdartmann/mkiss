@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+patch -Np1 -i resolve_DNS.patch
+
+cmake -B build -G Ninja \
+    -D CMAKE_BUILD_TYPE=None \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D ZIG_PREFER_CLANG_CPP_CYLIB=ON 
+
+ninja -C build
+ninja -C build install
