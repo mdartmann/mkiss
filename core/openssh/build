@@ -22,6 +22,7 @@ autoreconf -v
 	--enable-utmp \
 	--with-sandbox \
 	--with-shadow \
+    --with-libedit \
 	--with-default-path='/usr/local/sbin:/usr/local/bin:/usr/bin'
 
 make
