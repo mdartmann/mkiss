@@ -1,7 +1,0 @@
-#!/bin/sh -uxe
-
-meson build \
-    ${MESON_OPTIONS}
-
-ninja -C build
-ninja -C build install
