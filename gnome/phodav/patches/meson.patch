@@ -1,0 +1,15 @@
+diff --git a/data/meson.build b/data/meson.build
+index c466030..f420655 100644
+--- a/data/meson.build
++++ b/data/meson.build
+@@ -16,8 +16,8 @@ endif
+ 
+ buildid = get_option('build-id')
+ version = proj_version.split('.')
+-maj = version[0].to_int()
+-min = version[1].split('-')[0].to_int()
++maj = 2
++min = 5
+ mic = 0
+ if version.length() > 2
+   mic = version[2].split('-')[0].to_int()

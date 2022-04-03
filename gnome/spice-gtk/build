@@ -1,4 +1,5 @@
 #!/bin/sh -uxe
+export DESTDIR="$1"
 
 meson build \
     ${MESON_OPTIONS/-D b_lto=true/}

@@ -1,0 +1,13 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+sed -i "s|etc/sysconfig|etc/conf.d|" data/spice-webdavd.service
+sed -i "s|usr/sbin|usr/bin|" data/spice-webdavd.service
+
+patch -Np1 -i  meson.patch
+
+meson build \
+    ${MESON_OPTIONS}
+
+ninja -C build
+ninja -C build install

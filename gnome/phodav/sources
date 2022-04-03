@@ -1,0 +1,2 @@
+git+https://gitlab.gnome.org/GNOME/phodav.git#vVERSION
+patches/meson.patch
