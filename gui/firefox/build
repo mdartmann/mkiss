@@ -1,9 +1,5 @@
 #!/bin/sh -uxe
 
-for i in *.patch; do
-    patch -Np1 -i $i
-done
-
 cat > mozconfig << EOF
 ac_add_options --enable-application=browser
 export MOZ_MAKE_FLAGS="$CFLAGS $LDFLAGS"
