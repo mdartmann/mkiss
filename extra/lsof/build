@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+
+
+sed -i 's|/\* #define\tHASSECURITY\t1 \*/|#define\tHASSECURITY\t1|' dialects/linux/machine.h
+sed -i "s|.so ./version|.ds VN ${2}|" -i Lsof.8
+
+./Configure -n linux
+
+make CC="cc ${CFLAGS} ${LDFLAGS}" 
+
+install -Dm 755 lsof -t "${1}"/usr/bin
+install -Dm 644 Lsof.8 "${1}"/usr/share/man/man8/lsof.8
