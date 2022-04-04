@@ -1,24 +1,24 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
 
-for i in *.patch; do
-    patch -p1 -i $i
-done
+# Minimal debug info; #6229
+export CFLAGS+=" -g1 -mtls-dialect=gnu"
+export CXXFLAGS+=" -g1 -mtls-dialect=gnu"
+
 
 meson build \
     -D b_ndebug=true \
     -D platforms=x11,wayland \
-    -D dri-drivers=i915,i965,r100,r200,nouveau \
-    -D gallium-drivers=r300,r600,radeonsi,nouveau,virgl,svga,swrast,swr,iris,crocus,zink \
+    -D gallium-drivers=r300,r600,radeonsi,nouveau,virgl,svga,swrast,iris,crocus,zink \
     -D vulkan-drivers=amd,intel,swrast \
     -D vulkan-layers=device-select,intel-nullhw,overlay \
-    -D swr-arches=avx,avx2 \
     -D dri3=enabled \
     -D egl=enabled \
     -D gallium-extra-hud=true \
     -D gallium-nine=true \
     -D gallium-omx=bellagio \
     -D gallium-opencl=icd \
+    -D gallium-va=enabled \
     -D gallium-vdpau=enabled \
     -D gallium-xa=enabled \
     -D gallium-xvmc=disabled \
@@ -29,6 +29,7 @@ meson build \
     -D libunwind=enabled \
     -D llvm=enabled \
     -D shared-llvm=enabled \
+    -D lmsensors=enabled \
     -D osmesa=true \
     -D shared-glapi=enabled \
     -D microsoft-clc=disabled \
