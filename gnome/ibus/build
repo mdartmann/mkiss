@@ -1,7 +1,5 @@
 #!/bin/sh -uxe
 
-git fetch
-git cherry-pick -n 936a0e76df79d92a8bdc03e9205330fb84a2083e
 sed -i 's|$(libibus) $(libibus_emoji_dialog)|$(libibus_emoji_dialog) $(libibus)|' ui/gtk3/Makefile.am
 
 NOCONFIGURE=1 ./autogen.sh
