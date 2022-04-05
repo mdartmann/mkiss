@@ -1,6 +1,10 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
 
+# Add minimal debug info
+export CFLAGS+=" -g1"
+export CXXFLAGS+=" -g1"
+
 cmake -B build -G Ninja \
     -D PORT=GTK \
     -D CMAKE_BUILD_TYPE=Release \
@@ -10,8 +14,7 @@ cmake -B build -G Ninja \
     -D CMAKE_SKIP_RPATH=ON \
     -D USE_SOUP2=ON \
     -D ENABLE_GTKDOC=OFF \
-    -D ENABLE_MINIBROWSER=ON \
-    -D USE_SYSTEMD=OFF
+    -D ENABLE_MINIBROWSER=ON 
 
 ninja -C build
 ninja -C build install
