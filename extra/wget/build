@@ -1,0 +1,17 @@
+#!/bin/sh -uxe
+
+cat >> doc/sample.wgetrc << EOF
+# Default CA location
+ca_certificate=/etc/ssl/certs/ca-certificates.crt
+EOF
+
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --disable-rpath \
+    --enable-nls \
+    --with-ssl=gnutls
+
+make
+make DESTDIR="$1" install 
+
