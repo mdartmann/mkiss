@@ -1,5 +1,9 @@
 #!/bin/sh -uxe
 
+cp /usr/include/linux/audit.h lib/audit.h
+
+patch -p1 -i audit-3.0.8-flex-array-workaround.patch
+
 ./configure \
 	--prefix=/usr \
 	--sbindir=/usr/bin \
