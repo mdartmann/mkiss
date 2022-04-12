@@ -4,7 +4,8 @@ cd ${2}/dmraid/
 
 mv ../../*.patch  .
 
-./configure 
+./configure \
+	--prefix=/usr
 
 CFLAGS="" make -j1
 
