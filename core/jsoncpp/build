@@ -9,6 +9,7 @@ ninja -C build
 ninja -C build install
 
 meson build-static \
+	${MESON_OPTIONS/-D b_lto=true/} \
 	--default-library static
 
 ninja -C build-static
