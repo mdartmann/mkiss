@@ -19,7 +19,7 @@ cd gtk2
 sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
 
 make -j1
-make DESTDIR="$1" install
+make DESTDIR="$1" -j1 install
 
 cd ../gtk3
 ../configure \
@@ -32,4 +32,4 @@ cd ../gtk3
 sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
 
 make -j1
-make DESTDIR="$1" install
+make DESTDIR="$1" -j1 install
