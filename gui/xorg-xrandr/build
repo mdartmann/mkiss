@@ -1,0 +1,8 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr
+
+make
+make DESTDIR="$1" install
+rm -f "$1"/usr/bin/xkeystone
