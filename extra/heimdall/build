@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+cmake -B build -G Ninja \
+    -D CMAKE_INSTALL_PREFIX=/usr
+
+cmake --build build
+
+install -d "$1"/usr/bin
+install -Dm755 build/bin/* "$1"/usr/bin
+install -Dm644 heimdall/60-heimdall.rules "$1"/usr/lib/udev/rules.d/60-heimdall.rules
