@@ -1,6 +1,6 @@
 gmp
 libisl
-mpc
+libmpc
 mpfr
 zlib
 zstd

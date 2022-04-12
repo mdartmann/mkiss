@@ -1,5 +1,5 @@
 gmp
-mpc
+libmpc
 mpfr
 zlib
 zstd
