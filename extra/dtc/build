@@ -6,4 +6,4 @@ sed -i "s/-Werror//" Makefile
 
 make
 
-make DESTDIR="$1" SETUP_PREFIX="/usr" PREFIX="/usr" install
+make PREFIX=/usr SETUP_PREFIX="/usr" PREFIX="$1/usr" install
