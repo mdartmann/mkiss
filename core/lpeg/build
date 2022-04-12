@@ -1,4 +1,4 @@
 #!/bin/sh -uxe
 
-make LUADIR=/usr/include/luajit-2.0
+make LUADIR=/usr/include/luajit-2.1
 install -Dm755 lpeg.so "$1/usr/lib/lua/5.1/lpeg.so"
