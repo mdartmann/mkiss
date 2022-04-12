@@ -1,5 +1,5 @@
 #!/bin/sh -uxe
 
-gcc ${CFLAGS} -DMPACK_USE_SYSTEM -I/usr/include/luajit-2.0 -c lmpack.c -o lmpack.o
+gcc ${CFLAGS} -DMPACK_USE_SYSTEM -I/usr/include/luajit-2.1 -c lmpack.c -o lmpack.o
 gcc -shared -lmpack ${LDFLAGS} -o mpack.so.5.1 lmpack.o
 install -Dm755 mpack.so.5.1 "$1/usr/lib/lua/5.1/mpack.so"
