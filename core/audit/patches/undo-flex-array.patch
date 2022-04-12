@@ -1,0 +1,11 @@
+--- usr/include/libaudit.h.orig	2022-04-12 19:32:01.386558397 +0200
++++ usr/include/libaudit.h	2022-04-12 19:32:20.338261473 +0200
+@@ -27,7 +27,7 @@
+ #include <stdint.h>
+ #include <sys/socket.h>
+ #include <linux/netlink.h>
+-#include "audit.h"
++#include <linux/audit.h>
+ #include <stdarg.h>
+ #include <syslog.h>
+ #ifndef __attr_access

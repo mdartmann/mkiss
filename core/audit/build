@@ -17,7 +17,9 @@ make
 
 make DESTDIR="$1" INSTALL="install -p" install
 
+srcdir=$PWD
 cd "$1"
+patch -p0 < $srcdir/undo-flex-array.patch
 install -dm700 var/log/audit
 
 rm -rf etc/rc.d \
