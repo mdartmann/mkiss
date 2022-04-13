@@ -31,6 +31,8 @@ export LINKFORSHARED="$LDFLAGS"
     --with-doc-strings \
     ax_cv_c_float_words_bigendian=no
 
+find -name Makefile -exec sed -i "s|-Werror|-Wno-error|g" {} +
+
 make
 make DESTDIR="$1" install
 

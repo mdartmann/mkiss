@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cat << EOF
+[NOTE] You will need to build and install this package twice to fix ensurepip.
+EOF
