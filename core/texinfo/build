@@ -1,6 +1,10 @@
 #!/bin/sh -uxe
 
+patch -Rp1 -i gnulib\?id=e3529d91abed939dde0975c0d71735b0fd0395fb 
+
+autoreconf -fiv
+
 ./configure --prefix=/usr
 
-make 
+make -j1
 make DESTDIR="$1" install
