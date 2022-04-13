@@ -6,5 +6,5 @@ meson build \
     -D docs=false \
     -D man=false
 
-ninja -C build
+ninja -C build -j1
 ninja -C build install
