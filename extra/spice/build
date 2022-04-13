@@ -1,6 +1,10 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
 
+cd subprojects/spice-common
+patch -Np1 < ../../a7b5474bf808934cf0ee1107a58d5f4d97b9afbf.patch
+cd ../..
+
 sed -i "s|if not version_info.contains('git')|if version_info.length() >= 4)|" server/meson.build
 sed -i "/doxygen.sh/d" meson.build
 
