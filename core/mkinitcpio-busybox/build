@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+
+# use safe CFLAGS
+export CFLAGS="-march=x86-64 -mtune=generic -Os -pipe -fno-strict-aliasing"
+
+sed 's|^\(CONFIG_EXTRA_CFLAGS\)=.*|\1="'"$CFLAGS"'"|' config > .config
+
+export KCONFIG_NOTIMESTAMP=1
+make
+install -Dm755 busybox "$1"/usr/lib/initcpio/busybox

@@ -21,10 +21,13 @@ make ARCH="x86_64" CC="$CC" HOSTCC="$CC" CXX="$CXX" HOSTCXX="$CXX" all
 kernver="$(<version)"
 modulesdir="$1/usr/lib/modules/$kernver"
 
+install -Dm644 "$(make -s image_name)" "$modulesdir/vmlinuz"
+echo linux-kernel | install -Dm644 /dev/stdin "$modulesdir/pkgbase"
+
 echo "Installing modules..."
 make INSTALL_MOD_PATH="$1/usr" INSTALL_MOD_STRIP=1 modules_install
 
-install -Dm644 "$(make -s image_name)" "$1/boot/vmlinuz-uwu"
+install -Dm644 "$(make -s image_name)" "$1/boot/vmlinuz-mkiss"
 rm -rf "$modulesdir"/{source,build}
 
 builddir="$1/usr/lib/modules/$(<version)/build"
@@ -66,3 +69,6 @@ find -L "$builddir" -type l -printf 'Removing %P\n' -delete
 echo "Adding symlink..."
 mkdir -p "$1/usr/src"
 ln -sr "$builddir" "$1/usr/src/linux"
+
+echo "Installing initramfs config..."
+install -Dm644 linux-mkiss.preset "$1"/etc/mkinitcpio.d/linux-mkiss.preset

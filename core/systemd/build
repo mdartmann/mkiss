@@ -54,3 +54,8 @@ install -D -m0644 -t "$1"/usr/share/man/man8 \
     build/man/{halt,poweroff,reboot,shutdown}.8
 
 install -Dm644 systemd-user.pam "$1"/etc/pam.d/systemd-user
+
+# add mkinitcpio hooks
+install -Dm0644 initcpio-install-systemd "$1"/usr/lib/initcpio/install/systemd
+install -Dm0644 initcpio-install-udev "$1"/usr/lib/initcpio/install/udev
+install -Dm0644 initcpio-hook-udev "$1"/usr/lib/initcpio/hooks/udev
