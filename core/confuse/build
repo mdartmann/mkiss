@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+
+autoreconf -fiv
+
+./configure \
+	--prefix=/usr \
+	--enable-shared
+
+make
+make DESTDIR="$1" install

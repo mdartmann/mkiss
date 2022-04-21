@@ -1,0 +1,13 @@
+#!/bin/sh -uxe
+
+./configure \
+	--prefix=/usr \
+	--sbindir=/usr/bin
+
+make
+make DESTDIR="$1" install
+
+install -Dm644 anything "$1"/etc/acpi/events/anything
+install -Dm755 handler.sh "$1"/etc/acpi/handler.sh
+
+install -Dm644 acpid.service "$1"/usr/lib/systemd/system/acpid.service

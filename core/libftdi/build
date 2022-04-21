@@ -1,0 +1,23 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+sed -i 's|LIB_SUFFIX 64|LIB_SUFFIX ""|' CMakeLists.txt
+sed -i 's|MODE="0644", GROUP=plugdev|TAG+="uaccess"|g' packages/99-libftdi.rules
+
+patch -Np1 -i fix_includes_path.patch
+
+cmake -B build -G Ninja \
+	-D CMAKE_INSTALL_PREFIX=/usr \
+	-D CMAKE_SKIP_BUILD_RPATH=ON \
+	-D CMAKE_BUILD_TYPE=Release \
+	-D EXAMPLES=OFF \
+	-D FTDI_EEPROM=ON \
+	-D FTDIPP=ON \
+	-D PYTHON_BINDINGS=ON \
+	-D LINK_PYTHON_LIBRARY=ON
+
+ninja -C build
+ninja -C build install
+
+install -Dm644 packages/99-libftdi.rules "$1"/usr/lib/udev/rules.d/69-libftdi.rules
+

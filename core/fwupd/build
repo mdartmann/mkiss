@@ -1,0 +1,22 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+	${MESON_OPTIONS/-D b_lto=true/} \
+	-D plugin_modem_manager=true \
+	-D plugin_intel_spi=true \
+	-D lzma=true \
+	-D docs=gtkdoc \
+	-D plugin_flashrom=true \
+	-D supported_build=true \
+	-D efi_binary=false
+
+ninja -C build
+ninja -C build install
+
+rm -r "$1"/usr/share/installed-tests
+
+mv "$1"/usr/bin/{,fwupd-}dbxtool
+mv "$1"/usr/share/man/man1/{,fwupd-}dbxtool.1
+
+rm "$1"/usr/lib/modules-load.d/fwupd-msr.conf

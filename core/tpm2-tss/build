@@ -1,0 +1,15 @@
+#!/bin/sh -uxe
+
+cp tss2-tcti-libtpms.map lib/
+
+./configure \
+	--prefix=/usr \
+	--sysconfdir=/etc \
+	--localstatedir=/var \
+	--with-runstatedir=/run \
+	--with-sysusersdir=/usr/lib/sysusers.d \
+	--with-tmpfilesdir=/usr/lib/tmpfiles.d \
+	--with-udevrulesprefix=60-
+
+make
+make DESTDIR="$1" install

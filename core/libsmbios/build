@@ -1,0 +1,18 @@
+#!/bin/sh -uxe
+
+./autogen.sh --no-configure
+
+mkdir build && cd build
+
+../configure \
+	--prefix=/usr \
+	--sbindir=/usr/bin \
+	--sysconfdir=/etc \
+	--disable-static
+
+make -j1
+make DESTDIR="$1" install
+
+
+install -dm755 "$1"/usr/include
+cp -a ../src/include/* out/public-include/* "$1"/usr/include

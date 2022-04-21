@@ -1,0 +1,14 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+	${MESON_OPTIONS}
+
+ninja -C build
+make
+
+ninja -C build install
+
+mkdir _tmp
+make DESTDIR=_tmp install
+mv _tmp/usr/local/share "$1"/usr/share
