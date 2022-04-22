@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+    ${MESON_OPTIONS/-D b_lto=true/} \
+    -D pam_modules_dir=/usr/lib/security \
+    -D gtk_doc=true
+
+ninja -C build
+ninja -C build install
