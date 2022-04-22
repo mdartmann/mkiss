@@ -1,0 +1,9 @@
+#!/bin/sh -uxe
+
+NOCONFIGURE=1 ./bootstrap.sh
+
+./configure \
+	--prefix=/usr \
+	--enable-gtk3
+make
+make DESTDIR="$1" install
