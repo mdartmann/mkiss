@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --disable-gles1 \
+    --with-system-data-files=/usr/share/mesa-demos
+
+
+make
+make DESTDIR="$1" install
+
+install -m0755 src/egl/opengl/{eglgears_wayland,eglgears_x11,eglkms,egltri_wayland,egltri_x11,peglgears,xeglgears,xeglthreads} "$1"/usr/bin

@@ -1,0 +1,7 @@
+#!/bin/sh -uxe
+
+patch -Np1 -i glew-install.patch
+
+make STRIP= LIBDIR=/usr/lib
+
+make install.all DESTDIR="$1" LIBDIR=/usr/lib
