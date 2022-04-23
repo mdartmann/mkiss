@@ -1,0 +1,174 @@
+#!/bin/bash -iuxe
+export _openssl_ver=1.1.1.1n
+export _brotli_ver=1.0.9
+export _build_type=RELEASE
+export _build_plugin=GCC5
+export _arch_list=(IA32 X64)
+
+# stolen from arch linux, adapted for easier submodules
+
+git submodule init
+git submodule update --recursive
+
+# reintroduce include accidentally removed in https://github.com/tianocore/edk2/commit/b47575801e1903e8b316d01840572ce2681cf2c6
+patch -Np1 -i edk2-202202-ovmfpkgia32.patch
+
+# -Werror, not even once
+sed -e 's/ -Werror//g' -i BaseTools/Conf/*.template BaseTools/Source/C/Makefiles/*.makefile
+
+# copy seabios's CSM binary into place, so that it can be included in the binaries:
+cp -v /usr/share/qemu/bios-csm.bin OvmfPkg/Csm/Csm16/Csm16.bin
+
+# TODO: check TPM_ENABLE/TPM2_ENABLE
+# shared targets for all
+_common_args=(
+-b "$_build_type"
+-n "$(nproc)"
+-t "$_build_plugin"
+)
+# shared targets for all EFI binaries
+_efi_args=(
+-D NETWORK_IP6_ENABLE
+-D TPM_CONFIG_ENABLE
+-D TPM1_ENABLE
+-D TPM2_ENABLE
+)
+# shared targets x86_64 and i686
+_x86_args=(
+-D FD_SIZE_2MB
+-D HTTP_BOOT_ENABLE
+-D TLS_ENABLE
+)
+
+export GCC5_IA32_PREFIX="x86_64-linux-gnu-"
+export GCC5_X64_PREFIX="x86_64-linux-gnu-"
+export GCC5_AARCH64_PREFIX="aarch64-linux-gnu-"
+echo "Building base tools"
+make -C BaseTools 
+
+# Weird behaviour when sourcing.
+# This needs to run in a new shell (for some reason),
+# so we set the environment manually.
+bash -c ". edksetup.sh"
+
+export WORKSPACE=$PWD
+export EDK_TOOLS_PATH=$PWD/BaseTools
+export CONF_PATH=$PWD/Conf
+export PATH=$EDK_TOOLS_PATH/BinWrappers/PosixLike:$PATH
+export MAKEFLAGS=-j1
+for _arch in ${_arch_list[@]}; do
+# shell
+echo "Building shell ($_arch)."
+BaseTools/BinWrappers/PosixLike/build -p ShellPkg/ShellPkg.dsc -a "$_arch" "${_common_args[@]}"
+# ovmf
+if [[ "$_arch" == IA32 ]]; then
+  echo "Building ovmf ($_arch) with secure boot support"
+  OvmfPkg/build.sh -p OvmfPkg/OvmfPkgIa32.dsc \
+                   -a "$_arch" \
+                   "${_common_args[@]}" \
+                   "${_efi_args[@]}" \
+                   "${_x86_args[@]}" \
+                   -D EXCLUDE_SHELL_FROM_FD \
+                   -D LOAD_X64_ON_IA32_ENABLE \
+                   -D SECURE_BOOT_ENABLE \
+                   -D SMM_REQUIRE
+  mv -v Build/Ovmf{Ia32,IA32-secure}
+  echo "Building ovmf ($_arch) with CSM support"
+  OvmfPkg/build.sh -p OvmfPkg/OvmfPkgIa32.dsc \
+                   -a "${_arch}" \
+                   "${_common_args[@]}" \
+                   "${_efi_args[@]}" \
+                   "${_x86_args[@]}" \
+                   -D CSM_ENABLE \
+                   -D LOAD_X64_ON_IA32_ENABLE
+  mv -v Build/Ovmf{Ia32,IA32-csm}
+  echo "Building ovmf ($_arch) default"
+  OvmfPkg/build.sh -p OvmfPkg/OvmfPkgIa32.dsc \
+                   -a "$_arch" \
+                   "${_common_args[@]}" \
+                   "${_efi_args[@]}" \
+                   "${_x86_args[@]}" \
+                   -D LOAD_X64_ON_IA32_ENABLE
+  mv -v Build/Ovmf{Ia32,IA32}
+fi
+if [[ "$_arch" == X64 ]]; then
+  echo "Building ovmf ($_arch) with secure boot support"
+  OvmfPkg/build.sh -p OvmfPkg/OvmfPkgIa32X64.dsc \
+                   -a IA32 -a "$_arch" \
+                   "${_common_args[@]}" \
+                   "${_efi_args[@]}" \
+                   "${_x86_args[@]}" \
+                   -D SECURE_BOOT_ENABLE \
+                   -D SMM_REQUIRE \
+                   -D EXCLUDE_SHELL_FROM_FD
+  mv -v Build/Ovmf3264{,-secure}
+  echo "Building ovmf ($_arch) with CSM support"
+  OvmfPkg/build.sh -p OvmfPkg/OvmfPkg$_arch.dsc \
+                   -a "${_arch}" \
+                   "${_common_args[@]}" \
+                   "${_efi_args[@]}" \
+                   "${_x86_args[@]}" \
+                   -D CSM_ENABLE
+  mv -v Build/OvmfX64{,-csm}
+  echo "Building ovmf (${_arch}) without secure boot"
+  OvmfPkg/build.sh -p OvmfPkg/OvmfPkg$_arch.dsc \
+                   -a "$_arch" \
+                   "${_common_args[@]}" \
+                   "${_efi_args[@]}" \
+                   "${_x86_args[@]}"
+fi
+if [[ "$_arch" == AARCH64 ]]; then
+  echo "Building ArmVirtPkg ($_arch) with secure boot"
+  BaseTools/BinWrappers/PosixLike/build -p ArmVirtPkg/ArmVirtQemu.dsc \
+                                        -a "$_arch" \
+                                        "${_common_args[@]}" \
+                                        "${_efi_args[@]}" \
+                                        -D NETWORK_HTTP_BOOT_ENABLE \
+                                        -D NETWORK_TLS_ENABLE \
+                                        -D SECURE_BOOT_ENABLE
+  dd if=/dev/zero of=Build/ArmVirtQemu-$_arch/${_build_type}_${_build_plugin}/FV/QEMU_CODE.fd bs=1M count=64
+  dd if=Build/ArmVirtQemu-$_arch/${_build_type}_${_build_plugin}/FV/QEMU_EFI.fd of=Build/ArmVirtQemu-$_arch/${_build_type}_${_build_plugin}/FV/QEMU_CODE.fd conv=notrunc
+  dd if=/dev/zero of=Build/ArmVirtQemu-$_arch/${_build_type}_${_build_plugin}/FV/QEMU_VARS.fd bs=1M count=64
+fi
+done
+
+_min='7C04A583-9E3E-4f1c-AD65-E05268D0B4D1'
+# full UEFI shell, as defined in ShellPkg/ShellPkg.dsc
+_full='EA4BB293-2D7F-4456-A681-1F22F42CD0BC'
+
+
+for _arch in ${_arch_list[@]}; do
+    if [[ "${_arch}" == 'AARCH64' ]]; then
+      install -vDm 644 Build/ArmVirtQemu-$_arch/${_build_type}_${_build_plugin}/$_arch/Shell.efi -t "$1/usr/share/edk2-ovmf/${_arch,,}/"
+    else
+      install -vDm 644 Build/Shell/${_build_type}_${_build_plugin}/$_arch/Shell_$_min.efi "$1/usr/share/edk2-ovmf/${_arch,,}/Shell.efi"
+      install -vDm 644 Build/Shell/${_build_type}_${_build_plugin}/$_arch/Shell_$_full.efi "$1/usr/share/edk2-ovmf/${_arch,,}/Shell_Full.efi"
+    fi
+done
+
+# installing the various firmwares
+for _arch in ${_arch_list[@]}; do
+    if [[ "$_arch" == AARCH64 ]]; then
+      continue
+    else
+      # installing OVMF.fd for xen: https://bugs.archlinux.org/task/58635
+      install -vDm 644 Build/Ovmf$_arch/${_build_type}_${_build_plugin}/FV/OVMF.fd -t "$1/usr/share/edk2-ovmf/${_arch,,}"
+      install -vDm 644 Build/Ovmf$_arch/${_build_type}_${_build_plugin}/FV/OVMF_CODE.fd -t "$1/usr/share/edk2-ovmf/${_arch,,}"
+      install -vDm 644 Build/Ovmf$_arch/${_build_type}_${_build_plugin}/FV/OVMF_VARS.fd -t "$1/usr/share/edk2-ovmf/${_arch,,}"
+      install -vDm 644 Build/Ovmf$_arch-csm/${_build_type}_${_build_plugin}/FV/OVMF_CODE.fd "$1/usr/share/edk2-ovmf/${_arch,,}/OVMF_CODE.csm.fd"
+      if [[ "${_arch}" == 'X64' ]]; then
+        install -vDm 644 Build/Ovmf3264-secure/${_build_type}_${_build_plugin}/FV/OVMF_CODE.fd "$1/usr/share/edk2-ovmf/${_arch,,}/OVMF_CODE.secboot.fd"
+      else
+        install -vDm 644 Build/Ovmf$_arch-secure/${_build_type}_${_build_plugin}/FV/OVMF_CODE.fd "$1/usr/share/edk2-ovmf/${_arch,,}/OVMF_CODE.secboot.fd"
+      fi
+    fi
+done
+# installing qemu descriptors in accordance with qemu:
+# https://git.qemu.org/?p=qemu.git;a=tree;f=pc-bios/descriptors
+# https://bugs.archlinux.org/task/64206
+install -vDm 644 *edk2*.json -t "$1/usr/share/qemu/firmware/"
+# adding symlink for previous ovmf location
+# https://bugs.archlinux.org/task/66528
+ln -svf /usr/share/edk2-ovmf "$1/usr/share/ovmf"
+# adding a symlink for applications with questionable heuristics (such as lxd)
+ln -svf /usr/share/edk2-ovmf "$1/usr/share/OVMF"

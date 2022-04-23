@@ -1,0 +1,15 @@
+git+https://github.com/tianocore/edk2#edk2-stableVERSION
+patches/edk2-202202-brotli.patch
+patches/edk2-202202-ovmfpkgia32.patch
+files/60-edk2-ovmf-x86_64.json
+files/82-edk2-ovmf-ia32-on-x86_64-csm.json
+files/60-edk2-ovmf-i386.json
+files/80-edk2-ovmf-ia32-on-x86_64-secure.json
+files/50-edk2-ovmf-x86_64-secure.json
+files/81-edk2-ovmf-ia32-on-x86_64.json
+files/70-edk2-ovmf-x86_64-csm.json
+files/50-edk2-ovmf-i386-secure.json
+files/60-edk2-armvirt-aarch64.json
+files/70-edk2-ovmf-i386-csm.json
+files/edk2-shell.install
+files/edk2-ovmf.install
