@@ -1,0 +1,17 @@
+#!/bin/sh -uxe
+
+git submodule init
+git submodule update
+
+./autogen.sh
+
+./configure \
+    --prefix=/usr \
+    --bindir=/usr/bin \
+    --sbindir=/usr/bin \
+    --libexecdir=/usr/lib \
+    --mandir=/usr/share/man \
+    --sysconfdir=/etc
+
+make
+make DESTDIR="$1" install

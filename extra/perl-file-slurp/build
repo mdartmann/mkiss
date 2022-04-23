@@ -1,0 +1,9 @@
+#!/bin/sh -uxe
+
+PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor
+make
+
+make install DESTDIR="$1"
+
+find "$1" -name '.packlist' -delete
+find "$1" -name '*.pod' -delete

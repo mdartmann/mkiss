@@ -1,0 +1,2 @@
+git+https://git.kernel.org/pub/scm/linux/kernel/git/jejb/efitools.git#vVERSION
+patches/efitools-1.9.2-console_warning_typo.patch
