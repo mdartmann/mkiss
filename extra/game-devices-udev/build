@@ -1,0 +1,8 @@
+#!/bin/sh -uxe
+
+install -dm755 "$1"/usr/lib/udev/rules.d
+
+cp *.rules \
+    "$1"/usr/lib/udev/rules.d/
+
+echo uinput | install -Dm644 /dev/stdin "$1"/usr/lib/modules-load.d/uinput.conf
