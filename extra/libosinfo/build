@@ -1,0 +1,10 @@
+#!/bin/sh -uxue
+export DESTDIR="$1"
+
+meson build \
+    ${MESON_OPTIONS} \
+    -D with-usb-ids-path=/usr/share/hwdata/usb.ids \
+    -D with-pci-ids-path=/usr/share/hwdata/pci.ids
+
+ninja -C build
+ninja -C build install

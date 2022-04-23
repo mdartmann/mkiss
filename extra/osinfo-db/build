@@ -1,0 +1,3 @@
+#!/bin/sh -uxe
+
+osinfo-db-import --root="$1" --system "osinfo-db-$2.tar.xz?no-extract"

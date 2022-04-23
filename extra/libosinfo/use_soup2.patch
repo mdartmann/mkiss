@@ -1,0 +1,13 @@
+diff --git a/meson.build b/meson.build
+index 39b739e..f8b6df4 100644
+--- a/meson.build
++++ b/meson.build
+@@ -73,7 +73,7 @@ gobject_dep = dependency('gobject-2.0', version: glib_version_info)
+ #  everything else
+ libsoup_dep = dependency('libsoup-3.0', required: false)
+ #    fallback to libsoup2
+-if not libsoup_dep.found()
++if true 
+   libsoup_dep = dependency('libsoup-2.4')
+ endif
+ libxml_dep = dependency('libxml-2.0', version: '>= 2.6.0')
