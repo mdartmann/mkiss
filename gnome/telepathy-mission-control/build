@@ -1,0 +1,15 @@
+#!/bin/sh -uxe
+
+autoreconf -fiv
+
+./configure \
+    --prefix=/usr \
+    --libexecdir=/usr/lib/telepathy \
+    --with-connectivity=nm \
+    --enable-gtk-doc \
+    --disable-upower \
+    --disable-static \
+    --disable-schemas-compile
+
+make
+make DESTDIR="$1" install

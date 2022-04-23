@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+
+autoreconf -fiv
+
+./configure \
+    --prefix=/usr \
+    --libexecdir=/usr/lib/telepathy 
+
+make
+make DESTDIR="$1" install

@@ -1,0 +1,16 @@
+#!/bin/sh -uxe
+
+patch -Np1 -i 0001-tools-Fix-the-build-with-Python-3.patch
+
+autoreconf -fiv
+
+./configure \
+    --prefix=/usr \
+    --libexecdir=/usr/lib/telepathy \
+    --enable-call \
+    --disable-static \
+    --disable-scrollkeeper \
+    --disable-schemas-compile
+
+make
+make DESTDIR="$1" install

@@ -1,0 +1,2 @@
+git+https://gitlab.freedesktop.org/telepathy/telepathy-logger.git#telepathy-logger-VERSION
+patches/0001-tools-Fix-the-build-with-Python-3.patch

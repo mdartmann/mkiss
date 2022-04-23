@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+
+autoreconf -fiv
+
+./configure \
+    --prefix=/usr \
+    --libexecdir=/usr/lib/telepathy \
+    --enable-vala-bindings \
+    --enable-static=no
+
+make
+make DESTDIR="$1" install
