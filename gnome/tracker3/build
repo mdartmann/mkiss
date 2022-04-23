@@ -4,6 +4,7 @@ export DESTDIR="$1"
 meson build \
     ${MESON_OPTIONS/-D b_lto=true/} \
     -D docs=false \
+    -D soup=soup2 \
     -D man=false
 
 ninja -C build -j1
