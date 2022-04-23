@@ -2,8 +2,6 @@
 
 autoreconf -fiv 
 
-patch -Np1 -i *.patch
-
 ./configure \
 	--prefix=/usr \
 	--libexecdir=/usr/lib \
