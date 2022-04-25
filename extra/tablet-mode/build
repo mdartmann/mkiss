@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+
+python setup.py build
+python setup.py install --root="$1" --optimize=1 --skip-build
+
+install -dm 755 "${1}/etc"
+install -dm 750 "${1}/etc/sudoers.d"
+install -m 640 tablet-mode.sudoers "${1}/etc/sudoers.d/tablet-mode"
+install -Dm 644 tablet-mode.service "${1}/usr/lib/systemd/system/tablet-mode.service"
+install -Dm 644 laptop-mode.service "${1}/usr/lib/systemd/system/laptop-mode.service"
+install -Dm 644 tablet-mode.group "${1}/usr/lib/sysusers.d/tablet-mode.conf"
+install -Dm 644 tablet-mode.desktop "${1}/usr/share/applications/tablet-mode.desktop"
