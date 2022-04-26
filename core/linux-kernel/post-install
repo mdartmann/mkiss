@@ -13,15 +13,11 @@ dkmsrefresh()
     depmod "${linver}"
 }
 
-if kiss l | rg nvidia > /dev/null 2&>1; then
+if kiss l | rg nvidia > /dev/null 2>&1; then
     dkmsrefresh
 fi
 
-initramfs()
-{
+if kiss l mkinitcpio > /dev/null 2>&1; then
+    echo "mkinitcpio found, regenerating initramfs..."
     mkinitcpio -P
-}
-
-if kiss l | grep mkinitpcio >/dev/null 2&>/1; then
-    initramfs
 fi
