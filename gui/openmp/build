@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+cmake -B build -G Ninja \
+    -D CMAKE_BUILD_TYPE=Release \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D LIBOMP_INSTALL_ALIASES=OFF
+
+ninja -C build
+ninja -C build install
+
+rm "$1"/usr/lib/libarcher_static.a

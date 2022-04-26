@@ -1,0 +1,23 @@
+#!/bin/sh -uxe
+
+patch -Np1 -i liblua.so.patch
+
+sed "s|%VER%|${2%.*}|g;s|%REL%|${2}|g" -i lua.pc
+
+make MYCFLAGS="$CFLAGS -fPIC" MYLDFLAGS="$LDFLAGS" linux
+
+make \
+    TO_LIB="liblua.a liblua.so.5.4 liblua.so.${2}" \
+    INSTALL_DATA='cp -d' \
+    INSTALL_TOP="$1/usr" \
+    INSTALL_MAN="$1"/usr/share/man/man1 \
+    install
+
+ln -sf /usr/bin/lua "$1"/usr/bin/lua5.4
+ln -sf /usr/bin/luac "$1"/usr/bin/luac5.4
+ln -sf /usr/lib/liblua.so.$2 "$1"/usr/lib/liblua5.4.so
+
+install -Dm644 lua.pc "$1"/usr/lib/pkgconfig/lua54.pc
+ln -sf lua54.pc "$1"/usr/lib/pkgconfig/lua.pc
+ln -sf lua54.pc "$1"/usr/lib/pkgconfig/lua5.4.pc
+ln -sf lua54.pc "$1"/usr/lib/pkgconfig/lua-5.4.pc

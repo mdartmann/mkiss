@@ -1,0 +1,25 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+patch -Np1 -i fix-cmake-build.patch
+
+cmake -B build -G Ninja \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D ENABLE_DYNAMIC_LINKING=ON \
+    -D BUILD_LIB_STATIC=OFF \
+    -D ENABLE_OPENCV=ON
+
+ninja -C build
+ninja -C build install
+
+export LDFLAGS+=" -L../build"
+
+cmake -B build-qt -G Ninja \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D ENABLE_DYNAMIC_LINKING=ON \
+    -D GMIC_PATH=$PWD/src \
+    -D GMIC_QT_HOST=none
+
+ninja -C build-qt
+ninja -C build-qt install
+

@@ -1,0 +1,2 @@
+git+https://github.com/caolanm/libwmf#vVERSION
+patches/libwmf-freetype.patch

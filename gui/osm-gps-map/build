@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+
+autoreconf -fiv
+
+./configure \
+    --prefix=/usr \
+    --enable-gtk-doc
+
+make
+make DESTDIR="$1" install

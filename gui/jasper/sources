@@ -1,0 +1,2 @@
+git+https://github.com/mdadams/jasper#version-VERSION
+patches/jasper-1.900.1-fix-filename-buffer-overflow.patch

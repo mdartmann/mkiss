@@ -1,0 +1,26 @@
+#!/bin/sh -uxe
+
+sed -i "s|freetype_config=''|freetype_config='/usr/bin/pkg-config freetype2'|g" configure
+
+./configure \
+    --prefix=/usr \
+    --enable-shared \
+    --with-modules \
+    --with-perl \
+    --with-quantum-depth=16 \
+    --with-threads
+
+make
+make DESTDIR="$1" install
+
+
+cd PerlMagick
+
+sed -i -e "s:'LDDLFLAGS'  => \"\(.*\)\":'LDDLFLAGS'  => \"-L${1}/usr/lib \1\":" Makefile.PL
+perl Makefile.PL \
+    INSTALLDIRS=vendor \
+    PREFIX=/usr \
+    DESTDIR="$1"
+
+make
+make install

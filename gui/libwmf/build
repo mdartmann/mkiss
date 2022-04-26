@@ -1,0 +1,16 @@
+#!/bin/sh -uxe
+
+patch -Np1 -i libwmf-freetype.patch
+
+autoreconf -fiv -Ipatches
+
+./configure \
+    --prefix=/usr \
+    --with-gsfontdir=/usr/share/fonts/Type1 \
+    --with-fontdir=/usr/share/fonts/Type1 \
+    --with-gsfontmap=/usr/share/ghostscript/9.10/Resource/Init/Fontmap.GS
+
+make
+make DESTDIR="$1" install
+
+rm -rf "$1/usr/share/fonts"

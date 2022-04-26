@@ -1,0 +1,32 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+# fix linking issue
+export CFLAGS+=" -lglut"
+
+patch -Np1 -i  *.patch
+
+sed -r "s|(CMAKE_SKIP_BUILD_RPATH) FALSE|\1 TRUE|g" -i CMakeLists.txt
+
+cmake_opts=(
+    -D CMAKE_INSTALL_PREFIX=/usr
+    -D CMAKE_INSTALL_LIBDIR=lib
+    -D CMAKE_BUILD_TYPE=Release 
+    -D JAS_ENABLE_OPENGL=ON 
+    -D JAS_ENABLE_LIBJPEG=ON
+    -D JAS_ENABLE_AUTOMATIC_DEPENDENCIES=OFF
+    -D CMAKE_SKIP_RPATH=ON
+ )
+
+ cmake -B static -G Ninja \
+    "${cmake_opts[@]}" \
+    -D JAS_ENABLE_SHARED=OFF
+
+ ninja -C static 
+ ninja -C static install
+
+ cmake -B shared -G Ninja \
+    "${cmake_opts[@]}" \
+    -D JAS_ENABLE_SHARED=ON
+
+ ninja -C shared
+ ninja -C shared install

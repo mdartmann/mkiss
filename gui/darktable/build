@@ -1,0 +1,21 @@
+#!/bin/sh -uxe
+
+cmake -B build -G Ninja \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D CMAKE_INSTALL_LIBDIR=lib \
+    -D CMAKE_INSTALL_LIBEXECDIR=lib \
+    -D CMAKE_BUILD_TYPE=Release \
+    -D BINARY_PACKAGE_BUILD=1 \
+    -D BUILD_USERMANUAL=False \
+    -D USE_LIBSECRET=ON \
+    -D USE_LUA=ON \
+    -D USE_COLORD=ON \
+    -D BUILD_CURVE_TOOLS=ON \
+    -D BUILD_NOISE_TOOLS=ON \
+    -D RAWSPEED_ENABLE_LTO=ON \
+    -D PROJECT_VERSION=$2
+
+ninja -C build
+ninja -C build install
+
+ln -s darktable/libdarktable.so "$1"/usr/lib/libdarktable.so

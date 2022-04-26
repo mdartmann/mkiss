@@ -1,0 +1,20 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+# fix build with svt-av1 >=0.9.0
+for patch in 1/* 2/* 3/*; do
+    patch -Np1 -i $patch
+done
+
+cmake -B build -G Ninja \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D CMAKE_INSTALL_LIBDIR=lib \
+    -D AVIF_BUILD_APPS=ON \
+    -D AVIF_CODEC_AOM=ON \
+    -D AVIF_CODEC_DAV1D=ON \
+    -D AVIF_CODEC_RAV1E=ON \
+    -D AVIF_CODEC_SVT=ON \
+    -D AVIF_BUILD_GDK_PIXBUF=ON
+
+ninja -C build
+ninja -C build install
