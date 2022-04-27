@@ -1,6 +1,0 @@
-git+https://invent.kde.org/qt/qt/qtwebengine#VERSION
-https://src.fedoraproject.org/rpms/qt5-qtwebengine/raw/rawhide/f/qtwebengine-everywhere-src-5.15.5-SIGSTKSZ.patch
-https://src.fedoraproject.org/rpms/qt5-qtwebengine/raw/rawhide/f/qtwebengine-everywhere-src-5.15.5-TRUE.patch
-https://src.fedoraproject.org/rpms/qt5-qtwebengine/raw/rawhide/f/qtwebengine-everywhere-src-5.15.6-clone3.patch
-https://src.fedoraproject.org/rpms/qt5-qtwebengine/raw/rawhide/f/qtwebengine-everywhere-src-5.15.5-%231904652.patch
-https://src.fedoraproject.org/rpms/qt5-qtwebengine/raw/rawhide/f/qtwebengine-harfbuzz.patch

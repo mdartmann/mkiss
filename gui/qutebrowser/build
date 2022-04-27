@@ -1,4 +1,0 @@
-#!/bin/sh -uxe
-
-make -f misc/Makefile all
-make -f misc/Makefile install DESTDIR="$1" PREFIX=/usr install
