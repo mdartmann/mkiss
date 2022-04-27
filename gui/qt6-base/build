@@ -1,0 +1,33 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+for i in *.patch; do
+    patch -Np1 -i $i
+done
+
+
+cmake -B build -G Ninja \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D CMAKE_BUILD_TYPE=RelWithDebInfo \
+    -D INSTALL_BINDIR=lib/qt6/bin \
+    -D INSTALL_PUBLICBINDIR=/usr/bin \
+    -D INSTALL_LIBEXECDIR=lib/qt6 \
+    -D INSTALL_DOCDIR=share/doc/qt6 \
+    -D INSTALL_ARCHDATADIR=lib/qt6 \
+    -D INSTALL_DATADIR=share/qt6 \
+    -D INSTALL_INCLUDEDIR=include/qt6 \
+    -D INSTALL_MKSPECSDIR=lib/qt6/mkspecs \
+    -D INSTALL_EXAMPLESDIR=share/doc/qt6/examples \
+    -D QT_FEATURE_journald=ON \
+    -D QT_FEATURE_openssl_linked=ON \
+    -D QT_FEATURE_system_sqlite=ON \
+    -D QT_FEATURE_system_xcb_xinput=ON \
+    -D CMAKE_INTERPROCEDURAL_OPTIMIZATION=ON
+
+ninja -C build
+ninja -C build install
+
+srcdir=$PWD
+
+mkdir -p "$1"/usr/bin
+ln -s /usr/lib/qt6/bin/qmake "$1"/usr/bin/qmake6

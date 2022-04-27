@@ -1,9 +1,8 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
-export CFLAGS="${CFLAGS/-march=native/-march=x86-64-v3}"
 
 cmake -B build -G Ninja \
-    -D DESKTOP_APP_QT6=off \
+    -D DESKTOP_APP_QT6=on \
     -D CMAKE_INSTALL_PREFIX=/usr \
     -D CMAKE_BUILD_TYPE=Release \
     -D TDESKTOP_API_ID=611335 \

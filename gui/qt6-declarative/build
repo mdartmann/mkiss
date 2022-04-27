@@ -1,0 +1,13 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+cmake -B build -G Ninja \
+    -D INSTALL_PUBLICBINDIR=bin
+
+ninja -C build
+ninja -C build install
+
+mkdir -p "$1"/usr/bin
+for i in '' preview scene leasing; do
+    ln -s /usr/lib/qt6/bin/qml$i "$1"/usr/bin/qml"$i"6
+done

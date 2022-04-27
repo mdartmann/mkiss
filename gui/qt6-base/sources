@@ -1,0 +1,4 @@
+https://download.qt.io/official_releases/qt/MAJOR.MINOR/VERSION/submodules/qtbase-everywhere-src-VERSION.tar.xz
+https://download.qt.io/official_releases/qt/6.3/CVE-2018-25032-qtbase-6.3.diff
+patches/qt6-base-cflags.patch
+patches/qt6-base-nostrip.patch
