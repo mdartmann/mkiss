@@ -33,7 +33,7 @@ export MACH_USE_SYSTEM_PYTHON=1
 export MOZBUILD_STATE_PATH="$PWD/mozbuild"
 
 ulimit -n 4096
-yes y | ./mach build -j12
+yes y | ./mach build -j`nproc`
 ./mach buildsymbols
 DESTDIR="$1" ./mach install
 

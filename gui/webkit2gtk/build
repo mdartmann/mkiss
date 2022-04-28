@@ -16,7 +16,8 @@ cmake -B build -G Ninja \
     -D ENABLE_GTKDOC=OFF \
     -D ENABLE_MINIBROWSER=ON 
 
-ninja -C build
+# Limit to 8 threads to avoid brutal RAM slaughtering
+ninja -C build -j8
 ninja -C build install
 
 rm -rf "$1/usr/bin"
