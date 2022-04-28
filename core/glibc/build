@@ -47,3 +47,4 @@ printf "en_US.UTF8 UTF-8" > "$1/etc/locale.gen"
 for script in ldd locale-gen sotruss; do
     install -Dm755 "../alternatives/glibc/$script" "$1/usr/bin/$script"
 done
+rm -f $1/usr/share/info/dir

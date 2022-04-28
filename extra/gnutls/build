@@ -14,3 +14,4 @@ sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
 
 make
 make DESTDIR="$1" install
+rm -f $1/usr/share/info/dir

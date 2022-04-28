@@ -40,3 +40,4 @@ for info in as bfd binutils gprof ld; do
 done
 
 rm -r "$1"/usr/share/locale
+rm -f $1/usr/share/info/dir

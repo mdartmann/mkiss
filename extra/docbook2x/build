@@ -15,3 +15,4 @@ make DESTDIR="$1" install
 
 sed -i 's|http://docbook2x.sf.net/latest|/usr/share/docbook2X|g' \
     "$1"/usr/bin/db2x_xsltproc
+rm -f $1/usr/share/info/dir

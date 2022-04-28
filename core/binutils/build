@@ -34,3 +34,4 @@ make DESTDIR="$1" tooldir=/usr install
 
 echo 'INPUT( /usr/lib/libbfd.a -liberty -lz -ldl )' > "$1/usr/lib/libbfd.so"
 echo 'INPUT( /usr/lib/libopcodes.a -lbfd )' > "$1/usr/lib/libopcodes.so"
+rm -f $1/usr/share/info/dir
