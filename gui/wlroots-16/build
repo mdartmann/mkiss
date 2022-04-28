@@ -1,0 +1,23 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+meson build \
+    -D prefix=/usr 
+
+ninja -C build
+ninja -C build install
+
+mv "$1"/usr/include/wlr{,-16} 
+
+rm "$1"/usr/lib/libwlroots.so
+ln -s /usr/lib/libwlroots16.so.11 "$1"/usr/lib/libwlroots16.so
+mv "$1"/usr/lib/libwlroots{,16}.so.11
+
+mv "$1"/usr/lib/pkgconfig/wlroots{,-16}.pc
+
+sed -i "s/-lwlroots/-lwlroots16/g" "$1"/usr/lib/pkgconfig/wlroots-16.pc
+
+cd "$1"/usr/include/wlr-16
+for i in $(grep -r \#include | grep wlr\/ | cut -d ":" -f1 | uniq); do
+    sed -i "s|<wlr/|<wlr-16/|g" $i
+done

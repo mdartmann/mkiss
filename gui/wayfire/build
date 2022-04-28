@@ -1,0 +1,20 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+# Fix meson issue by forcing x11/xwayland
+patch -Np1 -i force-xwayland-enable.patch
+
+
+export CFLAGS+=" -ffat-lto-objects"
+export CXXFLAGS+=" -ffat-lto-objects"
+
+meson build \
+    ${MESON_OPTIONS} \
+    -D use_system_wfconfig=enabled \
+    -D xwayland=enabled
+
+ninja -C build
+ninja -C build install
+
+install -Dm644 wayfire.desktop "$1"/usr/share/wayland-sessions/wayfire.desktop
+install -Dm644 wayfire.ini "$1"/usr/share/doc/wayfire/wayfire.ini

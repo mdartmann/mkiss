@@ -1,0 +1,5 @@
+git+https://github.com/g-truc/glm#VERSION
+files/glm.pc.in
+files/glmConfigVersion.cmake.in
+files/glmTargets.cmake
+files/glmConfig.cmake.in

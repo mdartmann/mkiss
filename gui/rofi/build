@@ -1,0 +1,14 @@
+#!/bin/sh -uxe
+
+git submodule init
+git submodule update --recursive
+
+autoreconf -iv
+
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --disable-check
+
+make
+make DESTDIR="$1" install install-man

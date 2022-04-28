@@ -1,0 +1,3 @@
+git+https://github.com/WayfireWM/wayfire.git#vVERSION
+patches/allow-git-wlroots.patch
+patches/force-xwayland-enable.patch

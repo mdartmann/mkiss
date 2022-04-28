@@ -1,0 +1,13 @@
+#!/bin/sh -uxe
+
+install -dm755 "$1"/usr/{include,share/doc,lib/pkgconfig,lib/cmake/glm}
+
+cp -r glm "$1"/usr/include
+cp -r doc "$1"/usr/share/doc/glm
+
+sed "s|@VERSION@|$2|" glm.pc.in > "$1"/usr/lib/pkgconfig/glm.pc
+
+sed "s|@VERSION@|$2|" glmConfigVersion.cmake.in > "$1"/usr/lib/cmake/glm/glmConfigVersion.cmake
+sed "s|@VERSION@|$2|" glmConfig.cmake.in > "$1"/usr/lib/cmake/glm/glmConfig.cmake
+
+install -Dm644 glmTargets.cmake "$1"/usr/lib/cmake/glm/glmTargets.cmake

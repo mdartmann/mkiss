@@ -1,0 +1,22 @@
+diff --git a/meson.build b/meson.build
+index cb3c6f9..b815b3c 100644
+--- a/meson.build
++++ b/meson.build
+@@ -127,15 +127,8 @@ wayfire_conf_inc = include_directories(['.'])
+ 
+ add_project_arguments(['-Wno-unused-parameter'], language: 'cpp')
+ 
+-have_xwayland = false
+-have_x11_backend = false
+-if use_system_wlroots
+-  have_xwayland = cpp.get_define('WLR_HAS_XWAYLAND', prefix: '#include <wlr/config.h>', dependencies: wlroots) == '1'
+-  have_x11_backend = cpp.get_define('WLR_HAS_X11_BACKEND', prefix: '#include <wlr/config.h>', dependencies: wlroots) == '1'
+-else
+-  have_xwayland = subproject('wlroots').get_variable('conf_data').get('WLR_HAS_XWAYLAND', false) == 1
+-  have_x11_backend = subproject('wlroots').get_variable('conf_data').get('WLR_HAS_X11_BACKEND', false) == 1
+-endif
++have_xwayland = true
++have_x11_backend = true
+ 
+ if get_option('xwayland').enabled() and not have_xwayland
+   error('Cannot enable Xwayland in wayfire: wlroots has been built without Xwayland support')

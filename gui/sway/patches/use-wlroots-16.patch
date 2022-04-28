@@ -1,0 +1,1070 @@
+diff --git a/include/sway/commands.h b/include/sway/commands.h
+index a92c048..872922b 100644
+--- a/include/sway/commands.h
++++ b/include/sway/commands.h
+@@ -1,7 +1,7 @@
+ #ifndef _SWAY_COMMANDS_H
+ #define _SWAY_COMMANDS_H
+ 
+-#include <wlr/util/edges.h>
++#include <wlr-16/util/edges.h>
+ #include "config.h"
+ 
+ struct sway_container;
+diff --git a/include/sway/config.h b/include/sway/config.h
+index cb41292..ecc1a3d 100644
+--- a/include/sway/config.h
++++ b/include/sway/config.h
+@@ -5,10 +5,10 @@
+ #include <stdint.h>
+ #include <string.h>
+ #include <time.h>
+-#include <wlr/render/wlr_texture.h>
+-#include <wlr/interfaces/wlr_switch.h>
+-#include <wlr/types/wlr_tablet_tool.h>
+-#include <wlr/util/box.h>
++#include <wlr-16/render/wlr_texture.h>
++#include <wlr-16/interfaces/wlr_switch.h>
++#include <wlr-16/types/wlr_tablet_tool.h>
++#include <wlr-16/util/box.h>
+ #include <xkbcommon/xkbcommon.h>
+ #include <xf86drmMode.h>
+ #include "../include/config.h"
+diff --git a/include/sway/decoration.h b/include/sway/decoration.h
+index 7916746..e53bc17 100644
+--- a/include/sway/decoration.h
++++ b/include/sway/decoration.h
+@@ -1,7 +1,7 @@
+ #ifndef _SWAY_DECORATION_H
+ #define _SWAY_DECORATION_H
+ 
+-#include <wlr/types/wlr_server_decoration.h>
++#include <wlr-16/types/wlr_server_decoration.h>
+ 
+ struct sway_server_decoration {
+ 	struct wlr_server_decoration *wlr_server_decoration;
+diff --git a/include/sway/desktop.h b/include/sway/desktop.h
+index 7f2f5b3..fd6d96d 100644
+--- a/include/sway/desktop.h
++++ b/include/sway/desktop.h
+@@ -1,4 +1,4 @@
+-#include <wlr/types/wlr_compositor.h>
++#include <wlr-16/types/wlr_compositor.h>
+ 
+ struct sway_container;
+ struct sway_view;
+diff --git a/include/sway/desktop/idle_inhibit_v1.h b/include/sway/desktop/idle_inhibit_v1.h
+index 58d54c6..67c5fda 100644
+--- a/include/sway/desktop/idle_inhibit_v1.h
++++ b/include/sway/desktop/idle_inhibit_v1.h
+@@ -1,7 +1,7 @@
+ #ifndef _SWAY_DESKTOP_IDLE_INHIBIT_V1_H
+ #define _SWAY_DESKTOP_IDLE_INHIBIT_V1_H
+-#include <wlr/types/wlr_idle_inhibit_v1.h>
+-#include <wlr/types/wlr_idle.h>
++#include <wlr-16/types/wlr_idle_inhibit_v1.h>
++#include <wlr-16/types/wlr_idle.h>
+ #include "sway/server.h"
+ 
+ enum sway_idle_inhibit_mode {
+diff --git a/include/sway/input/cursor.h b/include/sway/input/cursor.h
+index 3a71a35..0100b36 100644
+--- a/include/sway/input/cursor.h
++++ b/include/sway/input/cursor.h
+@@ -2,9 +2,9 @@
+ #define _SWAY_INPUT_CURSOR_H
+ #include <stdbool.h>
+ #include <stdint.h>
+-#include <wlr/types/wlr_pointer_constraints_v1.h>
+-#include <wlr/types/wlr_pointer_gestures_v1.h>
+-#include <wlr/types/wlr_compositor.h>
++#include <wlr-16/types/wlr_pointer_constraints_v1.h>
++#include <wlr-16/types/wlr_pointer_gestures_v1.h>
++#include <wlr-16/types/wlr_compositor.h>
+ #include "sway/input/seat.h"
+ #include "config.h"
+ 
+diff --git a/include/sway/input/input-manager.h b/include/sway/input/input-manager.h
+index c9bd08f..586078c 100644
+--- a/include/sway/input/input-manager.h
++++ b/include/sway/input/input-manager.h
+@@ -1,10 +1,10 @@
+ #ifndef _SWAY_INPUT_INPUT_MANAGER_H
+ #define _SWAY_INPUT_INPUT_MANAGER_H
+ #include <libinput.h>
+-#include <wlr/types/wlr_input_inhibitor.h>
+-#include <wlr/types/wlr_keyboard_shortcuts_inhibit_v1.h>
+-#include <wlr/types/wlr_virtual_keyboard_v1.h>
+-#include <wlr/types/wlr_virtual_pointer_v1.h>
++#include <wlr-16/types/wlr_input_inhibitor.h>
++#include <wlr-16/types/wlr_keyboard_shortcuts_inhibit_v1.h>
++#include <wlr-16/types/wlr_virtual_keyboard_v1.h>
++#include <wlr-16/types/wlr_virtual_pointer_v1.h>
+ #include "sway/server.h"
+ #include "sway/config.h"
+ #include "list.h"
+diff --git a/include/sway/input/seat.h b/include/sway/input/seat.h
+index 50c4be9..e18fa16 100644
+--- a/include/sway/input/seat.h
++++ b/include/sway/input/seat.h
+@@ -1,10 +1,10 @@
+ #ifndef _SWAY_INPUT_SEAT_H
+ #define _SWAY_INPUT_SEAT_H
+ 
+-#include <wlr/types/wlr_keyboard_shortcuts_inhibit_v1.h>
+-#include <wlr/types/wlr_layer_shell_v1.h>
+-#include <wlr/types/wlr_seat.h>
+-#include <wlr/util/edges.h>
++#include <wlr-16/types/wlr_keyboard_shortcuts_inhibit_v1.h>
++#include <wlr-16/types/wlr_layer_shell_v1.h>
++#include <wlr-16/types/wlr_seat.h>
++#include <wlr-16/util/edges.h>
+ #include "sway/config.h"
+ #include "sway/input/input-manager.h"
+ #include "sway/input/tablet.h"
+diff --git a/include/sway/input/tablet.h b/include/sway/input/tablet.h
+index d7e4c24..9eb8245 100644
+--- a/include/sway/input/tablet.h
++++ b/include/sway/input/tablet.h
+@@ -1,6 +1,6 @@
+ #ifndef _SWAY_INPUT_TABLET_H
+ #define _SWAY_INPUT_TABLET_H
+-#include <wlr/types/wlr_layer_shell_v1.h>
++#include <wlr-16/types/wlr_layer_shell_v1.h>
+ 
+ struct sway_seat;
+ struct wlr_tablet_tool;
+diff --git a/include/sway/input/text_input.h b/include/sway/input/text_input.h
+index c70fd93..65912e2 100644
+--- a/include/sway/input/text_input.h
++++ b/include/sway/input/text_input.h
+@@ -1,9 +1,9 @@
+ #ifndef _SWAY_INPUT_TEXT_INPUT_H
+ #define _SWAY_INPUT_TEXT_INPUT_H
+ 
+-#include <wlr/types/wlr_text_input_v3.h>
+-#include <wlr/types/wlr_input_method_v2.h>
+-#include <wlr/types/wlr_compositor.h>
++#include <wlr-16/types/wlr_text_input_v3.h>
++#include <wlr-16/types/wlr_input_method_v2.h>
++#include <wlr-16/types/wlr_compositor.h>
+ #include "sway/input/seat.h"
+ 
+ /**
+diff --git a/include/sway/layers.h b/include/sway/layers.h
+index f850849..28af78e 100644
+--- a/include/sway/layers.h
++++ b/include/sway/layers.h
+@@ -1,8 +1,8 @@
+ #ifndef _SWAY_LAYERS_H
+ #define _SWAY_LAYERS_H
+ #include <stdbool.h>
+-#include <wlr/types/wlr_compositor.h>
+-#include <wlr/types/wlr_layer_shell_v1.h>
++#include <wlr-16/types/wlr_compositor.h>
++#include <wlr-16/types/wlr_layer_shell_v1.h>
+ 
+ enum layer_parent {
+ 	LAYER_PARENT_LAYER,
+diff --git a/include/sway/output.h b/include/sway/output.h
+index 26b9709..90a95cc 100644
+--- a/include/sway/output.h
++++ b/include/sway/output.h
+@@ -3,7 +3,7 @@
+ #include <time.h>
+ #include <unistd.h>
+ #include <wayland-server-core.h>
+-#include <wlr/types/wlr_output.h>
++#include <wlr-16/types/wlr_output.h>
+ #include "config.h"
+ #include "sway/tree/node.h"
+ #include "sway/tree/view.h"
+diff --git a/include/sway/server.h b/include/sway/server.h
+index 0bd860b..bc9e002 100644
+--- a/include/sway/server.h
++++ b/include/sway/server.h
+@@ -2,23 +2,23 @@
+ #define _SWAY_SERVER_H
+ #include <stdbool.h>
+ #include <wayland-server-core.h>
+-#include <wlr/backend.h>
+-#include <wlr/backend/session.h>
+-#include <wlr/render/allocator.h>
+-#include <wlr/render/wlr_renderer.h>
+-#include <wlr/types/wlr_compositor.h>
+-#include <wlr/types/wlr_data_device.h>
+-#include <wlr/types/wlr_input_method_v2.h>
+-#include <wlr/types/wlr_foreign_toplevel_management_v1.h>
+-#include <wlr/types/wlr_drm_lease_v1.h>
+-#include <wlr/types/wlr_layer_shell_v1.h>
+-#include <wlr/types/wlr_output_management_v1.h>
+-#include <wlr/types/wlr_output_power_management_v1.h>
+-#include <wlr/types/wlr_presentation_time.h>
+-#include <wlr/types/wlr_relative_pointer_v1.h>
+-#include <wlr/types/wlr_server_decoration.h>
+-#include <wlr/types/wlr_text_input_v3.h>
+-#include <wlr/types/wlr_xdg_shell.h>
++#include <wlr-16/backend.h>
++#include <wlr-16/backend/session.h>
++#include <wlr-16/render/allocator.h>
++#include <wlr-16/render/wlr_renderer.h>
++#include <wlr-16/types/wlr_compositor.h>
++#include <wlr-16/types/wlr_data_device.h>
++#include <wlr-16/types/wlr_input_method_v2.h>
++#include <wlr-16/types/wlr_foreign_toplevel_management_v1.h>
++#include <wlr-16/types/wlr_drm_lease_v1.h>
++#include <wlr-16/types/wlr_layer_shell_v1.h>
++#include <wlr-16/types/wlr_output_management_v1.h>
++#include <wlr-16/types/wlr_output_power_management_v1.h>
++#include <wlr-16/types/wlr_presentation_time.h>
++#include <wlr-16/types/wlr_relative_pointer_v1.h>
++#include <wlr-16/types/wlr_server_decoration.h>
++#include <wlr-16/types/wlr_text_input_v3.h>
++#include <wlr-16/types/wlr_xdg_shell.h>
+ #include "config.h"
+ #include "list.h"
+ #if HAVE_XWAYLAND
+diff --git a/include/sway/surface.h b/include/sway/surface.h
+index fb1cd77..5401620 100644
+--- a/include/sway/surface.h
++++ b/include/sway/surface.h
+@@ -1,6 +1,6 @@
+ #ifndef _SWAY_SURFACE_H
+ #define _SWAY_SURFACE_H
+-#include <wlr/types/wlr_compositor.h>
++#include <wlr-16/types/wlr_compositor.h>
+ 
+ struct sway_surface {
+ 	struct wlr_surface *wlr_surface;
+diff --git a/include/sway/tree/container.h b/include/sway/tree/container.h
+index d6f5bd8..3f3e578 100644
+--- a/include/sway/tree/container.h
++++ b/include/sway/tree/container.h
+@@ -2,7 +2,7 @@
+ #define _SWAY_CONTAINER_H
+ #include <stdint.h>
+ #include <sys/types.h>
+-#include <wlr/types/wlr_compositor.h>
++#include <wlr-16/types/wlr_compositor.h>
+ #include "list.h"
+ #include "sway/tree/node.h"
+ 
+diff --git a/include/sway/tree/root.h b/include/sway/tree/root.h
+index 5d4a2f2..12d31ac 100644
+--- a/include/sway/tree/root.h
++++ b/include/sway/tree/root.h
+@@ -2,8 +2,8 @@
+ #define _SWAY_ROOT_H
+ #include <wayland-server-core.h>
+ #include <wayland-util.h>
+-#include <wlr/types/wlr_output_layout.h>
+-#include <wlr/render/wlr_texture.h>
++#include <wlr-16/types/wlr_output_layout.h>
++#include <wlr-16/render/wlr_texture.h>
+ #include "sway/tree/container.h"
+ #include "sway/tree/node.h"
+ #include "config.h"
+diff --git a/include/sway/tree/view.h b/include/sway/tree/view.h
+index 95708a0..b37056c 100644
+--- a/include/sway/tree/view.h
++++ b/include/sway/tree/view.h
+@@ -1,10 +1,10 @@
+ #ifndef _SWAY_VIEW_H
+ #define _SWAY_VIEW_H
+ #include <wayland-server-core.h>
+-#include <wlr/types/wlr_compositor.h>
++#include <wlr-16/types/wlr_compositor.h>
+ #include "config.h"
+ #if HAVE_XWAYLAND
+-#include <wlr/xwayland.h>
++#include <wlr-16/xwayland.h>
+ #endif
+ #include "sway/input/input-manager.h"
+ #include "sway/input/seat.h"
+diff --git a/include/sway/xdg_decoration.h b/include/sway/xdg_decoration.h
+index 8bef4c6..c0902ff 100644
+--- a/include/sway/xdg_decoration.h
++++ b/include/sway/xdg_decoration.h
+@@ -1,7 +1,7 @@
+ #ifndef _SWAY_XDG_DECORATION_H
+ #define _SWAY_XDG_DECORATION_H
+ 
+-#include <wlr/types/wlr_xdg_decoration_v1.h>
++#include <wlr-16/types/wlr_xdg_decoration_v1.h>
+ 
+ struct sway_xdg_decoration {
+ 	struct wlr_xdg_toplevel_decoration_v1 *wlr_xdg_decoration;
+diff --git a/include/sway/xwayland.h b/include/sway/xwayland.h
+index 93055c4..aa3fb54 100644
+--- a/include/sway/xwayland.h
++++ b/include/sway/xwayland.h
+@@ -1,7 +1,7 @@
+ #ifndef SWAY_XWAYLAND_H
+ #define SWAY_XWAYLAND_H
+ 
+-#include <wlr/xwayland.h>
++#include <wlr-16/xwayland.h>
+ #include <xcb/xproto.h>
+ 
+ enum atom_name {
+diff --git a/meson.build b/meson.build
+index 46352da..d0439a6 100644
+--- a/meson.build
++++ b/meson.build
+@@ -51,7 +51,7 @@ wayland_client = dependency('wayland-client')
+ wayland_cursor = dependency('wayland-cursor')
+ wayland_egl = dependency('wayland-egl')
+ wayland_protos = dependency('wayland-protocols', version: '>=1.24')
+-wlroots = dependency('wlroots', version: wlroots_version)
++wlroots = dependency('wlroots-16', version: wlroots_version)
+ xkbcommon = dependency('xkbcommon')
+ cairo = dependency('cairo')
+ pango = dependency('pango')
+diff --git a/sway/commands/bind.c b/sway/commands/bind.c
+index 26c99e6..988f153 100644
+--- a/sway/commands/bind.c
++++ b/sway/commands/bind.c
+@@ -5,7 +5,7 @@
+ #include <strings.h>
+ #include <xkbcommon/xkbcommon.h>
+ #include <xkbcommon/xkbcommon-names.h>
+-#include <wlr/types/wlr_cursor.h>
++#include <wlr-16/types/wlr_cursor.h>
+ #include "sway/commands.h"
+ #include "sway/config.h"
+ #include "sway/desktop/transaction.h"
+diff --git a/sway/commands/border_images.c b/sway/commands/border_images.c
+index a238be5..3e84c29 100644
+--- a/sway/commands/border_images.c
++++ b/sway/commands/border_images.c
+@@ -1,5 +1,5 @@
+ #define _POSIX_C_SOURCE 200809L
+-#include <wlr/render/wlr_renderer.h>
++#include <wlr-16/render/wlr_renderer.h>
+ #include <drm_fourcc.h>
+ #include <string.h>
+ #include "cairo.h"
+diff --git a/sway/commands/create_output.c b/sway/commands/create_output.c
+index 79283fd..44b09fd 100644
+--- a/sway/commands/create_output.c
++++ b/sway/commands/create_output.c
+@@ -1,9 +1,9 @@
+-#include <wlr/config.h>
+-#include <wlr/backend/headless.h>
+-#include <wlr/backend/multi.h>
+-#include <wlr/backend/wayland.h>
++#include <wlr-16/config.h>
++#include <wlr-16/backend/headless.h>
++#include <wlr-16/backend/multi.h>
++#include <wlr-16/backend/wayland.h>
+ #if WLR_HAS_X11_BACKEND
+-#include <wlr/backend/x11.h>
++#include <wlr-16/backend/x11.h>
+ #endif
+ #include "sway/commands.h"
+ #include "sway/server.h"
+diff --git a/sway/commands/focus.c b/sway/commands/focus.c
+index facd82d..beb3a06 100644
+--- a/sway/commands/focus.c
++++ b/sway/commands/focus.c
+@@ -1,6 +1,6 @@
+ #include <float.h>
+ #include <strings.h>
+-#include <wlr/types/wlr_output_layout.h>
++#include <wlr-16/types/wlr_output_layout.h>
+ #include "log.h"
+ #include "sway/commands.h"
+ #include "sway/input/input-manager.h"
+diff --git a/sway/commands/input/events.c b/sway/commands/input/events.c
+index 9405181..2a420ce 100644
+--- a/sway/commands/input/events.c
++++ b/sway/commands/input/events.c
+@@ -1,7 +1,7 @@
+ #include <limits.h>
+ #include <string.h>
+ #include <strings.h>
+-#include <wlr/backend/libinput.h>
++#include <wlr-16/backend/libinput.h>
+ #include "sway/config.h"
+ #include "sway/commands.h"
+ #include "sway/input/input-manager.h"
+diff --git a/sway/commands/input/xkb_switch_layout.c b/sway/commands/input/xkb_switch_layout.c
+index 3be37da..58e0a89 100644
+--- a/sway/commands/input/xkb_switch_layout.c
++++ b/sway/commands/input/xkb_switch_layout.c
+@@ -1,6 +1,6 @@
+ #define _POSIX_C_SOURCE 200809L
+ #include <assert.h>
+-#include <wlr/interfaces/wlr_keyboard.h>
++#include <wlr-16/interfaces/wlr_keyboard.h>
+ #include "sway/config.h"
+ #include "sway/commands.h"
+ #include "sway/input/input-manager.h"
+diff --git a/sway/commands/move.c b/sway/commands/move.c
+index 0d0d972..18d9af9 100644
+--- a/sway/commands/move.c
++++ b/sway/commands/move.c
+@@ -4,9 +4,9 @@
+ #include <stdbool.h>
+ #include <string.h>
+ #include <strings.h>
+-#include <wlr/types/wlr_cursor.h>
+-#include <wlr/types/wlr_output.h>
+-#include <wlr/types/wlr_output_layout.h>
++#include <wlr-16/types/wlr_cursor.h>
++#include <wlr-16/types/wlr_output.h>
++#include <wlr-16/types/wlr_output_layout.h>
+ #include "sway/commands.h"
+ #include "sway/input/cursor.h"
+ #include "sway/input/seat.h"
+diff --git a/sway/commands/resize.c b/sway/commands/resize.c
+index 425069d..5f4d054 100644
+--- a/sway/commands/resize.c
++++ b/sway/commands/resize.c
+@@ -5,7 +5,7 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <strings.h>
+-#include <wlr/util/edges.h>
++#include <wlr-16/util/edges.h>
+ #include "sway/commands.h"
+ #include "sway/tree/arrange.h"
+ #include "sway/tree/view.h"
+diff --git a/sway/commands/seat/cursor.c b/sway/commands/seat/cursor.c
+index 504a9f5..6d3c2ca 100644
+--- a/sway/commands/seat/cursor.c
++++ b/sway/commands/seat/cursor.c
+@@ -2,8 +2,8 @@
+ #include <linux/input-event-codes.h>
+ 
+ #include <strings.h>
+-#include <wlr/types/wlr_cursor.h>
+-#include <wlr/types/wlr_pointer.h>
++#include <wlr-16/types/wlr_cursor.h>
++#include <wlr-16/types/wlr_pointer.h>
+ #include "sway/commands.h"
+ #include "sway/input/cursor.h"
+ 
+diff --git a/sway/commands/seat/pointer_constraint.c b/sway/commands/seat/pointer_constraint.c
+index 3890ebd..d7ee673 100644
+--- a/sway/commands/seat/pointer_constraint.c
++++ b/sway/commands/seat/pointer_constraint.c
+@@ -1,5 +1,5 @@
+ #include <string.h>
+-#include <wlr/types/wlr_pointer_constraints_v1.h>
++#include <wlr-16/types/wlr_pointer_constraints_v1.h>
+ #include "sway/commands.h"
+ #include "sway/config.h"
+ #include "sway/input/cursor.h"
+diff --git a/sway/config.c b/sway/config.c
+index e4745a5..0260a37 100644
+--- a/sway/config.c
++++ b/sway/config.c
+@@ -14,7 +14,7 @@
+ #include <dirent.h>
+ #include <strings.h>
+ #include <linux/input-event-codes.h>
+-#include <wlr/types/wlr_output.h>
++#include <wlr-16/types/wlr_output.h>
+ #include "sway/input/input-manager.h"
+ #include "sway/input/seat.h"
+ #include "sway/input/switch.h"
+diff --git a/sway/config/output.c b/sway/config/output.c
+index 88514ac..d10ed94 100644
+--- a/sway/config/output.c
++++ b/sway/config/output.c
+@@ -6,10 +6,10 @@
+ #include <sys/socket.h>
+ #include <sys/wait.h>
+ #include <unistd.h>
+-#include <wlr/types/wlr_cursor.h>
+-#include <wlr/types/wlr_output_layout.h>
+-#include <wlr/types/wlr_output.h>
+-#include <wlr/backend/drm.h>
++#include <wlr-16/types/wlr_cursor.h>
++#include <wlr-16/types/wlr_output_layout.h>
++#include <wlr-16/types/wlr_output.h>
++#include <wlr-16/backend/drm.h>
+ #include "sway/config.h"
+ #include "sway/input/cursor.h"
+ #include "sway/output.h"
+diff --git a/sway/desktop/idle_inhibit_v1.c b/sway/desktop/idle_inhibit_v1.c
+index 8235303..ce26f63 100644
+--- a/sway/desktop/idle_inhibit_v1.c
++++ b/sway/desktop/idle_inhibit_v1.c
+@@ -1,5 +1,5 @@
+ #include <stdlib.h>
+-#include <wlr/types/wlr_idle.h>
++#include <wlr-16/types/wlr_idle.h>
+ #include "log.h"
+ #include "sway/desktop/idle_inhibit_v1.h"
+ #include "sway/input/seat.h"
+diff --git a/sway/desktop/layer_shell.c b/sway/desktop/layer_shell.c
+index 159f333..a2a12f5 100644
+--- a/sway/desktop/layer_shell.c
++++ b/sway/desktop/layer_shell.c
+@@ -2,10 +2,10 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <wayland-server-core.h>
+-#include <wlr/types/wlr_layer_shell_v1.h>
+-#include <wlr/types/wlr_output_damage.h>
+-#include <wlr/types/wlr_output.h>
+-#include <wlr/types/wlr_subcompositor.h>
++#include <wlr-16/types/wlr_layer_shell_v1.h>
++#include <wlr-16/types/wlr_output_damage.h>
++#include <wlr-16/types/wlr_output.h>
++#include <wlr-16/types/wlr_subcompositor.h>
+ #include "log.h"
+ #include "sway/desktop/transaction.h"
+ #include "sway/input/cursor.h"
+diff --git a/sway/desktop/output.c b/sway/desktop/output.c
+index dd2eaf0..2f0823d 100644
+--- a/sway/desktop/output.c
++++ b/sway/desktop/output.c
+@@ -4,18 +4,18 @@
+ #include <strings.h>
+ #include <time.h>
+ #include <wayland-server-core.h>
+-#include <wlr/backend/drm.h>
+-#include <wlr/backend/headless.h>
+-#include <wlr/render/wlr_renderer.h>
+-#include <wlr/types/wlr_buffer.h>
+-#include <wlr/types/wlr_drm_lease_v1.h>
+-#include <wlr/types/wlr_matrix.h>
+-#include <wlr/types/wlr_output_damage.h>
+-#include <wlr/types/wlr_output_layout.h>
+-#include <wlr/types/wlr_output.h>
+-#include <wlr/types/wlr_presentation_time.h>
+-#include <wlr/types/wlr_compositor.h>
+-#include <wlr/util/region.h>
++#include <wlr-16/backend/drm.h>
++#include <wlr-16/backend/headless.h>
++#include <wlr-16/render/wlr_renderer.h>
++#include <wlr-16/types/wlr_buffer.h>
++#include <wlr-16/types/wlr_drm_lease_v1.h>
++#include <wlr-16/types/wlr_matrix.h>
++#include <wlr-16/types/wlr_output_damage.h>
++#include <wlr-16/types/wlr_output_layout.h>
++#include <wlr-16/types/wlr_output.h>
++#include <wlr-16/types/wlr_presentation_time.h>
++#include <wlr-16/types/wlr_compositor.h>
++#include <wlr-16/util/region.h>
+ #include "config.h"
+ #include "log.h"
+ #include "sway/config.h"
+diff --git a/sway/desktop/render.c b/sway/desktop/render.c
+index 73d37a5..75f9544 100644
+--- a/sway/desktop/render.c
++++ b/sway/desktop/render.c
+@@ -5,15 +5,15 @@
+ #include <strings.h>
+ #include <time.h>
+ #include <wayland-server-core.h>
+-#include <wlr/render/gles2.h>
+-#include <wlr/render/wlr_renderer.h>
+-#include <wlr/types/wlr_buffer.h>
+-#include <wlr/types/wlr_matrix.h>
+-#include <wlr/types/wlr_output_damage.h>
+-#include <wlr/types/wlr_output_layout.h>
+-#include <wlr/types/wlr_output.h>
+-#include <wlr/types/wlr_compositor.h>
+-#include <wlr/util/region.h>
++#include <wlr-16/render/gles2.h>
++#include <wlr-16/render/wlr_renderer.h>
++#include <wlr-16/types/wlr_buffer.h>
++#include <wlr-16/types/wlr_matrix.h>
++#include <wlr-16/types/wlr_output_damage.h>
++#include <wlr-16/types/wlr_output_layout.h>
++#include <wlr-16/types/wlr_output.h>
++#include <wlr-16/types/wlr_compositor.h>
++#include <wlr-16/util/region.h>
+ #include "log.h"
+ #include "config.h"
+ #include "sway/config.h"
+diff --git a/sway/desktop/surface.c b/sway/desktop/surface.c
+index 1d7b536..d62829e 100644
+--- a/sway/desktop/surface.c
++++ b/sway/desktop/surface.c
+@@ -1,7 +1,7 @@
+ #define _POSIX_C_SOURCE 200112L
+ #include <stdlib.h>
+ #include <time.h>
+-#include <wlr/types/wlr_compositor.h>
++#include <wlr-16/types/wlr_compositor.h>
+ #include "sway/server.h"
+ #include "sway/surface.h"
+ 
+diff --git a/sway/desktop/transaction.c b/sway/desktop/transaction.c
+index d6e7292..d225e0f 100644
+--- a/sway/desktop/transaction.c
++++ b/sway/desktop/transaction.c
+@@ -3,7 +3,7 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <time.h>
+-#include <wlr/types/wlr_buffer.h>
++#include <wlr-16/types/wlr_buffer.h>
+ #include "sway/config.h"
+ #include "sway/desktop.h"
+ #include "sway/desktop/idle_inhibit_v1.h"
+diff --git a/sway/desktop/xdg_shell.c b/sway/desktop/xdg_shell.c
+index 51168f4..f38f193 100644
+--- a/sway/desktop/xdg_shell.c
++++ b/sway/desktop/xdg_shell.c
+@@ -3,8 +3,8 @@
+ #include <stdbool.h>
+ #include <stdlib.h>
+ #include <wayland-server-core.h>
+-#include <wlr/types/wlr_xdg_shell.h>
+-#include <wlr/util/edges.h>
++#include <wlr-16/types/wlr_xdg_shell.h>
++#include <wlr-16/util/edges.h>
+ #include "log.h"
+ #include "sway/decoration.h"
+ #include "sway/desktop.h"
+diff --git a/sway/desktop/xwayland.c b/sway/desktop/xwayland.c
+index 7c5dde5..211087a 100644
+--- a/sway/desktop/xwayland.c
++++ b/sway/desktop/xwayland.c
+@@ -3,9 +3,9 @@
+ #include <stdbool.h>
+ #include <stdlib.h>
+ #include <wayland-server-core.h>
+-#include <wlr/types/wlr_output_layout.h>
+-#include <wlr/types/wlr_output.h>
+-#include <wlr/xwayland.h>
++#include <wlr-16/types/wlr_output_layout.h>
++#include <wlr-16/types/wlr_output.h>
++#include <wlr-16/xwayland.h>
+ #include <xcb/xcb_icccm.h>
+ #include "log.h"
+ #include "sway/desktop.h"
+diff --git a/sway/input/cursor.c b/sway/input/cursor.c
+index 0b2f03a..2c67834 100644
+--- a/sway/input/cursor.c
++++ b/sway/input/cursor.c
+@@ -6,15 +6,15 @@
+ #include <errno.h>
+ #include <time.h>
+ #include <strings.h>
+-#include <wlr/types/wlr_cursor.h>
+-#include <wlr/types/wlr_idle.h>
+-#include <wlr/types/wlr_pointer.h>
+-#include <wlr/types/wlr_touch.h>
+-#include <wlr/types/wlr_tablet_v2.h>
+-#include <wlr/types/wlr_tablet_pad.h>
+-#include <wlr/types/wlr_tablet_tool.h>
+-#include <wlr/types/wlr_xcursor_manager.h>
+-#include <wlr/util/region.h>
++#include <wlr-16/types/wlr_cursor.h>
++#include <wlr-16/types/wlr_idle.h>
++#include <wlr-16/types/wlr_pointer.h>
++#include <wlr-16/types/wlr_touch.h>
++#include <wlr-16/types/wlr_tablet_v2.h>
++#include <wlr-16/types/wlr_tablet_pad.h>
++#include <wlr-16/types/wlr_tablet_tool.h>
++#include <wlr-16/types/wlr_xcursor_manager.h>
++#include <wlr-16/util/region.h>
+ #include "config.h"
+ #include "log.h"
+ #include "util.h"
+diff --git a/sway/input/input-manager.c b/sway/input/input-manager.c
+index 8538d97..1826ff7 100644
+--- a/sway/input/input-manager.c
++++ b/sway/input/input-manager.c
+@@ -3,12 +3,12 @@
+ #include <stdio.h>
+ #include <string.h>
+ #include <math.h>
+-#include <wlr/backend/libinput.h>
+-#include <wlr/types/wlr_cursor.h>
+-#include <wlr/types/wlr_keyboard_group.h>
+-#include <wlr/types/wlr_input_inhibitor.h>
+-#include <wlr/types/wlr_virtual_keyboard_v1.h>
+-#include <wlr/types/wlr_virtual_pointer_v1.h>
++#include <wlr-16/backend/libinput.h>
++#include <wlr-16/types/wlr_cursor.h>
++#include <wlr-16/types/wlr_keyboard_group.h>
++#include <wlr-16/types/wlr_input_inhibitor.h>
++#include <wlr-16/types/wlr_virtual_keyboard_v1.h>
++#include <wlr-16/types/wlr_virtual_pointer_v1.h>
+ #include "sway/config.h"
+ #include "sway/input/cursor.h"
+ #include "sway/input/input-manager.h"
+diff --git a/sway/input/keyboard.c b/sway/input/keyboard.c
+index 1aa3065..f808f65 100644
+--- a/sway/input/keyboard.c
++++ b/sway/input/keyboard.c
+@@ -1,12 +1,12 @@
+ #include <assert.h>
+ #include <limits.h>
+ #include <strings.h>
+-#include <wlr/backend/multi.h>
+-#include <wlr/backend/session.h>
+-#include <wlr/interfaces/wlr_keyboard.h>
+-#include <wlr/types/wlr_idle.h>
+-#include <wlr/types/wlr_keyboard.h>
+-#include <wlr/types/wlr_keyboard_group.h>
++#include <wlr-16/backend/multi.h>
++#include <wlr-16/backend/session.h>
++#include <wlr-16/interfaces/wlr_keyboard.h>
++#include <wlr-16/types/wlr_idle.h>
++#include <wlr-16/types/wlr_keyboard.h>
++#include <wlr-16/types/wlr_keyboard_group.h>
+ #include <xkbcommon/xkbcommon-names.h>
+ #include "sway/commands.h"
+ #include "sway/input/input-manager.h"
+diff --git a/sway/input/libinput.c b/sway/input/libinput.c
+index 3c0f359..d1724fa 100644
+--- a/sway/input/libinput.c
++++ b/sway/input/libinput.c
+@@ -2,7 +2,7 @@
+ #include <libinput.h>
+ #include <libudev.h>
+ #include <limits.h>
+-#include <wlr/backend/libinput.h>
++#include <wlr-16/backend/libinput.h>
+ #include "log.h"
+ #include "sway/config.h"
+ #include "sway/output.h"
+diff --git a/sway/input/seat.c b/sway/input/seat.c
+index 85179dc..f4f6132 100644
+--- a/sway/input/seat.c
++++ b/sway/input/seat.c
+@@ -4,15 +4,15 @@
+ #include <string.h>
+ #include <strings.h>
+ #include <time.h>
+-#include <wlr/types/wlr_cursor.h>
+-#include <wlr/types/wlr_data_device.h>
+-#include <wlr/types/wlr_idle.h>
+-#include <wlr/types/wlr_keyboard_group.h>
+-#include <wlr/types/wlr_output_layout.h>
+-#include <wlr/types/wlr_primary_selection.h>
+-#include <wlr/types/wlr_tablet_v2.h>
+-#include <wlr/types/wlr_touch.h>
+-#include <wlr/types/wlr_xcursor_manager.h>
++#include <wlr-16/types/wlr_cursor.h>
++#include <wlr-16/types/wlr_data_device.h>
++#include <wlr-16/types/wlr_idle.h>
++#include <wlr-16/types/wlr_keyboard_group.h>
++#include <wlr-16/types/wlr_output_layout.h>
++#include <wlr-16/types/wlr_primary_selection.h>
++#include <wlr-16/types/wlr_tablet_v2.h>
++#include <wlr-16/types/wlr_touch.h>
++#include <wlr-16/types/wlr_xcursor_manager.h>
+ #include "config.h"
+ #include "list.h"
+ #include "log.h"
+diff --git a/sway/input/seatop_default.c b/sway/input/seatop_default.c
+index 15d1ca8..6c5c5e4 100644
+--- a/sway/input/seatop_default.c
++++ b/sway/input/seatop_default.c
+@@ -1,9 +1,9 @@
+ #define _POSIX_C_SOURCE 200809L
+ #include <float.h>
+ #include <libevdev/libevdev.h>
+-#include <wlr/types/wlr_cursor.h>
+-#include <wlr/types/wlr_tablet_v2.h>
+-#include <wlr/types/wlr_xcursor_manager.h>
++#include <wlr-16/types/wlr_cursor.h>
++#include <wlr-16/types/wlr_tablet_v2.h>
++#include <wlr-16/types/wlr_xcursor_manager.h>
+ #include "sway/desktop/transaction.h"
+ #include "sway/input/cursor.h"
+ #include "sway/input/seat.h"
+diff --git a/sway/input/seatop_down.c b/sway/input/seatop_down.c
+index b40773d..4d6c399 100644
+--- a/sway/input/seatop_down.c
++++ b/sway/input/seatop_down.c
+@@ -1,7 +1,7 @@
+ #define _POSIX_C_SOURCE 200809L
+ #include <float.h>
+-#include <wlr/types/wlr_cursor.h>
+-#include <wlr/types/wlr_tablet_v2.h>
++#include <wlr-16/types/wlr_cursor.h>
++#include <wlr-16/types/wlr_tablet_v2.h>
+ #include "sway/input/cursor.h"
+ #include "sway/input/seat.h"
+ #include "sway/tree/view.h"
+diff --git a/sway/input/seatop_move_floating.c b/sway/input/seatop_move_floating.c
+index ddcd4c5..b80e4b6 100644
+--- a/sway/input/seatop_move_floating.c
++++ b/sway/input/seatop_move_floating.c
+@@ -1,5 +1,5 @@
+ #define _POSIX_C_SOURCE 200809L
+-#include <wlr/types/wlr_cursor.h>
++#include <wlr-16/types/wlr_cursor.h>
+ #include "sway/desktop.h"
+ #include "sway/desktop/transaction.h"
+ #include "sway/input/cursor.h"
+diff --git a/sway/input/seatop_move_tiling.c b/sway/input/seatop_move_tiling.c
+index 223c6c0..71c8827 100644
+--- a/sway/input/seatop_move_tiling.c
++++ b/sway/input/seatop_move_tiling.c
+@@ -1,7 +1,7 @@
+ #define _POSIX_C_SOURCE 200809L
+ #include <limits.h>
+-#include <wlr/types/wlr_cursor.h>
+-#include <wlr/util/edges.h>
++#include <wlr-16/types/wlr_cursor.h>
++#include <wlr-16/util/edges.h>
+ #include "sway/desktop.h"
+ #include "sway/desktop/transaction.h"
+ #include "sway/input/cursor.h"
+diff --git a/sway/input/seatop_resize_floating.c b/sway/input/seatop_resize_floating.c
+index df68302..7790044 100644
+--- a/sway/input/seatop_resize_floating.c
++++ b/sway/input/seatop_resize_floating.c
+@@ -1,7 +1,7 @@
+ #define _POSIX_C_SOURCE 200809L
+ #include <limits.h>
+-#include <wlr/types/wlr_cursor.h>
+-#include <wlr/types/wlr_xcursor_manager.h>
++#include <wlr-16/types/wlr_cursor.h>
++#include <wlr-16/types/wlr_xcursor_manager.h>
+ #include "sway/desktop/transaction.h"
+ #include "sway/input/cursor.h"
+ #include "sway/input/seat.h"
+diff --git a/sway/input/seatop_resize_tiling.c b/sway/input/seatop_resize_tiling.c
+index 869d11b..9fc029c 100644
+--- a/sway/input/seatop_resize_tiling.c
++++ b/sway/input/seatop_resize_tiling.c
+@@ -1,6 +1,6 @@
+ #define _POSIX_C_SOURCE 200809L
+-#include <wlr/types/wlr_cursor.h>
+-#include <wlr/util/edges.h>
++#include <wlr-16/types/wlr_cursor.h>
++#include <wlr-16/util/edges.h>
+ #include "sway/commands.h"
+ #include "sway/desktop/transaction.h"
+ #include "sway/input/cursor.h"
+diff --git a/sway/input/switch.c b/sway/input/switch.c
+index af5a238..37563b5 100644
+--- a/sway/input/switch.c
++++ b/sway/input/switch.c
+@@ -1,6 +1,6 @@
+ #include "sway/config.h"
+ #include "sway/input/switch.h"
+-#include <wlr/types/wlr_idle.h>
++#include <wlr-16/types/wlr_idle.h>
+ #include "log.h"
+ 
+ struct sway_switch *sway_switch_create(struct sway_seat *seat,
+diff --git a/sway/input/tablet.c b/sway/input/tablet.c
+index db2f93e..09fce03 100644
+--- a/sway/input/tablet.c
++++ b/sway/input/tablet.c
+@@ -1,9 +1,9 @@
+ #define _POSIX_C_SOURCE 200809L
+ #include <stdlib.h>
+-#include <wlr/backend/libinput.h>
+-#include <wlr/types/wlr_tablet_v2.h>
+-#include <wlr/types/wlr_tablet_tool.h>
+-#include <wlr/types/wlr_tablet_pad.h>
++#include <wlr-16/backend/libinput.h>
++#include <wlr-16/types/wlr_tablet_v2.h>
++#include <wlr-16/types/wlr_tablet_tool.h>
++#include <wlr-16/types/wlr_tablet_pad.h>
+ #include "log.h"
+ #include "sway/input/cursor.h"
+ #include "sway/input/seat.h"
+diff --git a/sway/ipc-json.c b/sway/ipc-json.c
+index 8357ae0..63c00b9 100644
+--- a/sway/ipc-json.c
++++ b/sway/ipc-json.c
+@@ -3,8 +3,8 @@
+ #include <json.h>
+ #include <libevdev/libevdev.h>
+ #include <stdio.h>
+-#include <wlr/backend/libinput.h>
+-#include <wlr/types/wlr_output.h>
++#include <wlr-16/backend/libinput.h>
++#include <wlr-16/types/wlr_output.h>
+ #include <xkbcommon/xkbcommon.h>
+ #include "config.h"
+ #include "log.h"
+diff --git a/sway/main.c b/sway/main.c
+index 78974e2..2f21258 100644
+--- a/sway/main.c
++++ b/sway/main.c
+@@ -12,8 +12,8 @@
+ #include <sys/wait.h>
+ #include <sys/un.h>
+ #include <unistd.h>
+-#include <wlr/util/log.h>
+-#include <wlr/version.h>
++#include <wlr-16/util/log.h>
++#include <wlr-16/version.h>
+ #include "sway/commands.h"
+ #include "sway/config.h"
+ #include "sway/server.h"
+diff --git a/sway/server.c b/sway/server.c
+index 9bfcffa..16fd30c 100644
+--- a/sway/server.c
++++ b/sway/server.c
+@@ -4,36 +4,36 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <wayland-server-core.h>
+-#include <wlr/backend.h>
+-#include <wlr/backend/headless.h>
+-#include <wlr/backend/multi.h>
+-#include <wlr/backend/session.h>
+-#include <wlr/config.h>
+-#include <wlr/render/wlr_renderer.h>
+-#include <wlr/types/wlr_compositor.h>
+-#include <wlr/types/wlr_data_control_v1.h>
+-#include <wlr/types/wlr_drm_lease_v1.h>
+-#include <wlr/types/wlr_drm.h>
+-#include <wlr/types/wlr_export_dmabuf_v1.h>
+-#include <wlr/types/wlr_gamma_control_v1.h>
+-#include <wlr/types/wlr_idle.h>
+-#include <wlr/types/wlr_layer_shell_v1.h>
+-#include <wlr/types/wlr_linux_dmabuf_v1.h>
+-#include <wlr/types/wlr_pointer_constraints_v1.h>
+-#include <wlr/types/wlr_primary_selection_v1.h>
+-#include <wlr/types/wlr_relative_pointer_v1.h>
+-#include <wlr/types/wlr_screencopy_v1.h>
+-#include <wlr/types/wlr_server_decoration.h>
+-#include <wlr/types/wlr_subcompositor.h>
+-#include <wlr/types/wlr_tablet_v2.h>
+-#include <wlr/types/wlr_viewporter.h>
+-#include <wlr/types/wlr_xcursor_manager.h>
+-#include <wlr/types/wlr_xdg_activation_v1.h>
+-#include <wlr/types/wlr_xdg_decoration_v1.h>
+-#include <wlr/types/wlr_xdg_foreign_registry.h>
+-#include <wlr/types/wlr_xdg_foreign_v1.h>
+-#include <wlr/types/wlr_xdg_foreign_v2.h>
+-#include <wlr/types/wlr_xdg_output_v1.h>
++#include <wlr-16/backend.h>
++#include <wlr-16/backend/headless.h>
++#include <wlr-16/backend/multi.h>
++#include <wlr-16/backend/session.h>
++#include <wlr-16/config.h>
++#include <wlr-16/render/wlr_renderer.h>
++#include <wlr-16/types/wlr_compositor.h>
++#include <wlr-16/types/wlr_data_control_v1.h>
++#include <wlr-16/types/wlr_drm_lease_v1.h>
++#include <wlr-16/types/wlr_drm.h>
++#include <wlr-16/types/wlr_export_dmabuf_v1.h>
++#include <wlr-16/types/wlr_gamma_control_v1.h>
++#include <wlr-16/types/wlr_idle.h>
++#include <wlr-16/types/wlr_layer_shell_v1.h>
++#include <wlr-16/types/wlr_linux_dmabuf_v1.h>
++#include <wlr-16/types/wlr_pointer_constraints_v1.h>
++#include <wlr-16/types/wlr_primary_selection_v1.h>
++#include <wlr-16/types/wlr_relative_pointer_v1.h>
++#include <wlr-16/types/wlr_screencopy_v1.h>
++#include <wlr-16/types/wlr_server_decoration.h>
++#include <wlr-16/types/wlr_subcompositor.h>
++#include <wlr-16/types/wlr_tablet_v2.h>
++#include <wlr-16/types/wlr_viewporter.h>
++#include <wlr-16/types/wlr_xcursor_manager.h>
++#include <wlr-16/types/wlr_xdg_activation_v1.h>
++#include <wlr-16/types/wlr_xdg_decoration_v1.h>
++#include <wlr-16/types/wlr_xdg_foreign_registry.h>
++#include <wlr-16/types/wlr_xdg_foreign_v1.h>
++#include <wlr-16/types/wlr_xdg_foreign_v2.h>
++#include <wlr-16/types/wlr_xdg_output_v1.h>
+ #include "config.h"
+ #include "list.h"
+ #include "log.h"
+diff --git a/sway/tree/arrange.c b/sway/tree/arrange.c
+index 9c1a11e..8e02f63 100644
+--- a/sway/tree/arrange.c
++++ b/sway/tree/arrange.c
+@@ -3,8 +3,8 @@
+ #include <stdbool.h>
+ #include <stdlib.h>
+ #include <string.h>
+-#include <wlr/types/wlr_output.h>
+-#include <wlr/types/wlr_output_layout.h>
++#include <wlr-16/types/wlr_output.h>
++#include <wlr-16/types/wlr_output_layout.h>
+ #include "sway/tree/arrange.h"
+ #include "sway/tree/container.h"
+ #include "sway/output.h"
+diff --git a/sway/tree/container.c b/sway/tree/container.c
+index fbdd12e..9f54a2a 100644
+--- a/sway/tree/container.c
++++ b/sway/tree/container.c
+@@ -7,10 +7,10 @@
+ #include <strings.h>
+ #include <sys/stat.h>
+ #include <wayland-server-core.h>
+-#include <wlr/types/wlr_linux_dmabuf_v1.h>
+-#include <wlr/types/wlr_output_layout.h>
+-#include <wlr/types/wlr_subcompositor.h>
+-#include <wlr/render/drm_format_set.h>
++#include <wlr-16/types/wlr_linux_dmabuf_v1.h>
++#include <wlr-16/types/wlr_output_layout.h>
++#include <wlr-16/types/wlr_subcompositor.h>
++#include <wlr-16/render/drm_format_set.h>
+ #include "linux-dmabuf-unstable-v1-protocol.h"
+ #include "cairo_util.h"
+ #include "pango.h"
+diff --git a/sway/tree/output.c b/sway/tree/output.c
+index 52826c9..8b2590c 100644
+--- a/sway/tree/output.c
++++ b/sway/tree/output.c
+@@ -3,7 +3,7 @@
+ #include <ctype.h>
+ #include <string.h>
+ #include <strings.h>
+-#include <wlr/types/wlr_output_damage.h>
++#include <wlr-16/types/wlr_output_damage.h>
+ #include "sway/ipc-server.h"
+ #include "sway/layers.h"
+ #include "sway/output.h"
+diff --git a/sway/tree/root.c b/sway/tree/root.c
+index 8508e9e..0cff809 100644
+--- a/sway/tree/root.c
++++ b/sway/tree/root.c
+@@ -2,7 +2,7 @@
+ #include <stdbool.h>
+ #include <stdlib.h>
+ #include <string.h>
+-#include <wlr/types/wlr_output_layout.h>
++#include <wlr-16/types/wlr_output_layout.h>
+ #include "sway/desktop/transaction.h"
+ #include "sway/input/seat.h"
+ #include "sway/ipc-server.h"
+diff --git a/sway/tree/view.c b/sway/tree/view.c
+index 7d9e038..d906b21 100644
+--- a/sway/tree/view.c
++++ b/sway/tree/view.c
+@@ -2,15 +2,15 @@
+ #include <stdlib.h>
+ #include <strings.h>
+ #include <wayland-server-core.h>
+-#include <wlr/render/wlr_renderer.h>
+-#include <wlr/types/wlr_buffer.h>
+-#include <wlr/types/wlr_output_layout.h>
+-#include <wlr/types/wlr_server_decoration.h>
+-#include <wlr/types/wlr_subcompositor.h>
+-#include <wlr/types/wlr_xdg_decoration_v1.h>
++#include <wlr-16/render/wlr_renderer.h>
++#include <wlr-16/types/wlr_buffer.h>
++#include <wlr-16/types/wlr_output_layout.h>
++#include <wlr-16/types/wlr_server_decoration.h>
++#include <wlr-16/types/wlr_subcompositor.h>
++#include <wlr-16/types/wlr_xdg_decoration_v1.h>
+ #include "config.h"
+ #if HAVE_XWAYLAND
+-#include <wlr/xwayland.h>
++#include <wlr-16/xwayland.h>
+ #endif
+ #include "list.h"
+ #include "log.h"
+diff --git a/sway/xdg_activation_v1.c b/sway/xdg_activation_v1.c
+index 6c70c78..b6c20bb 100644
+--- a/sway/xdg_activation_v1.c
++++ b/sway/xdg_activation_v1.c
+@@ -1,4 +1,4 @@
+-#include <wlr/types/wlr_xdg_activation_v1.h>
++#include <wlr-16/types/wlr_xdg_activation_v1.h>
+ #include "sway/tree/view.h"
+ 
+ void xdg_activation_v1_handle_request_activate(struct wl_listener *listener,
