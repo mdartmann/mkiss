@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+
+patch -Np1 -i pass-ldflags.patch
+
+make
+make sbindir=/usr/bin DESTDIR="$1" install
+mkdir -p "$1"/usr/bin
+
+install -m755 contrib/idectl "$1"/usr/bin
+install -m755 contrib/idectl "$1"/usr/bin
+
+install -Dm755 wiper/wiper.sh "$1"/usr/bin/wiper.sh
