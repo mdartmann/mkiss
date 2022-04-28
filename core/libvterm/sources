@@ -1,1 +1,1 @@
-https://launchpad.net/libvterm/trunk/vVERSION/+download/libvterm-VERSION.tar.gz
+git+https://github.com/neovim/libvterm.git
