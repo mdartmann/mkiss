@@ -1,9 +1,6 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
 
-# Fix build with meson 0.61
-patch -Np1 -i meson-0.61.patch
-
 meson build \
     -D session_tracking=libsystemd-login \
     -D os_type=redhat \
