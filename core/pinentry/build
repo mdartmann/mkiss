@@ -9,7 +9,13 @@ configParams=(
 
 kiss l gnome-keyring >/dev/null 2>&1 && configParams+=(--enable-pinentry-gnome3)
 
+export CFLAGS+=" -I/usr/include/KF5/KWayland"
+export CXXFLAGS+=" -I/usr/include/KF5/KWayland"
+
 ./configure \
     ${configParams[@]}
+
+
 make
 make DESTDIR="$1" install
+rm -f $1/usr/share/info/dir
