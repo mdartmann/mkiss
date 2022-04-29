@@ -2,9 +2,11 @@
 
 ./configure \
     --prefix=/usr \
-    --with-crypto=libgcrypt
+    --with-crypto=libgcrypt \
+    --disable-documentation
 
 make
 make DESTDIR="$1" install install_python
 
 install -Dm644 btrfs-completion "$1/usr/share/bash-completion/completions/btrfs"
+
