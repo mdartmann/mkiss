@@ -1,11 +1,94 @@
 #!/bin/sh -uxe
 
-./configure \
-    --prefix=/usr \
-    --enable-shared \
+sed -i "s/3.6.9/3.6.10/g" src/CMakeLists.txt
+
+for i in single double long_double quad; do
+    cp -a src $i
+done
+
+
+config=(
+    ./configure 
+    --prefix=/usr
+    --enable-shared
     --enable-threads
+    --enable-mpi
+    --enable-openmp
+    )
 
-make
-make DESTDIR="$1" install
+config_single=(
+    --enable-sse
+    --enable-avx
+    --enable-single
+    )
 
-rm -f $1/usr/share/info/dir
+config_double=(
+    --enable-sse2 
+    --enable-avx
+    )
+
+config_long_double=(
+    --enable-long-double
+    )
+
+config_quad=(
+    --disable-mpi
+    --enable-quad-precision
+    )
+
+cmake_opts=(
+    -B build
+    -G Ninja
+    -S single
+    -D CMAKE_INSTALL_PREFIX=/usr 
+    -D CMAKE_BUILD_TYPE=None
+    -D ENABLE_OPENMP=ON
+    -D ENABLE_THREADS=ON
+    -D ENABLE_FLOAT=ON
+    -D ENABLE_LONG_DOUBLE=ON
+    -D ENABLE_QUAD_PRECISION=ON
+    -D ENABLE_SSE=ON
+    -D ENABLE_SSE2=ON
+    -D ENABLE_AVX=ON
+    -D ENABLE_AVX2=ON
+    )
+
+cmake "${cmake_opts[@]}"
+
+sed -i 's|\(IMPORTED_LOCATION_NONE\).*|\1 "/usr/lib/libfftw3.so"|' -i \
+    build/FFTW3LibraryDepends.cmake
+
+export F77=gfortran
+export CFLAGS+=" -O3 -fomit-frame-pointer -malign-double -fstrict-aliasing -ffast-math"
+
+cd single
+"${config[@]}" "${config_single[@]}"
+sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
+
+cd ../double
+"${config[@]}" "${config_double[@]}"
+sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
+
+cd ../long_double
+"${config[@]}" "${config_long_double[@]}"
+sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
+
+cd ../quad
+"${config[@]}" "${config_quad[@]}"
+sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
+cd ..
+
+make -C single
+make -C single DESTDIR="$1" install
+
+make -C double
+make -C double DESTDIR="$1" install
+
+make -C long_double
+make -C long_double DESTDIR="$1" install
+
+make -C quad
+make -C quad DESTDIR="$1" install
+
+install -vDm 644 build/FFTW3LibraryDepends.cmake "$1"/usr/lib/cmake/fftw3/
+rm -f "$1"/usr/share/info/dir

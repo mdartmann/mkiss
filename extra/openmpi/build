@@ -1,0 +1,30 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc/openmpi \
+    --enable-mpi-fortran=all \
+    --libdir=/usr/lib/openmpi \
+    --enable-builtin-atomics \
+    --enable-mpi-cxx \
+    --with-valgrind \
+    --enable-memchecker \
+    --enable-pretty-print-stacktrace \
+    --without-slurm \
+    --with-hwloc=/usr \
+    --with-libltdl=/usr \
+    --with-libevent=/usr \
+    --without-cuda \
+    FC=/usr/bin/gfortran \
+    LDFLAGS="${LDFLAGS} -Wl,-z,noexecstack"
+
+make DESTDIR="$1" install
+
+install -dm755 "$1"/usr/lib/pkgconfig 
+
+for i in "$1"/usr/lib/openmpi/pkgconfig/*.pc; do
+    ln -sf "/usr/lib/openmpi/pkgconfig/$(basename $i)" "$1"/usr/lib/pkgconfig/
+done
+
+install -dm755 "$1"/etc/ld.so.conf.d
+echo "/usr/lib/openmpi" > "$1"/etc/ld.so.conf.d/openmpi.conf
