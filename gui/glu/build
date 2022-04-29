@@ -5,7 +5,6 @@ for i in *.patch; do
     patch -Np1 -i  $i
 done
 
-zsh
 meson build \
     ${MESON_OPTIONS} \
     -D default_library=shared \
