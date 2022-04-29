@@ -1,0 +1,32 @@
+--- ./neofetch	2022-04-29 02:58:57.789658024 +0200
++++ /home/mae/neofetch	2022-04-29 02:50:46.546481367 +0200
+@@ -8026,6 +8026,29 @@
+ EOF
+         ;;
+ 
++        "MKISS"*)
++            set_colors  4 5 
++            read -rd '' ascii_data << 'EOF'
++${c1}    ..'..           ..         .';;'.   
++ .lkkl lOkl     ,dOOOOOx:    cO0l  x0O; 
++'kk      .Ok'  xO;     .0O. x0l      O0l
++xko        OO;,OO       .0Ol00,      k0k
++.kk.        OOkOO;        0000O;   .l00 
++ .kk'        kOOOO:        00O.00000o   
++   kk;        xOOOOc        O0l         
++    kk:        oOOOOo        k0o        
++     xkc        cOOOOd        x0d       
++      oko        ;OOOOx       c00       
++       lOd        'OOOOk.    ;00.       
++        :Ox        .OOd:0Okk00.         
++         ,Ox        .OO;                
++          .Ok.        OO.               
++           .Ok.       OO'               
++             OO;    .dOo                
++               OOkkOO;                  
++EOF
++        ;;
++
+         "linuxmint_small"*)
+             set_colors 2 7
+             read -rd '' ascii_data <<'EOF'
