@@ -1,2 +1,4 @@
 https://gmic.eu/files/source/gmic_VERSION.tar.gz
-patches/fix-cmake-build.patch
+files/CMakeLists.txt
+files/FindCImg.cmake
+files/FindGMicStdlib.cmake
