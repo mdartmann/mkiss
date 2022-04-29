@@ -47,7 +47,7 @@ export libat_cv_have_ifunc=yes
     --enable-lto \
     --enable-tls \
     --with-isl \
-    --enable-languages=c,c++,lto,objc,obj-c++,go \
+    --enable-languages=c,c++,lto,objc,obj-c++,go,fortran,d \
     --without-included-gettext \
     --with-system-zlib \
     --with-gmp=/usr \
