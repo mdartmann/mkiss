@@ -1,0 +1,5 @@
+#!/bin/sh -uxe
+
+kiss l python-sphinx-furo >/dev/null 2>&1 && kiss r python-sphinx-furo
+# why does sphinx need so many things??
+pip install --root="$1" furo

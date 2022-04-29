@@ -1,0 +1,5 @@
+#!/bin/sh -uxe
+
+python setup.py import_cldr
+python setup.py build
+python setup.py install --root="$1" --optimize=1 --skip-build

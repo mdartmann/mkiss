@@ -1,0 +1,5 @@
+#!/bin/sh -uxe
+
+kiss l python-sphinx-inline-tabs >/dev/null 2>&1 && kiss r python-sphinx-inline-tabs
+# Can't be bothered to build 35 python things for a build system just for this.
+pip install sphinx-inline-tabs --root="$1"

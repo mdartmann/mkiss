@@ -1,0 +1,2 @@
+https://pypi.io/packages/source/p/pytz/pytz-VERSION.tar.gz
+patches/0001-Use-the-system-zoneinfo-from-the-tzdata-package.patch

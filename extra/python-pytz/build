@@ -1,0 +1,8 @@
+#!/bin/sh -uxe
+
+patch -p2 -i 0001-Use-the-system-zoneinfo-from-the-tzdata-package.patch
+rm -r pytz/zoneinfo
+
+python setup.py build
+python setup.py install --root="$1" --optimize=1 --skip-build
+

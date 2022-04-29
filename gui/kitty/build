@@ -1,0 +1,17 @@
+#!/bin/sh -uxe
+
+python3 setup.py linux-package --update-check-interval=0
+
+cp -r linux-package "$1"/usr
+
+python __main__.py + complete setup bash | install -Dm644 /dev/stdin \
+    "$1"/usr/share/bash-completion/completions/kitty
+
+python __main__.py + complete setup zsh | install -Dm644 /dev/stdin \
+    "$1"/usr/share/zsh/site-functions/_zsh
+
+mkdir -p "$1"/usr/share/pixmaps
+ln -s /usr/share/icons/hicolor/256x256/apps/kitty.png "$1"/usr/share/pixmaps/kitty.png
+
+install -Dm644 docs/_build/html/_downloads/*/kitty.conf \
+    "$1"/usr/share/doc/kitty/kitty.conf
