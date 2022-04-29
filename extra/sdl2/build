@@ -16,5 +16,6 @@ cmake -B build -G Ninja \
     -D PIPEWIRE=ON \
     -D PIPEWIRE_SHARED=ON
 
+sed -i "s/-Werror/-Wno-error/g" build/build.ninja
 ninja -C build
 ninja -C build install
