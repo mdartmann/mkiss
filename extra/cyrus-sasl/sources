@@ -1,13 +1,4 @@
 https://github.com/cyrusimap/cyrus-sasl/releases/download/cyrus-sasl-VERSION/cyrus-sasl-VERSION.tar.gz
-patches/gdbm-errno.patch
-patches/0010-Update-required-libraries-when-ld-as-needed-is-used.patch
-patches/0022-Fix-keytab-option-for-MIT-Kerberos.patch
-patches/0032-Add-with_pgsql-include-postgresql-to-include-path.patch
-patches/0020-Restore-LIBS-after-checking-gss_inquire_sec_context_.patch
-patches/autoconf-2.70.patch
-patches/0003-Update-saslauthd.conf-location-in-documentation.patch
-patches/0006-Enable-autoconf-maintainer-mode.patch
-patches/0013-Don-t-use-la-files-for-opening-plugins.patch
 files/saslauthd.conf.d
 files/saslauthd.service
 files/tmpfiles.conf
