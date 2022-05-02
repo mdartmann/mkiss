@@ -1,5 +1,6 @@
 #!/bin/sh -uxe
 
+zsh
 autoreconf -fiv
 
 ./configure \
