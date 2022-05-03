@@ -1,0 +1,4 @@
+#!/bin/sh
+
+chmod u+s /opt/discord/chrome-sandbox
+

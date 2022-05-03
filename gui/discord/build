@@ -1,0 +1,18 @@
+#!/bin/sh -uxe
+
+sed -i "s|Exec=.*|Exec=/usr/bin/discord|" discord.desktop
+
+echo Path=/usr/bin >> discord.desktop
+
+install -d "$1"/opt/discord
+cp -a . "$1"/opt/discord
+
+chmod 0755 "$1"/opt/discord/Discord
+
+rm "$1"/opt/discord/postinst.sh
+
+install -d "$1"/usr/{bin,share/{pixmaps,applications}}
+ln -s /opt/discord/Discord "$1"/usr/bin/discord
+ln -s /opt/discord/discord.png "$1"/usr/share/pixmaps/discord.png
+ln -s /opt/discord/discord.desktop "$1"/usr/share/applications/discord.desktop
+
