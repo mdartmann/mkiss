@@ -2,11 +2,12 @@
 
 cat > mozconfig << EOF
 ac_add_options --enable-application=browser
-export MOZ_MAKE_FLAGS="$CFLAGS $LDFLAGS"
+export MOZ_MAKE_FLAGS="$CXXFLAGS $LDFLAGS"
 
 ac_add_options --prefix=/usr
 ac_add_options --enable-release
 ac_add_options --enable-hardening
+ac_add_options --enable-optimize
 ac_add_options --enable-rust-simd
 ac_add_options --enable-linker=bfd
 ac_add_options --disable-elf-hack
@@ -17,6 +18,10 @@ ac_add_options --enable-update-channel=release
 ac_add_options --with-distribution-id=com.github.mdartmann.mkiss
 ac_add_options --with-unsigned-addon-scopes=app,system
 ac_add_options --allow-addon-sideload
+
+export MOZILLA_OFFICIAL=1
+export MOZ_APP_REMOTINGNAME=firefox
+
 ac_add_options --with-system-nss
 ac_add_options --with-system-nspr
 ac_add_options --enable-alsa
@@ -29,10 +34,11 @@ EOF
 
 export MOZ_NOSPAM=1
 export MOZ_ENABLE_FULL_SYMBOLS=1
-export MACH_USE_SYSTEM_PYTHON=1
 export MOZBUILD_STATE_PATH="$PWD/mozbuild"
+export MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=system
 
 ulimit -n 4096
+
 yes y | ./mach build -j`nproc`
 ./mach buildsymbols
 DESTDIR="$1" ./mach install
