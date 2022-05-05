@@ -1,0 +1,15 @@
+#!/bin/sh -uxe
+
+for i in *.patch; do
+    patch -Np1 -i $i
+done
+
+mv configure.in configure.ac
+autoreconf -fiv
+
+./configure \
+    --prefix=/usr \
+    --enable-mpcchap
+
+make
+make DESTDIR="$1" install

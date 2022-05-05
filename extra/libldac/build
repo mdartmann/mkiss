@@ -1,0 +1,13 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+git submodule init
+git submodule update
+
+cmake -B build -G Ninja \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D CMAKE_BUILD_TYPE=None \
+    -D LDAC_SOFT_FLOAT=OFF
+
+ninja -C build
+ninja -C build install

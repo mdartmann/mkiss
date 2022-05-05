@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+
+./waf configure \
+    --prefix=/usr \
+    --libdir=/usr/lib \
+    --docs \
+    --test
+
+./waf build $MAKEFLAGS
+
+./waf install --destdir="$1"

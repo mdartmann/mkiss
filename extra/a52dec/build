@@ -1,0 +1,17 @@
+#!/bin/sh -uxe
+
+patch -Np1 -i a52dec-0.7.4-build.patch
+patch -Np1 -i stderr.patch
+sed -i "s|AM_CONFIG_HEADER|AC_CONFIG_HEADERS|" configure.in
+mv configure.in configure.ac
+
+./bootstrap
+
+./configure \
+    --prefix=/usr \
+    --enable-shared
+
+make
+make DESTDIR="$1" install
+
+install -m644 liba52/a52_internal.h "$1"/usr/include/a52dec/

@@ -1,0 +1,15 @@
+#!/bin/sh -uxe
+
+export CFLAGS="${CFLAGS/-Werror/-Wno-error}"
+
+sed -i "s/dist-lzma/dist-xz/g" configure.ac
+
+autoreconf -fiv
+
+./configure \
+    --prefix=/usr
+
+sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
+
+make
+make DESTDIR="$1" install

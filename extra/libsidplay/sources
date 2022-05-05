@@ -1,0 +1,3 @@
+https://critical.ch/distfiles/libsidplay-VERSION.tgz
+patches/libsidplay-1.36.59-gcc43.patch
+patches/g++-6_build.patch

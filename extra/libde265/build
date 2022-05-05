@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+
+autoreconf -fiv
+
+./configure \
+    --prefix=/usr \
+    --enable-static=no
+
+make
+make DESTDIR="$1" install
+
+rm "$1"/usr/bin/tests

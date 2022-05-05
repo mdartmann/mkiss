@@ -1,0 +1,18 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+cmake -B build -G Ninja \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D CMAKE_BUILD_TYPE=None \
+    -D FLUID_DAEMON_ENV_FILE=/etc/conf.d/fluidsynth \
+    -D enable-ladspa=ON \
+    -D enable-portaudio=ON \
+    -D LIB_SUFFIX="" \
+    -Wno-dev
+
+ninja -C build
+ninja -C build install
+
+install -Dm644 build/fluidsynth.service "$1"/usr/lib/systemd/user/fluidsynth.service
+install -Dm644 build/fluidsynth.conf "$1"/etc/conf.d/fluidsynth
+

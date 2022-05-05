@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+
+autoreconf -fiv
+
+export CXXFLAGS="$(pkg-config --cflags raptor2) $CXXFLAGS"
+
+./configure \
+    --prefix=/usr \
+    --disable-static
+
+make
+make DESTDIR="$1" install

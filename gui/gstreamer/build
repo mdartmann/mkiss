@@ -1,12 +1,70 @@
 #!/bin/sh -uxe
-
 export DESTDIR="$1"
+export CFLAGS+=" -ffat-lto-objects"
+export CXXFLAGS+=" -ffat-lto-objects"
+
+# Fix system orc
+sed -i "s/get_option('orc')/false/" meson.build
+
+git submodule init
+git submodule update --recursive
 
 meson build \
-    -D prefix=/usr \
-    -D buildtype=release \
-    -D dbghelp=disabled \
-    -D introspection=enabled 
+    ${MESON_OPTIONS} \
+    -D devtools=disabled \
+    -D doc=disabled \
+    -D examples=disabled \
+    -D gpl=enabled \
+    -D gst-examples=disabled \
+    -D libnice=disabled \
+    -D vaapi=enabled \
+    -D gstreamer:dbghelp=disabled \
+    -D gstreamer:gobject-cast-checks=disabled \
+    -D gstreamer:package-name="MKiss Linux gstreamer $2" \
+    -D gstreamer:package-origin="https://github.com/mdartmann/mkiss" \
+    -D gstreamer:ptp-helper-permissions=capabilities \
+    -D gst-plugins-base:gobject-cast-checks=disabled \
+    -D gst-plugins-base:package-name="MKiss Linux gst-plugins-base $2" \
+    -D gst-plugins-base:package-origin="https://github.com/mdartmann/mkiss" \
+    -D gst-plugins-base:tremor=disabled \
+    -D gst-plugins-good:gobject-cast-checks=disabled \
+    -D gst-plugins-good:package-name="MKiss Linux gst-plugins-base $2" \
+    -D gst-plugins-good:package-origin="https://github.com/mdartmann/mkiss" \
+    -D gst-plugins-good:rpicamsrc=disabled \
+    -D gst-plugins-good:jack=disabled \
+    -D gst-plugins-good:libcaca=disabled \
+    -D gst-plugins-bad:directfb=disabled \
+    -D gst-plugins-bad:flite=disabled \
+    -D gst-plugins-bad:gobject-cast-checks=disabled \
+    -D gst-plugins-bad:gs=disabled \
+    -D gst-plugins-bad:iqa=disabled \
+    -D gst-plugins-bad:isac=disabled \
+    -D gst-plugins-bad:magicleap=disabled \
+    -D gst-plugins-bad:onnx=disabled \
+    -D gst-plugins-bad:opencv=disabled \
+    -D gst-plugins-bad:openh264=disabled \
+    -D gst-plugins-bad:openni2=disabled \
+    -D gst-plugins-bad:opensles=disabled \
+    -D gst-plugins-bad:package-name="MKiss Linux gst-plugins-bad $2" \
+    -D gst-plugins-bad:package-origin="https://github.com/mdartmann/mkiss" \
+    -D gst-plugins-bad:tinyalsa=disabled \
+    -D gst-plugins-bad:voaacenc=disabled \
+    -D gst-plugins-bad:voamrwbenc=disabled \
+    -D gst-plugins-bad:wasapi2=disabled \
+    -D gst-plugins-bad:wasapi=disabled \
+    -D gst-plugins-ugly:package-name="MKiss Linux gst-plugins-ugly $2" \
+    -D gst-plugins-ugly:package-origin="https://github.com/mdartmann/mkiss" \
+    -D gst-libav:package-name="MKiss Linux gst-libav $2" \
+    -D gst-libav:package-origin="https://github.com/mdartmann/mkiss" \
+    -D gst-rtsp-server:gobject-cast-checks=disabled \
+    -D gst-rtsp-server:package-name="MKiss Linux gst-rtsp-server $2" \
+    -D gst-rtsp-server:package-origin="https://github.com/mdartmann/mkiss" \
+    -D gst-editing-services:validate=disabled \
+    -D gstreamer-vaapi:package-origin="https://github.com/mdartmann/mkiss" || zsh
+
+ninja -C build
+ninja -C build install
+
 
 ninja -C build 
 ninja -C build install

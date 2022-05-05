@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+
+autoreconf -fiv
+
+./configure \
+    --prefix=/usr
+
+make
+doxygen
+
+make DESTDIR="$1" install

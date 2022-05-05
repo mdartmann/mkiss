@@ -1,0 +1,4 @@
+https://librdf.org/dist/source/raptor2-VERSION.tar.gz
+https://github.com/dajobe/raptor/commit/590681e546cd9aa18d57dc2ea1858cb734a3863f.patch
+patches/raptor-2.0.15-out_of_bounds.patch
+patches/raptor-2.0.15-disable_broken_test_suites.patch

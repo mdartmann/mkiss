@@ -1,0 +1,15 @@
+#!/bin/sh -uxe
+
+git fetch
+
+# add pkg-config file
+git cherry-pick -n 11215a2dc792d28a8fa7bbef059c6798d248a0ea
+
+autoreconf -fiv
+
+./configure \
+    --prefix=/usr
+
+make
+make DESTDIR="$1" install
+

@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+
+patch -Np1 -i 0001-Fix-automake-warnings.patch
+autoreconf -fiv
+
+./configure \
+    --prefix=/usr \
+    --disable-static \
+    --disable-doc
+
+make 
+make DESTDIR="$1" install

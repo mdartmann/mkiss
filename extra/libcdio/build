@@ -1,0 +1,20 @@
+#!/bin/sh -uxe
+export CFLAGS="${CFLAGS/Werror/Wno-error}"
+
+autoreconf -fiv
+
+./configure \
+    --prefix=/usr \
+    --disable-vcd-info \
+    --enable-cpp-progs \
+    --disable-static
+
+sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
+
+make
+make DESTDIR="$1" install
+
+sed -i "/define CDIO_LIBCDIO_SOURCE_PATH/s|.*|/* #undef CDIO_LIBCDIO_SOURCE_PATH */|" \
+    "$1"/usr/include/cdio/cdio_config.h
+
+rm -f "$1"/usr/share/info/dir

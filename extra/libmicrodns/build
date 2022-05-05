@@ -1,0 +1,9 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+export CFLAGS+=" -ffat-lto-objects"
+
+meson build \
+    ${MESON_OPTIONS}
+
+ninja -C build
+ninja -C build install

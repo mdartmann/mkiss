@@ -1,0 +1,19 @@
+#!/bin/sh -uxe
+
+git fetch
+git cherry-pick -n 89e7900d
+autoreconf -fiv
+
+sed -i "/tp_print/d" python/enum.c
+
+./configure \
+    --prefix=/usr \
+    --with-qt \
+    --with-gtk=gtk3 \
+    --with-dbusconfdir=/usr/share \
+    CFLAGS="$CFLAGS -DNDEBUG"
+
+sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
+
+make
+make DESTDIR="$1" install

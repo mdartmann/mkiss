@@ -1,0 +1,14 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --with-expat \
+    --enable-shared \
+    --disable-static \
+    --with-ssl=openssl \
+    --with-ca-bundle=/etc/ssl/certs/ca-certificates.crt
+
+sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
+
+make
+make DESTDIR="$1" install

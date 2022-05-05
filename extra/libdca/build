@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+
+./bootstrap
+
+./configure \
+    --prefix=/usr \
+    --mandir=/usr/share/man \
+    --disable-static
+
+make
+make DESTDIR="$1" install

@@ -1,0 +1,8 @@
+#!/bin/sh -uxe
+
+./waf configure \
+    --prefix=/usr \
+    --test
+
+./waf build
+./waf install --destdir="$1"

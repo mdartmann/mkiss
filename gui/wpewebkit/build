@@ -1,0 +1,19 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+export CFLAGS+=" -g1"
+export CXXFLAGS+=" -g1"
+
+cmake -B build -G Ninja \
+    -D PORT=WPE \
+    -D CMAKE_BUILD_TYPE=Release \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D CMAKE_INSTALL_LIBDIR=lib \
+    -D CMAKE_INSTALL_LIBEXECDIR=lib \
+    -D CMAKE_SKIP_RPATH=ON \
+    -D USE_SOUP2=OFF \
+    -D ENABLE_GTKDOC=OFF \
+    -D ENABLE_MINIBROWSER=ON
+
+# Avoid brutal ram slaughtering
+ninja -C build -j8
+ninja -C build install

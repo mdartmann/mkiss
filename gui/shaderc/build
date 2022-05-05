@@ -1,0 +1,20 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+sed "/examples/d;/third_party/d" -i CMakeLists.txt
+sed "/build-version/d" -i glslc/CMakeLists.txt
+
+cat <<- EOF > glslc/src/build-version.inc
+"$(kiss l spirv-tools | cut -d " " -f2 | sed 's/-.*//')\\n"
+"$(kiss l glslang | cut -d " " -f2 | sed 's/-.*//')\\n"
+EOF
+
+cmake -B build -G Ninja \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D CMAKE_BUILD_TYPE=Release \
+    -D CMAKE_CXX_FLAGS="$CXXFLAGS -ffat-lto-objects" \
+    -D SHADERC_SKIP_TESTS=ON \
+    -D glslang_SOURCE_DIR=/usr/include/glslang
+
+ninja -C build
+ninja -C build install

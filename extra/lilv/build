@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+
+./waf configure \
+    --prefix=/usr \
+    --no-bash-completion \
+    --dyn-manifest \
+    --test
+
+./waf build
+./waf install --destdir="$1"

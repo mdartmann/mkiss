@@ -1,0 +1,13 @@
+#!/bin/sh -uxe
+
+# The `doc/html` subdirectory breaks with automake, so avoid building man pages
+patch -Np1 -i ignore-broken-doc-automake.patch
+
+autoreconf -fiv
+
+./configure \
+    --prefix=/usr \
+    --disable-static
+
+make -j1
+make DESTDIR="$1" install

@@ -5,7 +5,7 @@
     --mandir=/usr/share/man \
     --enable-pc-files \
     --disable-rpath-hack \
-    --with-pkg-config-libdir=/usr/share/pkgconfig \
+    --with-pkg-config-libdir=/usr/lib/pkgconfig \
     --with-shared \
     --enable-widec \
     --without-ada \
@@ -29,3 +29,5 @@ printf "%s\n" "INPUT(-lncursesw)" > "$1/usr/lib/libcursesw.so"
 ln -s libncurses.so "$1/usr/lib/libcurses.so"
 ln -s libncurses.so "$1/usr/lib/libtinfo.5"
 ln -s libncurses.so "$1/usr/lib/libtinfo.so.5"
+
+ln -s ncursesw.pc "$1"/usr/lib/pkgconfig/ncurses.pc

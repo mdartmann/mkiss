@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --enable-int-quality \
+    --with-audio="alsa oss pulse sdl"
+
+make
+make DESTDIR="$1" install
+install -Dm755 scripts/conplay "$1"/usr/bin/conplay

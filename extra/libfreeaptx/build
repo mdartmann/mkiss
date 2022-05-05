@@ -1,0 +1,13 @@
+#!/bin/sh -uxe
+
+make \
+    CFLAGS="$CFLAGS" \
+    LDFLAGS="$LDFLAGS" \
+    PREFIX=/usr
+make \
+    CFLAGS="$CFLAGS" \
+    LDFLAGS="$LDFLAGS" \
+    PREFIX=/usr \
+    DESTDIR="$1" \
+    install
+

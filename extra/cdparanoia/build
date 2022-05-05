@@ -1,0 +1,14 @@
+#!/bin/sh -uxe
+
+# Fix compilation with current gcc
+export CFLAGS="${CFLAGS/-Werror/-Wno-error/} -fPIC"
+
+# Fix broken detection of integers
+autoreconf -fiv
+
+./configure \
+    --prefix=/usr \
+    --mandir=/usr/share/man
+
+make
+make prefix="$1/usr" MANDIR="$1/usr/share/man" install

@@ -1,0 +1,16 @@
+#!/bin/sh -uxe
+
+sed "s/^CRYPTO=OPENSSL/#CRYPTO=OPENSSL/;s/#CRYPTO=GNUTLS/CRYPTO=GNUTLS/" \
+    -i Makefile \
+    -i librtmp/Makefile
+
+make \
+    OPT="$CFLAGS" \
+    XLDFLAGS="$LDFLAGS"
+
+make \
+    prefix=/usr \
+    sbindir=/usr/bin \
+    mandir=/usr/share/man \
+    DESTDIR="$1" \
+    install

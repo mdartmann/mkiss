@@ -1,0 +1,8 @@
+https://files.musepack.net/source/musepack_src_rVERSION.tar.gz
+patches/05_visibility.patch
+patches/03_mpcchap.patch
+patches/01_am-maintainer-mode.patch
+patches/04_link-order.patch
+patches/02_link-libm.patch
+patches/1001_missing_extern_kw.patch
+patches/add_subdir-objects.patch
