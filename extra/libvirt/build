@@ -8,11 +8,12 @@ sed -i "s|/sysconfig/|/conf.d/|g" \
     src/logging/virtlogd.service.in
 
 sed -i "s|/usr/libexec/qemu-bride-helper|/usr/lib/qemu/qemu-bridge-helper|g" \
-    src/qemu/qemu.conf \
+    src/qemu/qemu.conf.in \
     src/qemu/test_libvirtd_qemu.aug.in
 
 meson build \
     ${MESON_OPTIONS/-D b_lto=true/} \
+    --libexecdir=lib/libvirt \
     -D runstatedir=/run \
     -D qemu_group=kvm \
     -D qemu_user=libvirt-qemu \
