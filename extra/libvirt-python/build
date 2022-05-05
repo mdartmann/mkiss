@@ -1,4 +1,4 @@
 #!/bin/sh -uxe
 
-python setup.py clean
+python setup.py build
 python setup.py install --root="$1" --optimize=1
