@@ -2,6 +2,8 @@
 
 mkdir -p "$1/usr/bin"
 
+patch -Np1 -i fix-kiss-hook-inheritance.patch
+
 # Install kiss utilities.
 cp -f kiss contrib/* "$1/usr/bin/"
 

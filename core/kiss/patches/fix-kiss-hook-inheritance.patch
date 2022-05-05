@@ -1,0 +1,12 @@
+diff --git a/kiss b/kiss
+index 405d78d..e04e8c8 100755
+--- a/kiss
++++ b/kiss
+@@ -1837,6 +1837,7 @@ args() {
+                 HOME="$HOME" \
+                 XDG_CACHE_HOME="$XDG_CACHE_HOME" \
+                 KISS_COMPRESS="$KISS_COMPRESS" \
++                KISS_HOOK="$KISS_HOOK" \
+                 KISS_PATH="$KISS_PATH" \
+                 KISS_FORCE="$KISS_FORCE" \
+                 KISS_ROOT="$KISS_ROOT" \

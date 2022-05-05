@@ -19,4 +19,3 @@ make
 make DESTDIR="$1" install
 ln -s gpg "$1/usr/bin/gpg2"
 ln -s gpgv "$1/usr/bin/gpgv2"
-rm -f $1/usr/share/info/dir

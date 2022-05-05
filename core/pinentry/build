@@ -18,4 +18,3 @@ export CXXFLAGS+=" -I/usr/include/KF5/KWayland"
 
 make
 make DESTDIR="$1" install
-rm -f $1/usr/share/info/dir

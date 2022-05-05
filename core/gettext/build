@@ -21,4 +21,3 @@ sed -e 's/ -shared / $LDFLAGS\0/g' \
 	-i gettext-{tools,runtime,runtime/libasprintf}/libtool
 make
 make -j1 DESTDIR="$1" install
-rm -f $1/usr/share/info/dir

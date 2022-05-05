@@ -91,4 +91,3 @@ make -C quad
 make -C quad DESTDIR="$1" install
 
 install -vDm 644 build/FFTW3LibraryDepends.cmake "$1"/usr/lib/cmake/fftw3/
-rm -f "$1"/usr/share/info/dir
