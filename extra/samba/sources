@@ -2,3 +2,4 @@ https://us1.samba.org/samba/ftp/stable/samba-VERSION.tar.gz
 files/samba.conf
 files/samba.pam
 files/samba.logrotate
+patches/34771e1931587807d0395c7ac7f4be18654997f4.patch
