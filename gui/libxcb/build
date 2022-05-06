@@ -6,5 +6,7 @@
     --enable-xkb \
     --disable-static
 
+sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
+
 make
 make DESTDIR="$1" install
