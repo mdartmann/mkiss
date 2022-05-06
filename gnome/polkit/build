@@ -1,6 +1,9 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
 
+# Fix redefinition by glib2
+patch -Rp1 -i 63c02dc9e80e99e38c04514917a49a574e344e36.patch
+
 meson build \
     -D session_tracking=libsystemd-login \
     -D os_type=redhat \

@@ -1,2 +1,2 @@
 git+https://gitlab.freedesktop.org/polkit/polkit#VERSION
-patches/meson-0.61.patch
+https://gitlab.freedesktop.org/polkit/polkit/-/commit/63c02dc9e80e99e38c04514917a49a574e344e36.patch
