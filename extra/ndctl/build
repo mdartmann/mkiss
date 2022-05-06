@@ -1,14 +1,12 @@
 #!/bin/sh -uxe
+export DESTDIR="$1"
 
-sed -i "s|^modprobedir =.*|modprobedir = /usr/lib/modprobe.d/|" Makefile.am
+sed -i "s|^modprobedir =.*|modprobedir = /usr/lib/modprobe.d/|" contrib/meson.build
 
-./autogen.sh
+export CFLAGS+=" -ffat-lto-objects" 
 
-./configure \
-    --prefix=/usr \
-    --sysconfdir=/etc \
-    --disable-docs \
-    --with-systemd
+meson build \
+    ${MESON_OPTIONS}
 
-make
-make DESTDIR="$1" install
+ninja -C build
+ninja -C build install

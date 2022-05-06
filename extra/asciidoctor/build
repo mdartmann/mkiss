@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+
+gemdir=$(ruby -e 'puts Gem.default_dir')
+
+gem install --ignore-dependencies --no-user-install --verbose \
+    -i "$1/$gemdir" -n "$1"/usr/bin \
+    asciidoctor-$2.gem
+
+rm "$1/$gemdir"/cache/asciidoctor-$2.gem
+rm -rf "$1/$gemdir"/gems/asciidoctor-$2/man
