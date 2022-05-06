@@ -1,6 +1,5 @@
 #!/bin/sh 
 
-systemd-sysusers
 
 chown -R gdm:gdm /var/lib/gdm
 

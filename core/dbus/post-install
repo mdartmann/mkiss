@@ -1,4 +1,0 @@
-#!/bin/sh
-
-systemd-sysusers
-systemd-tmpfiles --create

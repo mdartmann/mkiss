@@ -4,5 +4,3 @@ if ! grep -qe '^/usr/bin/git-shell$' /etc/shells; then
     echo "/usr/bin/git-shell" >> /etc/shells
 fi
 
-systemd-sysusers
-systemd-tmpfiles --create

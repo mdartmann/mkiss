@@ -2,8 +2,6 @@
 
 echo "-> creating mysql user and folders..."
 
-systemd-sysusers
-systemd-tmpfiles --create
 mysql_install_db --force --datadir=/var/lib/mysql --user=mysql 
 
 chown -R mysql:mysql /var/lib/mysql
