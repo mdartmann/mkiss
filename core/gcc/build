@@ -2,7 +2,10 @@
 
 # Fix gccgo breaking in go bootstrap.
 # See github.com/golang/go/issues/47771 for details.
-patch -d gcc -p1 -i ../7edb992d8195572e2c823fedab319eb6cb2f0f32.patch
+#patch -d gcc -p1 -i ../7edb992d8195572e2c823fedab319eb6cb2f0f32.patch
+
+# Do not run fixinclude
+sed -i "s|\./fixinc\.sh|-c true|" gcc/gcc/Makefile.in
 
 # Use lib not lib64 by default
 sed -i '/m64=/s/lib64/lib/' gcc/gcc/config/i386/t-linux64
@@ -28,40 +31,27 @@ export libat_cv_have_ifunc=yes
     --mandir=/usr/share/man \
     --infodir=/usr/share/info \
     --with-bugurl=https://github.com/mdartmann/mkiss/issues \
-    --disable-multilib \
-    --enable-symvers \
-    --disable-libmpx \
-    --disable-libmudflap \
-    --enable-libsanitizer \
-    --disable-werror \
-    --enable-nls \
-    --enable-install-libiberty \
-    --enable-__cxa_atexit \
-    --enable-default-pie \
-    --enable-default-pic \
-    --enable-default-ssp \
-    --enable-shared \
-    --enable-threads \
-    --enable-graphite \
-    --enable-plugin \
-    --enable-lto \
-    --enable-tls \
-    --with-isl \
-    --enable-languages=c,c++,lto,objc,obj-c++,go,fortran,d \
-    --without-included-gettext \
-    --with-system-zlib \
-    --with-gmp=/usr \
-    --with-mpc=/usr \
-    --with-mpfr=/usr \
-    --enable-threads=posix \
-    --enable-checking=release \
     --with-linker-hash-style=gnu \
-    --enable-gnu-indirect-function \
-    --enable-linker-build-id \
-    --enable-gnu-unique-object \
-    --enable-clocale=gnu \
+    --with-system-zlib \
+    --enable-__cxa-atexit \
     --enable-cet=auto \
-    --enable-bootstrap
+    --enable-ehcking=release \
+    --enable-clocale=gnu \
+    --enable-default-pie \
+    --enable-default-ssp \
+    --enable-gnu-indirect-function \
+    --enable-gnu-unique-object \
+    --enable-linker-build-id \
+    --enable-lto \
+    --enable-shared \
+    --enable-threads=posix \
+    --disable-libssp \
+    --disable-libstdcxx-pch \
+    --disable-werror \
+    --disable-multilib \
+    --with-build-config=bootstrap-lto \
+    --enable-link-serialization=1 \
+    --enable-languages=c,c++,fortran,go,lto,objc,obj-c++
 
 make
 make DESTDIR="$1" install
@@ -73,3 +63,6 @@ ln -sfv ../../libexec/gcc/$(cc -dumpmachine)/$2/liblto_plugin.so \
 
 ln -s gcc "$1/usr/bin/cc"
 install -Dm755 ../c99 "$1/usr/bin/c99"
+
+python -m compileall "$1"/usr/share/gcc-$2 
+python -O -m compileall "$1"/usr/share/gcc-$2 
