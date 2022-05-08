@@ -1,0 +1,12 @@
+diff --git a/src/cache.h b/src/cache.h
+index 0ff3092..938fab0 100644
+--- a/src/cache.h
++++ b/src/cache.h
+@@ -17,6 +17,7 @@
+ #define CACHE_H
+ 
+ #include <list>
++#include <utility>
+ #include <unordered_map>
+ #include <mutex>
+ #include <ctype.h>

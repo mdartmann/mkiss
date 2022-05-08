@@ -1,6 +1,9 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
 
+# Fix missing <utility> include for std::exchange
+patch -Np1 -i std-exchange-utility.patch
+
 cmake -B build -G Ninja \
     -D CMAKE_INSTALL_PREFIX=/usr \
     -D DOC_INSTALL_DIR:PATH=share/doc/doxygen \
