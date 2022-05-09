@@ -1,0 +1,6 @@
+#!/bin/sh -uxe
+
+make
+
+python setup.py build
+python setup.py install -O1 --root="$1"

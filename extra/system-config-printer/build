@@ -1,0 +1,20 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --sbindir=/usr/bin \
+    --sysconfdir=/etc \
+    --with-systemdsystemunitdir=/usr/lib/systemd/system \
+    --with-udevdir=/usr/lib/udev \
+    --with-udev-rules
+
+make
+make DESTDIR="$1" install
+
+find "$1" -name '*.py' -exec python -mpy_compile {} +
+find "$1" -name '*.py' -exec python -O -mpy_compile {} +
+
+install -dm755 "$1"/usr/share/dbus-1/system.d
+mv "$1"/etc/dbus-1/system.d/* "$1"/usr/share/dbus-1/system.d/
+
+rm -rf "$1"/etc/dbus-1

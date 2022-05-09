@@ -1,0 +1,19 @@
+#!/bin/sh -uxe
+
+zsh
+
+./configure \
+    --prefix=/usr \
+    --disable-static \
+    --enable-crypto-gnutls \
+    --disable-crypto-opensl \
+    --disable-implicit-crypto \
+    --enable-show-failed-test-output \
+    --disable-doc-maintenance
+
+make DESTDIR="$1" install
+
+install -Dm644 completions/bash/qpdf "$1"/usr/share/bash-completion/completions/qpdf
+install -Dm644 completions/zsh/_qpdf "$1"/usr/share/zsh/site-functions/_qpdf
+
+rm -rf "$1"/usr/share/docs

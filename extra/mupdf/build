@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+
+export CXXFLAGS+=" -fPIC"
+export CFLAGS+=" -fPIC -ffat-lto-objects"
+
+export USE_SYSTEM_LIBS=yes
+
+make build=release libs apps
+
+make build=release DESTDIR="$1" prefix=/usr install
