@@ -1,5 +1,7 @@
 #!/bin/sh -uxe
 
+rm {un,}hinted/ttf/NotoSansTifinagh/NotoSansTifinagh[AGHRST]*.ttf
+
 install -Dm644 unhinted/ttf/Noto*/*.tt[fc] -t "$1/usr/share/fonts/noto"
 install -Dm644 hinted/ttf/Noto*/*.tt[fc] -t "$1/usr/share/fonts/noto"
 

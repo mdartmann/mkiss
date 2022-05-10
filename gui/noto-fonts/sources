@@ -1,4 +1,4 @@
-https://github.com/googlefonts/noto-fonts/archive/refs/tags/vVERSION-phase3.tar.gz
+git+https://github.com/googlefonts/noto-fonts#c5481f3a1b57d54190a4e7881103033fbbbcec0c
 files/66-noto-mono.conf
 files/46-noto-serif.conf
 files/66-noto-sans.conf
