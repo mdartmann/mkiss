@@ -5,6 +5,12 @@ mkdir build
 # use system types
 rm include/linux/types.h
 
+# fix broken include
+ln -rs libiptc/linux_list.h include/libiptc
+
+# fix build with -Werror=format-security
+patch -Np1 -i iptables-format-security.patch
+
 cd build 
 
 ../configure \
