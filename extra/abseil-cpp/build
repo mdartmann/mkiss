@@ -1,6 +1,17 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
 
+# GCC 12 is broken, so use clang
+export CC=clang
+export CXX=clang++
+export LD=ld.lld
+export AS=llvm-as
+export RANLIB=llvm-ranlib
+
+export CXXFLAGS+=" -lc++abi -stdlib=libc++"
+export LDFLAGS+=" -lc++abi -stdlib=libc++"
+export CFLAGS+=" -lc++abi -stdlib=libc++"
+
 cmake -B build -G Ninja \
     -D CMAKE_BUILD_TYPE=RelWithDebInfo \
     -D CMAKE_CXX_FLAGS="-DNEBUG" \

@@ -5,12 +5,15 @@ export DESTDIR="$1"
 git submodule init
 git submodule update --recursive
 
+# Fix missing stdint includes for GCC 12.
+patch -Np1 -i gcc12-fix-missing-stdint-include.patch
+
+export CFLAGS+=" -flto=auto -ffat-lto-objects"
+export CXXFLAGS+=" -flto=auto -ffat-lto-objects -I/usr/include/libdrm"
+
 # See https://github.com/desktop-app/tg_owt/issues/75
 # I hate this static link, but the maintainers are... special
 # So for now it's the only option.
-
-export CFLAGS+=" -flto -ffat-lto-objects"
-export CXXFLAGS+=" -flto -ffat-lto-objects -I/usr/include/libdrm"
 
 cmake -B build -G Ninja \
     -D CMAKE_BUILD_TYPE=Release \

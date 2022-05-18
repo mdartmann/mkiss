@@ -1,0 +1,60 @@
+diff --git a/src/common_video/h265/h265_common.h b/src/common_video/h265/h265_common.h
+index a829195..e67e836 100644
+--- a/src/common_video/h265/h265_common.h
++++ b/src/common_video/h265/h265_common.h
+@@ -8,6 +8,7 @@
+  *  be found in the AUTHORS file in the root of the source tree.
+  */
+ 
++#include <stdint.h>
+ #ifndef COMMON_VIDEO_H265_H265_COMMON_H_
+ #define COMMON_VIDEO_H265_H265_COMMON_H_
+ 
+diff --git a/src/common_video/h265/h265_pps_parser.h b/src/common_video/h265/h265_pps_parser.h
+index 28c95ea..b531f5f 100644
+--- a/src/common_video/h265/h265_pps_parser.h
++++ b/src/common_video/h265/h265_pps_parser.h
+@@ -8,6 +8,7 @@
+  *  be found in the AUTHORS file in the root of the source tree.
+  */
+ 
++#include <stdint.h>
+ #ifndef COMMON_VIDEO_H265_PPS_PARSER_H_
+ #define COMMON_VIDEO_H265_PPS_PARSER_H_
+ 
+diff --git a/src/common_video/h265/h265_sps_parser.h b/src/common_video/h265/h265_sps_parser.h
+index dbd3f0e..99c3387 100644
+--- a/src/common_video/h265/h265_sps_parser.h
++++ b/src/common_video/h265/h265_sps_parser.h
+@@ -8,6 +8,7 @@
+  *  be found in the AUTHORS file in the root of the source tree.
+  */
+ 
++#include <stdint.h>
+ #ifndef COMMON_VIDEO_H265_H265_SPS_PARSER_H_
+ #define COMMON_VIDEO_H265_H265_SPS_PARSER_H_
+ 
+diff --git a/src/common_video/h265/h265_vps_parser.h b/src/common_video/h265/h265_vps_parser.h
+index e8a2775..4bba7ba 100644
+--- a/src/common_video/h265/h265_vps_parser.h
++++ b/src/common_video/h265/h265_vps_parser.h
+@@ -8,6 +8,7 @@
+  *  be found in the AUTHORS file in the root of the source tree.
+  */
+ 
++#include <stdint.h>
+ #ifndef COMMON_VIDEO_H265_H265_VPS_PARSER_H_
+ #define COMMON_VIDEO_H265_H265_VPS_PARSER_H_
+ 
+diff --git a/src/modules/include/module_common_types_public.h b/src/modules/include/module_common_types_public.h
+index 345e45c..e686e5d 100644
+--- a/src/modules/include/module_common_types_public.h
++++ b/src/modules/include/module_common_types_public.h
+@@ -12,6 +12,7 @@
+ #define MODULES_INCLUDE_MODULE_COMMON_TYPES_PUBLIC_H_
+ 
+ #include <limits>
++#include <cstdint>
+ 
+ #include "absl/types/optional.h"
+ 

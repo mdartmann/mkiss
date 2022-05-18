@@ -1,1 +1,2 @@
 git+https://github.com/desktop-app/tg_owt#VERSION
+patches/gcc12-fix-missing-stdint-include.patch
