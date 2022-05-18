@@ -4,11 +4,13 @@ NOCONFIGURE=1 ./autogen.sh
 
 ./configure \
     --prefix=/usr \
-    --disable-static 
+    --disable-static \
+    --enable-vala \
+    --enable-gtk-doc
 
 export CARGO_PROFILE_RELEASE_LTO=true CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
 
-sed -s "s| -shared | ${LDFLAGS}\0|g" libtool
+sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
 
 make
 make DESTDIR="$1" install
