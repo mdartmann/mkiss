@@ -1,0 +1,13 @@
+#!/bin/sh -uxe
+
+bsdtar -xf commandlinetools-linux-8512546_latest.zip
+
+mkdir -p "$1"/opt/android-sdk/cmdline-tools
+cp -a cmdline-tools "$1"/opt/android-sdk/cmdline-tools/latest
+
+install -Dm755 android-sdk-cmdline-tools-latest.sh "$1"/etc/profile.d/android-sdk-cmdline-tools-latest.sh 
+
+install -d "$1"/usr/lib/sysusers.d/
+cat > "$1"/usr/lib/sysusers.d/android.conf << EOF
+g android - -
+EOF

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+systemd-sysusers
+chown -R root:android /opt/android-sdk
