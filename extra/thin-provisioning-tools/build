@@ -1,0 +1,9 @@
+#!/bin/sh -uxe
+
+autoconf
+
+./configure \
+    --prefix=/usr
+
+make
+make DESTDIR="$1" BINDIR="$1"/usr/bin MANDIR=/usr/share/man install

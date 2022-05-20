@@ -11,3 +11,8 @@ sed -i "s| -shared | ${LDFLAGS}\0|g" libtool
 
 make
 make DESTDIR="$1" install
+
+install -Dm644 hooks-encrypt "$1"/usr/lib/initcpio/hooks/encrypt
+install -Dm644 install-encrypt "$1"/usr/lib/initcpio/install/encrypt
+install -Dm644 install-sd-encrypt "$1"/usr/lib/initcpio/install/sd-encrypt
+

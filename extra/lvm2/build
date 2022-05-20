@@ -1,6 +1,13 @@
 #!/bin/sh -uxe
 
-export CONFIG_SHELL=/usr/bin/bash
+# prepare for non-systemd initramfs
+patch -Np1 --output='udev/69-dm-lvm-initcpio.rules.in' -i 0001-udev-initcpio.patch
+
+# remove install section from systemd units that are enabled by default
+sed -i -e '/^\[Install\]$/,$d' \
+    scripts/dm_event_systemd_red_hat.socket.in \
+    scripts/lvm2_lvmpolld_systemd_red_hat.socket.in \
+    scripts/lvm2_monitoring_systemd_red_hat.service.in
 
 ./configure \
     CONFIG_SHELL=/usr/bin/bash \
@@ -10,6 +17,7 @@ export CONFIG_SHELL=/usr/bin/bash
     --localstatedir=/var \
     --enable-cmdlib \
     --enable-dmeventd \
+    --enable-lvmpolld \
     --enable-pkgconfig \
     --enable-readline \
     --enable-udev_rules \
@@ -24,16 +32,26 @@ export CONFIG_SHELL=/usr/bin/bash
     --with-udev-prefix=/usr
 
 make
-make DESTDIR="$1" install
+make -C udev/ 69-dm-lvm-initcpio.rules
 
-install -d -m0755 "${1}/usr/lib/systemd/system/sockets.target.wants"
+make DESTDIR="$1" install_device-mapper
+# extra udev rule for device-mapper in initramfs
+install -Dm644 11-dm-initramfs.rules "$1"/usr/lib/initcpio/udev/11-dm-initramfs.rules
+make DESTDIR="$1" install_systemd_units
+install -dm755 "${1}/usr/lib/systemd/system/sockets.target.wants"
 ln -sf ../dm-event.socket "${1}/usr/lib/systemd/system/sockets.target.wants/dm-event.socket"
+
+make DESTDIR="$1" install_lvm2
+
+install -d "$1"/etc/lvm/{archive,backup}
+
+install -Dm644 lvm2_install "$1"/usr/lib/initcpio/install/lvm2
+ln -s lvm2 "$1"/usr/lib/initcpio/install/sd-lvm2
+install -Dm644 udev/69-dm-lvm-initcpio.rules "$1"/usr/lib/initcpio/udev/69-dm-lvm.rules
+
 install -d -m0755 "${1}/usr/lib/systemd/system/sysinit.target.wants/"
 ln -sf ../lvm2-lvmpolld.socket "${1}/usr/lib/systemd/system/sysinit.target.wants/lvm2-lvmpolld.socket"
 ln -sf ../lvm2-monitor.service "${1}/usr/lib/systemd/system/sysinit.target.wants/lvm2-monitor.service"
 
-install -d "$1"/etc/lvm/{archive,backup}
-
-make DESTDIR="$1" install_systemd_units
 make DESTDIR="$1" install_systemd_generators
 

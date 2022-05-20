@@ -1,2 +1,4 @@
 git+https://sourceware.org/git/lvm2.git#vMAJOR_MINOR_PATCH
+patches/0001-udev-initcpio.patch
 files/11-dm-initramfs.rules
+files/lvm2_install
