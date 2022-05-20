@@ -1,0 +1,2 @@
+https://developer.yubico.com/yubikey-personalization/Releases/ykpers-VERSION.tar.gz
+patches/0001-fix-boolean-value-with-json-c-0.14.patch

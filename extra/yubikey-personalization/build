@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+
+export CFLAGS+=" -fcommon"
+
+patch -Np1 -i 0001-fix-boolean-value-with-json-c-0.14.patch
+
+./configure \
+    --prefix=/usr \
+    --with-udevrulesdir=/usr/lib/udev/rules.d
+
+make
+make DESTDIR="$1" install
