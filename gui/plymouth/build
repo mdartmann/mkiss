@@ -1,0 +1,45 @@
+#!/bin/sh -uxe
+export LDFLAGS+=" -ludev"
+
+for i in *.patch; do
+    patch -Np1 -i $i
+done
+
+NOCONFIGURE=1 ./autogen.sh
+
+./configure \
+    --prefix=/usr \
+    --exec-prefix=/usr \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --libdir=/usr/lib \
+    --libexecdir=/usr/lib \
+    --sbindir=/usr/bin \
+    --with-runtimedir=/run \
+    --enable-systemd-integration \
+    --enable-drm \
+    --enable-tracing \
+    --enable-pango \
+    --enable-gtk=no \
+    --with-release-file=/etc/os-release \
+    --with-logo=/usr/share/plymouth/mkiss.png \
+    --with-background-color=0x000000 \
+    --with-background-start-color-stop=0x000000 \
+    --with-background-end-color-stop=0x4D4D4D \
+    --without-rhgb-compat-link \
+    --without-system-root-install 
+
+make
+make DESTDIR="$1" install
+
+install -Dm644 mkiss.png "$1"/usr/share/plymouth/mkiss.png
+
+install -Dm644 plymouth.encrypt_hook "$1"/usr/lib/initcpio/hooks/plymouth-encrypt
+install -Dm644 plymouth.initcpio_hook "$1"/usr/lib/initcpio/hooks/plymouth
+install -Dm644 plymouth.encrypt_install "$1"/usr/lib/initcpio/install/plymouth-encrypt
+install -Dm644 plymouth.initcpio_install "$1"/usr/lib/initcpio/install/plymouth
+install -Dm644 sd-plymouth.initcpio_install "$1"/usr/lib/initcpio/install/sd-plymouth
+
+install -Dm644 plymouth-deactivate.service "$1"/usr/lib/systemd/system/plymouthd-deactivate.service
+
+install -Dm644 "$1"/usr/share/plymouth/plymouthd.defaults "$1"/etc/plymouth/plymouthd.conf

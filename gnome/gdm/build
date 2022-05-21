@@ -8,7 +8,7 @@ meson build \
     -D default-path="/usr/bin:" \
     -D gdm-xsession=true \
     -D ipv6=true \
-    -D plymouth=disabled \
+    -D plymouth=enabled \
     -D run-dir=/run/gdm \
     -D selinux=disabled 
 

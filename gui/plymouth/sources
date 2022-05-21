@@ -1,0 +1,11 @@
+git+https://gitlab.freedesktop.org/plymouth/plymouth.git#VERSION
+patches/plymouth-quit.service.in.patch
+patches/plymouthd.conf.patch
+patches/plymouth-update-initrd.patch
+files/plymouth-deactivate.service
+files/plymouth.encrypt_hook
+files/mkiss.png
+files/plymouth.initcpio_hook
+files/sd-plymouth.initcpio_install
+files/plymouth.encrypt_install
+files/plymouth.initcpio_install
