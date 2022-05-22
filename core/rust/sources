@@ -3,4 +3,3 @@ patches/0003-compiler-Use-wasm-ld-for-wasm-targets.patch
 patches/0002-compiler-Change-LLVM-targets.patch
 patches/0001-cargo-Change-libexec-dir.patch
 patches/0001-bootstrap-Change-libexec-dir.patch
-https://github.com/rust-lang/cargo/commit/2ff0b401b9c79a44789a71eb53d83d422bb9b200.patch

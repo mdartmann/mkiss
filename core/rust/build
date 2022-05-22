@@ -11,14 +11,6 @@ patch -Np1 -i 0002-compiler-Change-LLVM-targets.patch
 # Use LLVMs wasm-ld
 patch -Np1 -i 0003-compiler-Use-wasm-ld-for-wasm-targets.patch
 
-# Fix libgit2 segmentation fault in cargo
-patch -d src/tools/cargo -Np1 < 2ff0b401b9c79a44789a71eb53d83d422bb9b200.patch
-cd src/tools/cargo
-cargo fetch
-cd ../../..
-
-cargo vendor
-
 cat > config.toml << EOF
 changelog-seen = 2
 profile = "user"
@@ -29,7 +21,6 @@ link-shared = true
 [build]
 target = [
   "x86_64-unknown-linux-gnu",
-  "wasm32-unknown-unknown",
 ]
 cargo = "/usr/bin/cargo"
 rustc = "/usr/bin/rustc"
@@ -66,10 +57,6 @@ compression-formats = ["gz"]
 
 [target.x86_64-unknown-linux-gnu]
 llvm-config = "/usr/bin/llvm-config"
-
-[target.wasm32-unknown-unknown]
-sanitizers = false
-profiler = false
 EOF
 
 export RUST_BACKTRACE=1
