@@ -29,6 +29,7 @@ meson build \
     -D default-hierarchy=unified \
     -D default-kill-user-processes=false \
     -D default-locale=C \
+    -D localegen-path=/usr/bin/locale-gen \
     -D dns-over-tls=openssl \
     -D fallback-hostname="mkiss" \
     -D nologin-path=/usr/bin/nologin \
