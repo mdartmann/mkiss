@@ -1,7 +1,1 @@
-https://downloads.sourceforge.net/vde/vde2-VERSION.tar.bz2
-patches/format-security.patch
-patches/vde_cryptcab-compile-against-openssl-1.1.0.patch
-files/iptables.rules.sample
-files/dhcpd.conf.sample
-files/vde-connection.sample
-files/vde-config.sample
+git+https://github.com/virtualsquare/vde-2#vVERSION
