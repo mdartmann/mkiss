@@ -1,8 +1,5 @@
 #!/bin/sh -uxe
 
-# Version of node.js for nvm.
-export _node="14.17.4"
-
 # Move bundled vs code into place
 cd vscodium
 rm -rf vscode
@@ -16,12 +13,16 @@ export SHOULD_BUILD="yes"
 export VSCODE_ARCH="x64"
 export OS_NAME="linux"
 
-# Skip packages for other distributions.
+# Skip packages for other distributions
 export SKIP_LINUX_PACKAGES="True"
 
-source /usr/share/nvm/init-nvm.sh
+which nvm > /dev/null 2>&1 && nvm deactivate && nvm unload
+export NVM_DIR=$PWD/.nvm
+source /usr/share/nvm/init-nvm.sh || [[ $! != 1 ]]
 
-nvm install ${_node}
+nvm install $(cat .nvmcr)
+nvm use
+
 ./build.sh
 
 mkdir -p "$1/usr/bin" "$1/usr/share/vscodium" "$1/usr/share/applications" "$1/usr/share/pixmaps"
