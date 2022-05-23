@@ -18,6 +18,8 @@ if kiss l | rg nvidia > /dev/null 2>&1; then
 fi
 
 if kiss l mkinitcpio > /dev/null 2>&1; then
+    pushd /tmp
     echo "mkinitcpio found, regenerating initramfs..."
     mkinitcpio -P
+    popd
 fi
