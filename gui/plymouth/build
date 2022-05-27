@@ -15,16 +15,15 @@ NOCONFIGURE=1 ./autogen.sh
     --libdir=/usr/lib \
     --libexecdir=/usr/lib \
     --sbindir=/usr/bin \
-    --with-runtimedir=/run \
     --enable-systemd-integration \
     --enable-drm \
     --enable-tracing \
     --enable-pango \
-    --enable-gtk=no \
+    --enable-gtk=yes \
     --with-release-file=/etc/os-release \
     --with-logo=/usr/share/plymouth/mkiss.png \
-    --with-background-color=0x000000 \
-    --with-background-start-color-stop=0x000000 \
+    --with-background-color=0x4D4D4D \
+    --with-background-start-color-stop=0x4D4D4D \
     --with-background-end-color-stop=0x4D4D4D \
     --without-rhgb-compat-link \
     --without-system-root-install 

@@ -1,0 +1,7 @@
+#!/bin/sh -uxe
+
+PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor
+
+make
+make DESTDIR="$1" install
+rm -rf "$1"/usr/lib
