@@ -1,0 +1,16 @@
+#!/bin/sh -uxe
+
+export CFLAGS+=" -fcommon"
+
+./configure \
+    --prefix=/usr \
+    --mandir=/usr/share/man
+
+make
+make DESTDIR="$1" install
+
+
+rm -f "$1"/usr/bin/mt "$1"/usr/share/man/man1/mt.1
+
+rm -rf "$1"/usr/libexec
+rm -f "$1"/usr/share/man/man8/rmt.8
