@@ -1,0 +1,42 @@
+#!/bin/sh -uxe
+
+src=$PWD
+
+rm -rf pkgs/sqlite3*
+
+cd unix
+
+./configure \
+	--prefix=/usr \
+	--mandir=/usr/share/man \
+	--enable-threads \
+	--enable-64bit
+
+make
+make INSTALL_ROOT="$1" install  install-private-headers
+
+ln -sf tclsh${2%.*} "$1"/usr/bin/tclsh
+ln -sf libtcl${2%.*} "$1"/usr/lib/libtcl.so
+
+install -Dm644 tcl.m4 "$1"/usr/share/aclocal
+
+chmod 0644 "$1"/usr/lib/libtclstub8.6.a
+
+tclver=8.6
+sed -e "s|${src}/tcl${2}/unix|/usr/lib|" \
+-e "s|${src}/tcl${2}|/usr/include|" \
+-e "s|'{/usr/lib} '|'/usr/lib/tcl$tclver'|" \
+-i "${1}/usr/lib/tclConfig.sh"
+
+tdbcver=tdbc1.1.3
+sed -e "s|${src}/tcl${2}/unix/pkgs/$tdbcver|/usr/lib/$tdbcver|" \
+-e "s|${src}/tcl${2}/pkgs/$tdbcver/generic|/usr/include|" \
+-e "s|${src}/tcl${2}/pkgs/$tdbcver/library|/usr/lib/tcl${2%.*}|" \
+-e "s|${src}/tcl${2}/pkgs/$tdbcver|/usr/include|" \
+-i "${1}/usr/lib/$tdbcver/tdbcConfig.sh"
+
+itclver=itcl4.2.2
+sed -e "s|${src}/tcl${2}/unix/pkgs/$itclver|/usr/lib/$itclver|" \
+-e "s|${src}/tcl${2}/pkgs/$itclver/generic|/usr/include|" \
+-e "s|${src}/tcl${2}/pkgs/$itclver|/usr/include|" \
+-i "${1}/usr/lib/$itclver/itclConfig.sh"
