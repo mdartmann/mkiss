@@ -1,0 +1,11 @@
+libcap
+elfutils
+libunwind
+ncurses
+pciutils
+perl
+python
+readline
+xz
+zlib
+zstd

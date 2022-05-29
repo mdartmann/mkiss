@@ -1,0 +1,118 @@
+#!/bin/sh -uxe
+
+export KBUILD_BUILD_HOST=`hostname`
+export KBUILD_BUILD_USER=`id -nu`
+export CC=gcc
+export CXX=g++
+export BUILD_LD="ld.bfd"
+
+pkgver="$2"
+
+echo ':: cpupower'
+pushd tools/power/cpupower
+make CC="${CC}" CXX="${CXX}" VERSION=$pkgver-1
+make CC="${CC}" CXX="${CXX}" \
+  DESTDIR="$1" \
+  sbindir='/usr/bin' \
+  libdir='/usr/lib' \
+  mandir='/usr/share/man' \
+  docdir='/usr/share/doc/cpupower' \
+  install install-man
+popd
+
+echo ':: x86_energy_perf_policy'
+pushd tools/power/x86/x86_energy_perf_policy
+make CC="${CC}" CXX="${CXX}"
+install -Dm 755 x86_energy_perf_policy "$1/usr/bin/x86_energy_perf_policy"
+install -Dm 644 x86_energy_perf_policy.8 "$1/usr/share/man/man8/x86_energy_perf_policy.8"
+
+popd
+
+#echo ':: usbip'
+#pushd tools/usb/usbip
+# Fix gcc compilation
+#sed -i 's,-Wall -Werror -Wextra,-fcommon,' configure.ac
+#./autogen.sh
+#./configure --prefix=/usr --sbindir=/usr/bin
+#make
+#make install DESTDIR="$1"
+#install -Dm 644 /dev/null "$1/usr/lib/modules-load.d/usbip.conf"
+#printf 'usbip-core\nusbip-host\n' > "$1/usr/lib/modules-load.d/usbip.conf"
+
+#popd
+
+#echo ':: tmon'
+#pushd tools/thermal/tmon
+#make
+#make install INSTALL_ROOT="$1"
+#popd
+#
+#echo ':: cgroup_event_listener'
+#pushd tools/cgroup
+#make
+#install -Dm755 cgroup_event_listener "$1/usr/bin/cgroup_event_listener"
+#popd
+
+#echo ':: turbostat'
+#pushd tools/power/x86/turbostat
+#make
+#make install DESTDIR="$1"
+#popd
+#
+#echo ':: hv'
+#pushd tools/hv
+#CFLAGS+=' -DKVP_SCRIPTS_PATH=\"/usr/lib/hyperv/kvp_scripts/\"' make
+#popd
+
+echo ':: bpf'
+pushd tools/bpf
+# doesn't compile when we don't first compile bpftool in its own directory and
+# man pages require to be also launch from the subdirectory
+make CC="${CC}" CXX="${CXX}" -C bpftool all doc
+# runqslower, require kernel binary path to build, skip it
+make CC="${CC}" CXX="${CXX}" -W runqslower
+# skip runsqlower until disabled in build
+make CC="${CC}" CXX="${CXX}" -W runqslower_install install prefix=/usr DESTDIR="$1"
+# fix bpftool hard written path
+mv "$1"/usr/sbin/bpftool "$1"/usr/bin/bpftool
+rmdir "$1"/usr/sbin
+# install man pages
+make CC="${CC}" CXX="${CXX}" -C bpftool doc-install prefix=/usr/share DESTDIR="$1"
+popd
+
+echo ':: perf'
+pushd tools/perf
+make CC="${CC}" CXX="${CXX}" -f Makefile.perf \
+  prefix=/usr \
+  lib=lib/perf \
+  perfexecdir=lib/perf \
+  NO_SDT=0 \
+  PYTHON=python3 \
+  PYTHON_CONFIG=python3-config \
+  PERF_VERSION=$pkgver-1 \
+  DESTDIR="$1"
+
+make CC="${CC}" CXX="${CXX}" -f Makefile.perf \
+  prefix=/usr \
+  lib=lib/perf \
+  perfexecdir=lib/perf \
+  NO_SDT=0 \
+  PYTHON=python3 \
+  PYTHON_CONFIG=python3-config \
+  PERF_VERSION=$pkgver-1 \
+  DESTDIR="$1" \
+  install
+
+# add linker search path
+mkdir "$1/etc/ld.so.conf.d"
+echo '/usr/lib/perf' > "$1/etc/ld.so.conf.d/perf.conf"
+# move completion in new directory
+#install -Dm644 etc/bash_completion.d/perf usr/share/bash-completion/completions/perf
+#rm -r etc/bash_completion.d
+# no exec on usr/share
+find "$1"/usr/share -type f -exec chmod a-x {} \;
+
+make CC="${CC}" CXX="${CXX}" install-python_ext PYTHON=python DESTDIR="$1"
+
+popd
+
