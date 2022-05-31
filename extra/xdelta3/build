@@ -1,0 +1,17 @@
+#!/bin/sh -uxe
+
+cd xdelta3
+
+export CFLAGS+=" -w"
+export CXXFLAGS+=" -w"
+
+autoreconf -fiv
+
+./configure \
+	--disable-dependency-tracking \
+	--prefix=/usr \
+	--with-liblzma
+
+make
+make DESTDIR="$1" install
+
