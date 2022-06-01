@@ -1,12 +1,15 @@
 #!/bin/sh -uxe
+export DESTDIR="$1"
+export CFLAGS+=" -ffat-lto-objects"
+export CXXFLAGS+=" -ffat-lto-objects"
 
-./configure \
-    --prefix=/usr \
-    --disable-gles1 \
-    --with-system-data-files=/usr/share/mesa-demos
+meson build \
+    ${MESON_OPTIONS} \
+    -D gles1=disabled \
+    -D with-system-data-files=true
 
+ninja -C build
+ninja -C build install
 
-make
-make DESTDIR="$1" install
+install -m0755 build/src/egl/opengl/{eglgears_wayland,eglgears_x11,eglkms,egltri_wayland,egltri_x11,peglgears,xeglgears,xeglthreads} "$1"/usr/bin
 
-install -m0755 src/egl/opengl/{eglgears_wayland,eglgears_x11,eglkms,egltri_wayland,egltri_x11,peglgears,xeglgears,xeglthreads} "$1"/usr/bin
