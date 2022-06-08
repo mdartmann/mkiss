@@ -10,9 +10,6 @@ export _arch_list=(IA32 X64)
 git submodule init
 git submodule update --recursive
 
-# reintroduce include accidentally removed in https://github.com/tianocore/edk2/commit/b47575801e1903e8b316d01840572ce2681cf2c6
-patch -Np1 -i edk2-202202-ovmfpkgia32.patch
-
 # -Werror, not even once
 sed -e 's/ -Werror//g' -i BaseTools/Conf/*.template BaseTools/Source/C/Makefiles/*.makefile
 
