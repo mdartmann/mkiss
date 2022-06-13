@@ -11,7 +11,7 @@ export DEBUG=-DNDEBUG
 
 make
 
-make DIST_ROOT="$1" PKG_ROOT_SBIN_DIR="/usr/bin" install install-dev
+make -j1 DIST_ROOT="$1" PKG_ROOT_SBIN_DIR="/usr/bin" install install-dev
 
 # bad Makefile is bad
 mv "$1/lib" "$1/usr/lib"
