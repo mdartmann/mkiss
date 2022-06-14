@@ -1,7 +1,8 @@
 #!/bin/sh -uxe
+export DESTDIR="$1"
 
-export CXXFLAGS+=" -DVERSION=${2}"
+meson build \
+    ${MESON_OPTIONS}
 
-make
-install -Dm755 pamixer "$1"/usr/bin/pamixer
-install -Dm644 pamixer.1 -t "$1"/usr/share/man/man1
+ninja -C build
+ninja -C build install
