@@ -1,11 +1,15 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
 
+patch -Np1 -i gcc12.patch
+
 cmake -B build -G Ninja \
     -D CMAKE_INSTALL_PREFIX=/usr \
     -D CMAKE_BUILD_TYPE=Release \
     -D CMAKE_C_FLAGS="${CFLAGS}" \
     -D CMAKE_CXX_FLAGS="${CXXFLAGS}"
+
+sed -i "s|-Werror|-Wno-error|g" build/build.ninja
 
 ninja -C build
 ninja -C build install
