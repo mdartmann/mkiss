@@ -1,6 +1,11 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
 
+git submodule init
+git submodule update --recursive
+
+patch -d Telegram/ThirdParty/tgcalls -Np1 < tgcalls-uint8t-gcc12.patch
+
 cmake -B build -G Ninja \
     -D DESKTOP_APP_QT6=on \
     -D CMAKE_INSTALL_PREFIX=/usr \

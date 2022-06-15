@@ -1,1 +1,2 @@
-https://github.com/telegramdesktop/tdesktop/releases/download/vVERSION/tdesktop-VERSION-full.tar.gz
+git+https://github.com/telegramdesktop/tdesktop#VERSION
+patches/tgcalls-uint8t-gcc12.patch
