@@ -1,14 +1,19 @@
-#!/bin/sh
+#!/bin/bash
 
-echo "-> creating mysql user and folders..."
+if kiss l mariadb &>/dev/null; then
+    echo "-> creating mysql user and folders..."
 
-mysql_install_db --force --datadir=/var/lib/mysql --user=mysql 
+    mysql_install_db --force --datadir=/var/lib/mysql --user=mysql 
 
-chown -R mysql:mysql /var/lib/mysql
+    chown -R mysql:mysql /var/lib/mysql
 
-cat << EOF
--> To set up mariadb, first start the service using /etc/init.d/mysql,
--> then use # mysql_secure_installation and follow its prompts.
--> The default root password is empty.
--> Afterwards connect to the database using $ mysql -u root -p
+    cat << EOF
+    -> To set up mariadb, first start the service using /etc/init.d/mysql,
+    -> then use # mysql_secure_installation and follow its prompts.
+    -> The default root password is empty.
+    -> Afterwards connect to the database using $ mysql -u root -p
 EOF
+else
+    echo "-> upgrading database..."
+    mysql_upgrade
+fi
