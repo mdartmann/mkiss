@@ -1,5 +1,8 @@
 #!/bin/sh -uxe
 
+export CFLAGS+=" -flto=auto"
+export CXXFLAGS+=" -flto=auto"
+
 ./configure \
     --prefix=/usr \
     --disable-debug \
