@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if kiss l mkinitcpio > /dev/null 2>&1; then
+    pushd /tmp
+    echo "mkinitcpio found, regenerating initramfs..."
+    mkinitcpio -P
+fi
