@@ -1,6 +1,6 @@
 #!/bin/sh -uxe
 
-cargo fetch --locked
+cargo fetch
 
 cargo build --release --frozen
 
