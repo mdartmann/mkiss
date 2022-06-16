@@ -1,4 +1,3 @@
 git+https://github.com/lgandx/responder#vVERSION
-patches/responder.patch
-patches/python3.10.patch
 files/responder.sh
+patches/responder.patch

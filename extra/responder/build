@@ -1,9 +1,7 @@
 #!/bin/sh -uxe
 
 patch -Np1 -i responder.patch
-patch -Np1 -i python3.10.patch
 rm responder.patch
-rm python3.10.patch
 
 install -Dm755 responder.sh "$1"/usr/bin/responder
 rm responder.sh
