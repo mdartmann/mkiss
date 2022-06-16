@@ -2,7 +2,6 @@
 
 cargo build \
     --release \
-    --locked \
     --all-features \
     --target-dir=target
 
