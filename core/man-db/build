@@ -1,0 +1,24 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --sbindir=/usr/bin \
+    --sysconfdir=/etc \
+    --libexecdir=/usr/lib \
+    --with-systemdsystemunitdir=/usr/lib/systemd/system \
+    --with-snapdir=/var/lib/snapd/snap \
+    --with-db=gdbm \
+    --disable-setuid \
+    --enable-cache-owner=root \
+    --enable-mandirs=GNU \
+    --with-sections="1 1p n l 8 3 3p 0 0p 2 5 4 9 6 7"
+
+make
+make DESTDIR="$1" install
+
+rm -f "$1"/usr/bin/zsoelim
+
+install -Dm755 convert-mans "$1"/usr/bin/convert-mans
+
+install -dm755 "$1"/usr/lib/systemd/system/timers.target.wants
+ln -s ../man-db.timer "$1"/usr/lib/systemd/system/timers.target.wants/man-db.timer

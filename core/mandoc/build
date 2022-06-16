@@ -1,24 +1,23 @@
 #!/bin/sh -uxe
 
-export CFLAGS="$CFLAGS -fcommon"
-sed -i '/int dummy/d'         compat_err.c
-sed -i "s|\"more -s\"|\"less\"|g" main.c
-sed -i "s|CC=.*|CC=\'$CC\'|"    configure
-mv configure.local.example configure.local
+echo "CFLAGS=${CFLAGS@Q}" >> configure.local
+echo "LDFLAGS=${LDFLAGS@Q}" >> configure.local
 
-cat > configure.local <<EOF
-PREFIX=/usr
-MANDIR=/usr/share/man
-LIBDIR=/usr/lib
-SBINDIR=/usr/bin
-CC="${CC:-cc}"
-CFLAGS="$CFLAGS"
-LDFLAGS="$LDFLAGS"
-LN="ln -sf"
-EOF
-
-./configure \
-    --prefix=/usr
+./configure 
 
 make
-make -j1 DESTDIR="$1" base-install
+make DESTDIR="$1" install
+
+install -Dm644 mandoc.timer "${1}"/usr/lib/systemd/system/mandoc.timer
+install -Dm644 mandoc.service "${1}"/usr/lib/systemd/system/mandoc.service
+install -dm755 "${1}"/usr/lib/systemd/system/multi-user.target.wants
+ln -s ../mandoc.timer "${1}"/usr/lib/systemd/system/multi-user.target.wants/mandoc.timer
+
+for i in apropos catman man whatis; do
+    mv "$1"/usr/bin/{,mandoc_}$i
+done
+
+mv "$1"/usr/share/man/man8/{,mandoc_}catman.8
+for i in whatis man apropos; do
+    mv "$1"/usr/share/man/man1/{,mandoc_}$i.1
+done

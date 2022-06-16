@@ -1,1 +1,4 @@
 https://fossies.org/linux/misc/mandoc-VERSION.tar.gz
+files/mandoc.service
+files/mandoc.timer
+files/configure.local
