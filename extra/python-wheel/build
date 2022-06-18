@@ -1,0 +1,5 @@
+#!/bin/sh -uxe
+
+kiss l python-wheel && env KISS_FORCE=1 kiss r python-wheel
+
+pip3 install wheel --root="$1"

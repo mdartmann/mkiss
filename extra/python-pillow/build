@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+
+python setup.py build
+
+python setup.py install --root="$1" --optimize=1
+
+pyver=$(python3 --version | cut -d " " -f2  | cut -d "." -f-2)
+
+install -dm755 "$1"/usr/include/python$pyver/
+
+install -m644 -t "$1"/usr/include/python$pyver/ src/libImaging/*.h

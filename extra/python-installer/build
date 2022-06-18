@@ -1,0 +1,5 @@
+#!/bin/sh -uxe
+
+kiss l python-installer && env KISS_FORCE=1 kiss r python-installer
+
+pip3 install installer --root="$1"

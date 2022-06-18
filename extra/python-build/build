@@ -1,0 +1,5 @@
+#!/bin/sh -uxe
+
+kiss l python-build && env KISS_FORCE=1 kiss r python-build
+
+pip3 install build --root="$1"
