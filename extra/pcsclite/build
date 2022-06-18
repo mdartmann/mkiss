@@ -1,0 +1,16 @@
+#!/bin/sh -uxe
+
+./configure \
+    --prefix=/usr \
+    --sbindir=/usr/bin \
+    --sysconfdir=/etc \
+    --enable-filter \
+    --enable-ipcdir=/run/pcscd \
+    --enable-libudev \
+    --enable-usbdropdir=/usr/lib/pcsc/drivers \
+    --with-systemdsystemunitdir=/usr/lib/systemd/system
+
+make
+
+make DESTDIR="$1" install
+install -dm755 "$1"/usr/lib/pcsc/drivers
