@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+
+qmake
+make
+make INSTALL_ROOT="$1" install
+
+# Drop QMAKE_PRL_BUILD_DIR because of build dir reference
+find "$1/usr/lib" -type f -name '*.prl' \
+    -exec sed -i '/^QMAKE_PRL_BUILD_DIR/d' {} \;
+
