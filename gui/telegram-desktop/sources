@@ -1,2 +1,2 @@
-git+https://github.com/telegramdesktop/tdesktop#VERSION
+git+https://github.com/telegramdesktop/tdesktop#vVERSION
 patches/tgcalls-uint8t-gcc12.patch
