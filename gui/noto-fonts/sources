@@ -1,4 +1,4 @@
-git+https://github.com/googlefonts/noto-fonts#c5481f3a1b57d54190a4e7881103033fbbbcec0c
+git+https://github.com/googlefonts/noto-fonts#c971829a87e7920f960e7277c3dafd9bedd3c601
 files/66-noto-mono.conf
 files/46-noto-serif.conf
 files/66-noto-sans.conf
