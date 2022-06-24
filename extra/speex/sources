@@ -1,1 +1,1 @@
-https://downloads.us.xiph.org/releases/speex/speex-VERSION.tar.gz
+git+https://gitlab.xiph.org/xiph/speex.git#Speex-VERSION

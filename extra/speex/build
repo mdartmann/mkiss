@@ -1,5 +1,7 @@
 #!/bin/sh -uxe
 
+./autogen.sh
+
 ./configure \
     --prefix=/usr \
     --sysconfdir=/etc \
