@@ -17,7 +17,7 @@ cmake -B build -G Ninja \
     -D LLVM_LINK_LLVM_DYLIB=ON \
     -D LLVM_INSTALL_UTILS=ON \
     -D LLVM_TARGETS_TO_BUILD="all" \
-    -D LLVM_ENABLE_PROJECTS="clang;clang-tools-extra;compiler-rt;libunwind;debuginfo-tests;libclc;libcxx;libcxxabi;lld;lldb;llvm;llvm-spirv;mlir;parallel-libs;polly;pstl;utils" \
+    -D LLVM_ENABLE_PROJECTS="clang;clang-tools-extra;compiler-rt;libunwind;libclc;libcxx;libcxxabi;lld;lldb;llvm;mlir;polly;pstl" \
     -D LLVM_ENABLE_RTTI=ON \
     -D LLVM_ENABLE_EH=ON \
     -D LLVM_ENABLE_FFI=ON \
