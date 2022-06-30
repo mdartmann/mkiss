@@ -1,0 +1,2 @@
+#!/bin/sh -e
+systemctl --global disable gnome-keyring-daemon.socket

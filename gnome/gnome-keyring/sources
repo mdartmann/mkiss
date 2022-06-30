@@ -1,1 +1,3 @@
 git+https://gitlab.gnome.org/GNOME/gnome-keyring.git#VERSION
+patches/0002-daemon-Add-Cinnamon-to-autostart-files.patch
+patches/0001-build-Use-p11_module_configs-as-default-pkcs11-confi.patch
