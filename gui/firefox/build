@@ -39,6 +39,9 @@ export MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=system
 
 ulimit -n 4096
 
+# Fix broken redefinition in generated header
+sed -i '/const uint64_t ROOT_CLIP_CHAIN = ~0;/d' gfx/webrender_bindings/webrender_ffi.h
+
 yes y | ./mach build -j`nproc`
 ./mach buildsymbols
 DESTDIR="$1" ./mach install

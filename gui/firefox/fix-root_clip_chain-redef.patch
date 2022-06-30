@@ -1,0 +1,12 @@
+--- gfx/webrender_bindings/webrender_ffi.h.orig	2022-06-30 09:38:44.570786228 +0200
++++ gfx/webrender_bindings/webrender_ffi.h	2022-06-30 09:38:23.868548399 +0200
+@@ -73,7 +73,9 @@
+	struct WrPipelineIdAndEpoch;
+	using WrPipelineIdEpochs = nsTArray<WrPipelineIdAndEpoch>;
+	
++	#ifndef ROOT_CLIP_CHAIN
+	const uint64_t ROOT_CLIP_CHAIN = ~0;
++	#endif // ROOT_CLIP_CHAIN
+	
+	}  // namespace wr
+	}  // namespace mozilla
