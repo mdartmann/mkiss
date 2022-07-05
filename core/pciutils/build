@@ -7,3 +7,7 @@ cp lib/libpci.a .
 make clean
 make OPT="${CFLAGS} -DPIC" ZLIB=no SHARED=yes PREFIX=/usr SHAREDIR=/usr/share/hwdata MANDIR=/usr/share/man SBINDIR=/usr/bin all
 make SHARED=yes PREFIX=/usr SHAREDIR=/usr/share/hwdata MANDIR=/usr/share/man SBINDIR=/usr/bin DESTDIR="$1" install install-lib
+
+# provided by hwdata
+rm "$1"/usr/share/hwdata/pci.ids
+
