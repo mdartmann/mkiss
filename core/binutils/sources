@@ -1,2 +1,3 @@
-http://ftp.gnu.org/gnu/binutils/binutils-VERSION.tar.xz
-patches/0001-close-thin-archive-fd.patch
+git+git://sourceware.org/git/binutils-gdb.git#9c67f6382ac2c90fbde5729feaf7d59ce662147a
+patches/debug_loclists.patch
+patches/gold-warn-unsupported.patch

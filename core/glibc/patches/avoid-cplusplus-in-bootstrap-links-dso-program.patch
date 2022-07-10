@@ -1,0 +1,17 @@
+diff --git a/support/links-dso-program.cc b/support/links-dso-program.cc
+index 4bc2411086..e0d61d41fb 100644
+--- a/support/links-dso-program.cc
++++ b/support/links-dso-program.cc
+@@ -19,10 +19,10 @@ int
+ main (int argc, char **argv)
+ {
+   /* Complexity to keep gcc from optimizing this away.  */
+-  cout << (argc > 1 ? argv[1] : "null");
++  printf("%s", (argc > 1 ? argv[1] : "null"));
+ #ifdef HAVE_SELINUX
+   /* This exists to force libselinux.so to be required.  */
+-  cout << "selinux " << is_selinux_enabled ();
++  printf("selinux: %d", is_selinux_enabled ());
+ #endif
+   return 0;
+ }

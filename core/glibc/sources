@@ -1,4 +1,4 @@
-https://ftp.gnu.org/gnu/libc/glibc-VERSION.tar.gz
+https://ftp.gnu.org/gnu/libc/glibc-VERSION.tar.gz glibc
 git+https://github.com/gkisslinux/sh-alternatives alternatives
 files/ld.so.conf
 files/locale-gen
@@ -6,3 +6,5 @@ files/locale.gen.txt
 files/nsswitch.conf
 files/sdt-config.h
 files/sdt.h
+patches/avoid-cplusplus-in-bootstrap-links-dso-program.patch
+patches/disable-clone3.diff

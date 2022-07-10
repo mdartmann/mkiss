@@ -1,33 +1,120 @@
 #!/bin/sh -uxe
+# vim:fdm=marker
 
 export CFLAGS="${CFLAGS/-Wp,-D_FORTIFY_SOURCE=2/}"
-export CXXFLAGS="${CXXFLAGS/-Wp,-D_FORTIFY_SOURCE-2/} -DPIC"
+export CXXFLAGS="${CXXFLAGS/-Wp,-D_FORTIFY_SOURCE-2/}"
+
+export _CARCH=$CARCH
+export _CHOST=$CHOST
+
+cd glibc
+patch -Np1 < ../disable-clone3.diff
+cd ..
+
+cp -a glibc lib32-glibc
+
+#{{{ 32 bit
+
+# Doing this first simplifies the install step as we have to remove most of the built binaries.
+
+# Specify 32-bit architecture for CC.
+export CC="$CC -m32 -mstackrealign"
+export CARCH=i686
+export CHOST=i686-pc-linux-gnu
+
+cd lib32-glibc
+
+# Fix weird symbol issue in libstdc++ for the first time building it as 32-bit.
+# patch -Np1 -i ../avoid-cplusplus-in-bootstrap-links-dso-program.patch
+
+mkdir build && cd build
+
+printf "%s\n" \
+    "slibdir=/usr/lib32" \
+    "rtlddir=/usr/lib32" \
+    "sbindir=/usr/bin" \
+    "rootsbindir=/usr/bin" > configparms
+
+../configure \
+    --host=i686-pc-linux-gnu \
+    --libdir=/usr/lib32 \
+    --libexecdir=/usr/lib32 \
+    --prefix=/usr \
+    --with-headers=/usr/include \
+    --with-bugurl=https://github.com/mdartmann/mkiss/issues/ \
+    --enable-bind-now \
+    --enable-cet \
+    --enable-kernel=4.4 \
+    --enable-multi-arch \
+    --enable-stack-protector=strong \
+    --enable-systemtap \
+    --disable-profile \
+    --disable-crypt \
+    --disable-werror 
+
+echo "build-programs=no" >> configparms
+make -O
+
+#sed -i "/build-programs=/s|no|yes|" configparms
+#echo "CFLAGS += -Wp,-D_FORTIFY_SOURCE=2" >> configparms
+#make -O
+
+# Move /var folder with KISS' stuff into build folder...
+mv "$1"/var ./varbak
+
+# ... install everything...
+make install_root="$1" install
+
+# ... Remove stuff we don't want ...
+rm -rf $1/{etc,sbin,usr/{bin,sbin,share},var/db/Makefile}
+
+# ...and move /var back into place.
+mv ./varbak/db "$1"/var/
+
+# Only keep 32-bit-specific headers.
+mkdir "$1"/usr/lib
+find $1/usr/include -type f -not -name "-32.h" -print -delete
+ln -s ../lib32/ld-linux.so.2 $1/usr/lib/
+
+# Add lib32 paths to the default ld.so search path.
+echo "/usr/lib32" | install -Dm644 /dev/stdin "$1"/etc/ld.so.conf.d/lib32-glibc.conf
+
+# Symlink locale directories.
+ln -s ../lib/locale "$1"/usr/lib32/locale
+
+# }}}
+
+#{{{ 64 bit
+
+# Set CC back to 64-bit.
+export CC=${CC/-m32 -mstackrealign/}
+export CARCH=$_CARCH
+export CHOST=$_CHOST
+
+cd ../../
 
 install -Dm644 "sdt.h" "$1/usr/include/sys/sdt.h"
 install -Dm644 "sdt-config.h" "$1/usr/include/sys/sdt-config.h"
+
+cd glibc
 
 mkdir build
 cd build
 
 ../configure \
-    --prefix=/usr \
-    --with-headers=/usr/include \
     --libdir=/usr/lib \
     --libexecdir=/usr/libexec \
-    libc_cv_slibdir=/usr/lib \
-    --with-nonshared-cflags="-Wa,--generate-missing-build-notes=yes -fPIC -fPIE" \
-    --enable-add-ons \
+    --prefix=/usr \
+    --with-headers=/usr/include \
+    --with-bugurl=https://github.com/mdartmann/mkiss/issues/ \
     --enable-bind-now \
     --enable-cet \
-    --enable-kernel=5.0 \
-    --enable-lock-elision \
-    --enable-tunables \
-    --disable-multi-arch \
+    --enable-kernel=4.4 \
+    --enable-multi-arch \
     --enable-stack-protector=strong \
-    --enable-stackguard-randomization \
-    --enable-static-pie \
-    --disable-systemtap\
+    --enable-systemtap \
     --disable-profile \
+    --disable-crypt \
     --disable-werror 
 
 printf "%s\n" \
@@ -35,15 +122,16 @@ printf "%s\n" \
     "rtlddir=/usr/lib" \
     "sbindir=/usr/bin" \
     "rootsbindir=/usr/bin" > configparms
-
 make 
 make DESTDIR="$1" install
 
 rm "$1"/var/db/Makefile "$1/usr/bin/ldd" "$1/usr/bin/sotruss" "$1/usr/bin/xtrace" "$1/usr/bin/tzselect"
 
+#}}}
+
 install -dm755 "$1/usr/lib/locale"
 printf "en_US.UTF8 UTF-8" > "$1/etc/locale.gen"
 
 for script in ldd locale-gen sotruss; do
-    install -Dm755 "../alternatives/glibc/$script" "$1/usr/bin/$script"
+    install -Dm755 "../../alternatives/glibc/$script" "$1/usr/bin/$script"
 done

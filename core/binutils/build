@@ -3,34 +3,44 @@
 # Disable development mode
 sed -i '/^development=/s/true/false/' bfd/development.sh
 
-# Fix malformed archive error with nodejs
-patch -Np1 -i 0001-close-thin-archive-fd.patch
+patch -Np1 -i debug_loclists.patch
+patch -Np1 -i gold-warn-unsupported.patch
 
-./configure \
+mkdir -p binutils-build
+cd binutils-build
+
+../configure \
 	--prefix=/usr \
 	--with-lib-path=/usr/lib:/usr/local/lib \
+    --with-bugurl=https://github.com/mdartmann/mkiss/issues \
+	--enable-cet \
 	--enable-deterministic-archives \
 	--enable-gold \
-	--enable-cet \
-	--enable-relro \
-	--without-debuginfod \
-	--enable-threads \
-	--enable-lto \
+    --enable-install-libiberty \
 	--enable-ld=default \
+    --enable-pgo-build=lto \
 	--enable-plugins \
-	--enable-multilib \
-	--enable-gdb \
-	--enable-nls \
-	--enable-readline \
-	--disable-gprof \
+	--enable-relro \
+    --enable-shared \
+    --enable-targets=x86_64-pep,bpf-unknown-none \
+	--enable-threads \
+    --disable-gdb \
+    --disable-gdbserver \
+    --disable-libdecnumber \
+    --disable-readline \
+    --disable-sim \
 	--disable-werror \
-	--with-mmap \
 	--with-pic \
 	--with-system-zlib
 
-make configure-host
-make tooldir=/usr
+make -O tooldir=/usr
 make DESTDIR="$1" tooldir=/usr install
 
+install -m644 libiberty/pic/libiberty.a "$1"/usr/lib/
+
+rm -f "$1"/usr/sahre/man/man1/{dlltool,windres,windmc}*
+
+# No shared linking to these outside binutils
+rm -f "$1"/usr/lib/lib{bfd,opcodes}.so
 echo 'INPUT( /usr/lib/libbfd.a -liberty -lz -ldl )' > "$1/usr/lib/libbfd.so"
 echo 'INPUT( /usr/lib/libopcodes.a -lbfd )' > "$1/usr/lib/libopcodes.so"
