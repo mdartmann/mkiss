@@ -55,10 +55,6 @@ printf "%s\n" \
 echo "build-programs=no" >> configparms
 make -O
 
-#sed -i "/build-programs=/s|no|yes|" configparms
-#echo "CFLAGS += -Wp,-D_FORTIFY_SOURCE=2" >> configparms
-#make -O
-
 # Move /var folder with KISS' stuff into build folder...
 mv "$1"/var ./varbak
 
@@ -73,7 +69,7 @@ mv ./varbak/db "$1"/var/
 
 # Only keep 32-bit-specific headers.
 mkdir "$1"/usr/lib
-find $1/usr/include -type f -not -name "-32.h" -print -delete
+find $1/usr/include -type f -not -name "*-32.h" -print -delete
 ln -s ../lib32/ld-linux.so.2 $1/usr/lib/
 
 # Add lib32 paths to the default ld.so search path.
