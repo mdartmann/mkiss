@@ -1,5 +1,7 @@
 #!/bin/sh -uxe
 
+autoreconf -fiv
+
 ./configure \
     --prefix=/usr
 

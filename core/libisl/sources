@@ -1,1 +1,1 @@
-https://deb.debian.org/debian/pool/main/i/isl/isl_VERSION.orig.tar.xz
+git+https://repo.or.cz/isl.git#isl-VERSION
