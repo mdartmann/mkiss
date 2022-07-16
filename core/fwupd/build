@@ -1,14 +1,15 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
 
+export CFLAGS+=" -flto=auto -ffat-lto-objects"
+export CXXFLAGS+=" -flto=auto -ffat-lto-objects"
+
 meson build \
-	${MESON_OPTIONS/-D b_lto=true/} \
-	-D plugin_modem_manager=true \
+	${MESON_OPTIONS} \
+	-D docs=enabled \
+    -D gresource_quirks=disabled \
 	-D plugin_intel_spi=true \
-	-D lzma=true \
-	-D docs=gtkdoc \
-	-D plugin_flashrom=true \
-	-D supported_build=true \
+	-D supported_build=enabled \
 	-D efi_binary=false
 
 ninja -C build
