@@ -1,1 +1,3 @@
 https://github.com/pkgconf/pkgconf/archive/refs/tags/pkgconf-VERSION.tar.gz
+files/i686-pc-linux-gnu.personality
+files/x86_64-pc-linux-gnu.personality

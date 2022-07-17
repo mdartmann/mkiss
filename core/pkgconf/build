@@ -4,7 +4,16 @@ export DESTDIR="$1"
 meson build \
 	$MESON_OPTIONS \
 	-D tests=false
+
 ninja -C build
 ninja -C build install
 
+install -Dt "$1"/usr/share/pkgconfig/personality.d -m644 \
+    i686-pc-linux-gnu.personality \
+    x86_64-pc-linux-gnu.personality
+
 ln -s pkgconf "$1/usr/bin/pkg-config"
+ln -s pkgconf "$1/usr/bin/i686-pc-linux-gnu-pkg-config"
+ln -s pkgconf "$1/usr/bin/x86_64-pc-linux-gnu-pkg-config"
+
+ln -s pkgconf.1 "$1"/usr/share/man/man1/pkg-config.1
