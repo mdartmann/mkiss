@@ -1,9 +1,8 @@
 #!/bin/sh -uxe
+export DESTDIR="$1"
 
-./waf configure \
-    --prefix=/usr \
-    --mandir=/usr/share/man \
-    --test
+meson build \
+    ${MESON_OPTIONS}
 
-./waf build
-./waf install --destdir="$1"
+ninja -C build
+ninja -C build install
