@@ -1,9 +1,6 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
 
-# Fix meson >= 0.60
-patch -Np1 -i b3ca1d02bb0148ca787ac4aead164d7c8ce2c4d8.patch
-
 meson build \
     ${MESON_OPTIONS/-D b_lto=true/} \
     -D systemd=enabled 
