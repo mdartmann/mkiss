@@ -1,0 +1,45 @@
+#!/bin/sh -uxe
+
+source /etc/kiss-flags/multilib.sh
+
+for i in *.patch; do
+    patch -Np1 -i $i
+done
+
+./configure \
+    --prefix=/usr \
+    --disable-db-install \
+    --enable-widec \
+    --enable-pc-files \
+    --libdir=/usr/lib32 \
+    --mandir=/usr/share/man \
+    --with-cxx-bindings \
+    --with-cxx-shared \
+    --with-pkg-config-libdir=/usr/lib32/pkgconfig \
+    --with-shared \
+    --with-versioned-syms \
+    --without-ada \
+    --without-debug \
+    --without-manpages \
+    --without-progs \
+    --without-tack \
+    --without-tests
+
+make
+make DESTDIR="$1" install
+
+for lib in ncurses ncurses++ form panel menu; do
+    printf "INPUT(-l%sw)\n" "${lib}" > "${1}/usr/lib32/lib${lib}.so"
+    ln -sv ${lib}w.pc "${1}/usr/lib32/pkgconfig/${lib}.pc"
+done
+
+printf 'INPUT(-lncursesw)\n' > "$1/usr/lib32/libcursesw.so"
+ln -sv libncurses.so "$1/usr/lib32/libcurses.so"
+
+for lib in tic tinfo; do
+    printf "INPUT(libncursesw.so.%s)\n" "${2:0:1}" > "${1}/usr/lib32/lib${lib}.so"
+    ln -sv libncursesw.so.${2:0:1} "${1}/usr/lib32/lib${lib}.so.${2:0:1}"
+    ln -fsv ncursesw.pc "$1/usr/lib32/pkgconfig/${lib}.pc"
+done
+
+rm -rf "$1/usr/"{bin,include}

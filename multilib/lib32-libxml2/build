@@ -1,0 +1,21 @@
+#!/bin/sh -uxe
+
+source /etc/kiss-flags/multilib.sh
+
+NOCONFIGURE=1 ./autogen.sh
+
+mkdir build && cd build
+
+../configure \
+    --prefix=/usr \
+    --libdir=/usr/lib32 \
+    --with-threads \
+    --with-history \
+    --without-python \
+    --with-icu
+
+make
+make DESTDIR="$1" install
+
+rm -rf "$1"/usr/{include,share,bin}
+rm "$1"/usr/lib32/xml2Conf.sh

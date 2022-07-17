@@ -1,0 +1,16 @@
+#!/bin/sh -uxe
+
+source /etc/kiss-flags/multilib.sh
+
+for i in *.patch; do
+    patch -Np1 -i $i
+done
+
+./configure \
+    --prefix=/usr \
+    --libdir=/usr/lib32
+
+make
+make DESTDIR="$1" install
+
+rm -rf "$1"/usr/{include,share,bin}
