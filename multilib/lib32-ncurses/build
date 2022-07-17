@@ -1,6 +1,7 @@
 #!/bin/sh -uxe
 
 source /etc/kiss-flags/multilib.sh
+export PKG_CONFIG_LIBDIR='/usr/lib32/pkgconfig'
 
 for i in *.patch; do
     patch -Np1 -i $i
