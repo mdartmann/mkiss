@@ -22,3 +22,5 @@ make NETSNMP_DONT_CHECK_VERSION=1
 sed -i "s|install --basedir=\$\$dir|install --basedir=\$\$dir --root=${1}|" Makefile
 
 make DESTDIR="$1" INSTALL_PREFIX="$1" INSTALLDIRS=vendor install -j1 
+
+rm "$1"/usr/lib/perl5/perllocal.pod
