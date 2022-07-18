@@ -3,10 +3,7 @@ export DESTDIR="$1"
 
 source /etc/kiss-flags/multilib.sh
 
-# Fix CMake issues
-mv Modules/* cmake/modules/
-
-cmake -B build -G Ninja \
+cmake -S llvm -B build -G Ninja \
     -D CMAKE_BUILD_TYPE=Release \
     -D CMAKE_CXX_FLAGS=-m32 \
     -D CMAKE_C_FLAGS=-m32 \
@@ -20,11 +17,13 @@ cmake -B build -G Ninja \
     -D LLVM_ENABLE_FFI=ON \
     -D LLVM_ENABLE_RTTI=ON \
     -D LLVM_ENABLE_SPHINX=OFF \
+    -D LLVM_ENABLE_PROJECTS="clang;llvm;libcxx;libclc;libcxxabi;polly;pstl" \
     -D LLVM_HOST_TRIPLE=$CHOST \
     -D LLVM_INCLUDE_BENCHMARKS=OFF \
     -D LLVM_LIBDIR_SUFFIX=32 \
     -D LLVM_LINK_LLVM_DYLIB=ON \
-    -D LLVM_TARGET_ARCH=i686
+    -D LLVM_TARGET_ARCH=i686 \
+    -Wno-dev 
 
 ninja -C build
 ninja -C build install
@@ -34,7 +33,7 @@ chmod -x "$1"/usr/lib32/*.a
 mv "$1"/usr/bin/llvm-config "$1"/usr/lib32
 mv "$1"/usr/include/llvm/Config/llvm-config.h "$1"/usr/lib32/llvm-config-32.h
 
-rm -rf "$1"/usr/{bin,include,share/{doc,man,llvm,opt-viewer}}
+rm -rf "$1"/usr/{bin,include,share/{doc,man,llvm,opt-viewer,clang,scan-build,scan-view},lib,libexec}
 
 install -d "$1"/usr/include/llvm/Config
 mv "$1"/usr/lib32/llvm-config-32.h "$1"/usr/include/llvm/Config/
