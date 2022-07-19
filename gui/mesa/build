@@ -25,6 +25,7 @@ meson build \
     -D gles1=disabled \
     -D gles2=enabled \
     -D glx=dri \
+    -D glvnd=true \
     -D libunwind=enabled \
     -D llvm=enabled \
     -D shared-llvm=enabled \
