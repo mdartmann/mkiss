@@ -1,0 +1,67 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+export CFLAGS+=" -flto=auto -ffat-lto-objects"
+export CXXFLAGS+=" -flto=auto -ffat-lto-objects"
+
+# Utilizing LLVM_DISTRIBUTION_COMPONENTS to avoid
+# installing static libraries; inspired by Gentoo and stolen from Arch
+_get_distribution_components() {
+  local target
+  ninja -t targets | grep -Po 'install-\K.*(?=-stripped:)' | while read -r target; do
+    case $target in
+      clang-libraries|distribution)
+        continue
+        ;;
+      clang-tidy-headers)
+        continue
+        ;;
+      clang|clangd|clang-*)
+        ;;
+      clang*|findAllSymbols)
+        continue
+        ;;
+    esac
+    echo $target
+  done
+}
+
+source /etc/kiss-flags/multilib.sh
+
+cd clang
+patch -Np2 -i ../enable-fstack-protector-strong-by-default.patch
+
+# fix broken CMAKE_MODULE_PATH
+mkdir cmake
+cp -a modules cmake/
+
+zsh
+cmake_opts=(
+    -D CMAKE_BUILD_TYPE=Release
+    -D CMAKE_INSTALL_PREFIX=/usr
+    -D CMAKE_SKIP_RPATH=ON
+    -D CLANG_DEFAULT_PIE_ON_LINUX=ON
+    -D CLANG_LINK_CLANG_DYLIB=ON
+    -D CMAKE_CXX_FLAGS=-m32
+    -D CMAKE_C_FLAGS=-m32
+    -D LLVM_BUILD_TESTS=OFF
+    -D LLVM_CONFIG="/usr/bin/llvm-config32"
+    -D LLVM_ENABLE_RTTI=ON
+    -D LLVM_INCLUDE_DOCS=OFF
+    -D LLVM_LINK_LLVM_DYLIB=ON
+    -D LLVM_MAIN_SRC_DIR=$PWD/../llvm/
+    -Wno-dev
+)
+zsh
+
+cmake -B build -G Ninja \
+    ${cmake_opts[@]}
+
+distcomps=$(_get_distribution_components | paste -sd\;)
+
+cmake -B build -G Ninja \
+    ${cmake_opts[@]}
+
+ninja -C build
+ninja -C build install
+
+rm -rf "$1"/usr/{bin,include,libexec,share}

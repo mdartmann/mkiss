@@ -1,0 +1,47 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+source /etc/kiss-flags/multilib.sh
+
+export CFLAGS+=" -mtls-dialect=gnu -flto=auto -ffat-lto-objects"
+export CXXFLAGS+=" -mtls-dialect=gnu -flto=auto -ffat-lto-objects"
+export PKG_CONFIG="i686-pc-linux-gnu-pkg-config"
+
+cat > crossfile.ini << EOF
+[binaries]
+llvm-config = '/usr/bin/llvm-config32'
+EOF
+
+meson build \
+    ${MESON_32_OPTIONS} \
+    --native-file crossfile.ini \
+    -D b_ndebug=true \
+    -D platforms=x11,wayland \
+    -D gallium-drivers=r300,r600,radeonsi,nouveau,virgl,swrast,iris,crocus,zink \
+    -D vulkan-drivers=amd,intel \
+    -D dri3=enabled \
+    -D egl=enabled \
+    -D gallium-extra-hud=true \
+    -D gallium-nine=true \
+    -D gallium-omx=disabled \
+    -D gallium-opencl=icd \
+    -D gallium-va=enabled \
+    -D gallium-xa=enabled \
+    -D gallium-xvmc=disabled \
+    -D gbm=enabled \
+    -D gles1=disabled \
+    -D gles2=enabled \
+    -D glvnd=true \
+    -D glx=dri \
+    -D libunwind=enabled \
+    -D llvm=enabled \
+    -D lmsensors=enabled \
+    -D osmesa=true \
+    -D shared-glapi=enabled \
+    -D microsoft-clc=disabled \
+    -D valgrind=disabled
+
+ninja -C build
+ninja -C build install
+
+rm -rf "$1"/{etc,usr/{share,include}}

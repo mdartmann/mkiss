@@ -1,0 +1,15 @@
+#!/bin/sh -uxe
+
+source /etc/kiss-flags/multilib.sh
+
+./configure \
+    --prefix=/usr \
+    --libdir=/usr/lib32 \
+    --with-root-prefix='' \
+    --enable-elf-shlibs \
+    --disable-{debugfs,inager,resizer,fsck,uuidd,libuuid,libblkid}
+
+make 
+make DESTDIR="$1" install-libs
+
+rm -rf "$1"/usr/{bin,include,share}

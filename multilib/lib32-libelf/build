@@ -1,0 +1,16 @@
+#!/bin/sh -uxe
+
+source /etc/kiss-flags/multilib.sh
+
+export CFLAGS+=" -flto=auto -ffat-lto-objects"
+
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --libdir=/usr/lib32 \
+    --disable-debuginfod
+
+make
+make DESTDIR="$1" install
+
+rm -rf "$1"/{etc,usr/{bin,share,include}}

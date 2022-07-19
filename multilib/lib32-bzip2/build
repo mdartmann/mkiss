@@ -1,0 +1,11 @@
+#!/bin/sh -uxe
+
+source /etc/kiss-flags/multilib.sh
+
+make -f Makefile-libbz2_so CC="$CC $CFLAGS $LDFLAGS"
+make libbz2.a CC="$CC $CFLAGS $LDFLAGS"
+
+install -dm755 "$1"/usr/lib32
+cp -a libbz2.so* "$1"/usr/lib32
+ln -s libbz2.so.$2 "$1"/usr/lib32/libbz2.so
+ln -s libbz2.so.$2 "$1"/usr/lib32/libbz2.so.1

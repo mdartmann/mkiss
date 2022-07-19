@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+
+source /etc/kiss-flags/multilib.sh
+
+./configure \
+    --libdir=/usr/lib32
+
+make lib{uuid,blkid,fdisk,mount,smartcols}.la
+
+make DESTDIR="$1" \
+    install-usrlib_execLTLIBRARIES \
+    install-pkgconfigDATA

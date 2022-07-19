@@ -1,0 +1,25 @@
+#!/bin/sh -uxe
+
+source /etc/kiss-flags/multilib.sh
+
+./configure \
+    --prefix=/usr \
+    --libdir=/usr/lib32 \
+    --disable-dependency-tracking \
+    --disable-ldap \
+    --disable-ldaps \
+    --enable-ipv6 \
+    --enable-manual \
+    --enable-threaded-resolver \
+    --with-gssapi \
+    --with-libssh2 \
+    --with-openssl \
+    --with-random=/dev/urandom \
+    --with-ca-bundle=/etc/ssl/certs/ca-certificates.crt \
+    --enable-versioned-symbols
+
+make -C lib
+make -C lib DESTDIR="$1" install
+
+make libcurl.pc
+make DESTDIR="$1" install-pkgconfigDATA

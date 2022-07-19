@@ -1,0 +1,24 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+# Specify manually to fix assembly file
+export ASFLAGS=--32
+export CFLAGS+=" -m32"
+export CXXFLAGS+=" -m32"
+source /etc/kiss-flags/multilib.sh
+
+cmake -B build -G Ninja \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D VULKAN_HEADERS_INSTALL_DIR=/usr \
+    -D CMAKE_INSTALL_SYSCONFDIR=/etc \
+    -D CMAKE_INSTALL_LIBDIR=lib32 \
+    -D CMAKE_INSTALL_DATADIR=share \
+    -D CMAKE_SKIP_RPATH=ON \
+    -D BUILD_TESTS=OFF \
+    -D BUILD_WSI_XCB_SUPPORT=ON \
+    -D BUILD_WSI_XLIB_SUPPORT=ON \
+    -D BUILD_WSI_WAYLAND_SUPPORT=ON \
+    -D CMAKE_BUILD_TYPE=Release
+
+ninja -C build
+ninja -C build install

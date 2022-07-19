@@ -1,0 +1,36 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+export CFLAGS+=" -flto=auto -ffat-lto-objects"
+export CXXFLAGS+=" -flto=auto -ffat-lto-objects"
+
+source /etc/kiss-flags/multilib.sh
+
+cd polly
+
+# fix broken CMAKE_MODULE_PATH
+#mkdir cmake
+#cp -a modules cmake/
+
+cmake_opts=(
+    -D CMAKE_BUILD_TYPE=Release
+    -D CMAKE_INSTALL_PREFIX=/usr
+    -D CMAKE_SKIP_RPATH=ON
+    -D CMAKE_CXX_FLAGS=-m32
+    -D CMAKE_C_FLAGS=-m32
+    -D CMAKE_INSTALL_LIBDIR=lib32
+    -D LLVM_BUILD_TESTS=OFF
+    -D LLVM_CONFIG="/usr/bin/llvm-config32"
+    -D LLVM_ENABLE_RTTI=ON
+    -D LLVM_INCLUDE_DOCS=OFF
+    -D LLVM_LINK_LLVM_DYLIB=ON
+    -D LLVM_MAIN_SRC_DIR=$PWD/../llvm/
+    -Wno-dev
+)
+
+cmake -B build -G Ninja \
+    ${cmake_opts[@]}
+
+ninja -C build
+ninja -C build install
+
+rm -rf "$1"/usr/{bin,include,libexec,share}

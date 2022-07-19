@@ -1,0 +1,15 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+source /etc/kiss-flags/multilib.sh
+
+cd expat
+cmake -B build -G Ninja -Wno-dev \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -D CMAKE_INSTALL_LIBDIR=lib32 \
+    -D CMAKE_BUILD_TYPE=None
+
+ninja -C build
+ninja -C build install
+
+rm -rf "$1"/usr/{bin,include,share/man,share/doc}

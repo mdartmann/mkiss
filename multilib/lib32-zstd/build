@@ -1,0 +1,16 @@
+#!/bin/sh -uxe
+
+source /etc/kiss-flags/multilib.sh
+
+make
+make zstdmt
+make -C contrib/pzstd
+
+make \
+    PREFIX=/usr \
+    LIBDIR=/usr/lib32 \
+    PKGCONFIGDIR=/usr/lib32/pkgconfig \
+    DESTDIR="$1" \
+    install
+
+rm -rf "$1"/usr/{share,include,bin}

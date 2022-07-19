@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+
+source /etc/kiss-flags/multilib.sh
+
+./configure \
+    --prefix=/usr \
+    --libdir=/usr/lib32
+
+make
+make DESTDIR="$1" install
+
+rm -rf "$1"/usr/{include,share,{s,}bin}

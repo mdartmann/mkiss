@@ -1,0 +1,12 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+
+source /etc/kiss-flags/multilib.sh
+
+meson build \
+    ${MESON_32_OPTIONS} 
+
+ninja -C build
+ninja -C build install
+
+rm -rf "$1"/{etc,usr/{include,share}}

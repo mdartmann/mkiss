@@ -1,0 +1,19 @@
+#!/bin/sh -uxe
+
+source /etc/kiss-flags/multilib.sh
+
+patch -Np0 -i ca-dir.patch
+
+./Configure \
+    --prefix=/usr \
+    --openssldir=/etc/ssl \
+    --libdir=/usr/lib32 \
+    shared \
+    no-ssl3-method \
+    linux-elf \
+    "-Wa,--noexecstack ${CFLAGS} ${LDFLAGS}"
+
+make
+make DESTDIR="$1" install_sw
+
+rm -rf "$1"/{etc,usr/{include,bin}}

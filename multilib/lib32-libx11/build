@@ -1,0 +1,16 @@
+#!/bin/sh -uxe
+
+source /etc/kiss-flags/multilib.sh
+
+./configure \
+    --prefix=/usr \
+    --libdir=/usr/lib32 \
+    --disable-static \
+    --disable-xf86bigfont \
+    --disable-thread-safety-constructor \
+    --disable-specs
+
+make
+make DESTDIR="$1" install
+
+rm -rf "$1"/usr/{include,share}

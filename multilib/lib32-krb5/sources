@@ -1,0 +1,2 @@
+https://web.mit.edu/kerberos/dist/krb5/MAJOR.MINOR/krb5-VERSION.tar.gz
+patches/krb5-config_LDFLAGS.patch

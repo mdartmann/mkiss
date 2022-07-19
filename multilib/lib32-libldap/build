@@ -1,0 +1,32 @@
+#!/bin/sh -uxe
+
+source /etc/kiss-flags/multilib.sh
+
+./configure \
+    --prefix=/usr \
+    --libdir=/usr/lib32 \
+    --libexecdir=/usr/sbin \
+    --sysconfdir=/etc \
+    --mandir=/usr/share/man \
+    --localstatedir=/var/lib/openldap \
+    --enable-crypt \
+    --enable-dynamic \
+    --with-threads \
+    --disable-wrappers \
+    --disable-spasswd \
+    --without-cyrus-sasl \
+    --disable-bdb \
+    --disable-hdb
+
+cd include 
+make 
+make DESTDIR="$1" install
+
+cd ../libraries
+make depend
+make
+make DESTDIR="$1" install
+
+rm -rf "$1"/{usr/{include,share,bin},etc}
+
+

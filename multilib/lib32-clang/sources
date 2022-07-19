@@ -1,0 +1,3 @@
+https://github.com/llvm/llvm-project/releases/download/llvmorg-VERSION/llvm-VERSION.src.tar.xz llvm
+https://github.com/llvm/llvm-project/releases/download/llvmorg-VERSION/clang-VERSION.src.tar.xz clang
+patches/enable-fstack-protector-strong-by-default.patch

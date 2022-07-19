@@ -1,0 +1,17 @@
+#!/bin/sh -uxe
+export DESTDIR="$1"
+export CFLAGS+=" -flto=auto -ffat-lto-objects"
+export CXXFLAGS+=" -flto=auto -ffat-lto-objects"
+
+source /etc/kiss-flags/multilib.sh
+export PKG_CONFIG="i686-pc-linux-gnu-pkg-config"
+
+meson build \
+    ${MESON_32_OPTIONS} \
+    -D headers=false \
+    -D gles1=false
+
+ninja -C build
+ninja -C build install
+
+rm -rf "$1"/usr/include

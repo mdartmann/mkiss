@@ -1,0 +1,16 @@
+#!/bin/sh -uxe
+
+source /etc/kiss-flags/multilib.sh
+
+meson build \
+    ${MESON_32_OPTIONS} \
+    -D builtin=libidn2 \
+    -D runtime=libidn2 \
+    -D psl_file=/usr/share/publicsuffix/effective_tld_names.dat \
+    -D psl_distfile=/usr/share/publicsuffix/public_suffix_list.dat \
+    -D psl_testfile=/usr/share/publicsuffix/test_psl.txt
+
+ninja -C build
+ninja -C build install
+
+rm -rf "$1"/usr/{bin,share,include}

@@ -1,0 +1,11 @@
+--- tools/libclang/CMakeLists.txt.bak	2022-07-18 11:07:16.023828174 +0200
++++ tools/libclang/CMakeLists.txt	2022-07-18 11:07:43.068378126 +0200
+@@ -132,6 +132,8 @@
+	  ${LLVM_TARGETS_TO_BUILD}
+	  Core
+	  Support
++	  Polly
++	  PollyISL
+	  )
+	
+	if(ENABLE_STATIC)

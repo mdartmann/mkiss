@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+
+source /etc/kiss-flags/multilib.sh
+
+sed -i 's/^\(USR\)\?LIBDIR\s*:=.*$/\1LIBDIR=\/usr\/lib32/' Makefile
+
+make CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}"
+make DESTDIR="$1" install
+
+rm -rf "$1"/{etc,{s,}bin,usr/{include,share,bin,sbin}}

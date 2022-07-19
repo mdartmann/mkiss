@@ -1,0 +1,10 @@
+#!/bin/sh -uxe
+
+source /etc/kiss-flags/multilib.sh
+
+sed -i "s|CC := gcc|cc := gcc -m32|" Makefile
+
+make PREFIX=/usr
+make LIBDIR=/usr/lib32 PREFIX=/usr BUILD_STATIC_LIB=0 DESTDIR="$1" install
+
+rm -rf "$1"/{etc,usr/{bin,sbin,include,man}}
