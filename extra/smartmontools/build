@@ -1,0 +1,27 @@
+#!/bin/sh -uxe
+
+sed -i "/^StandardOutput=/d" smartd.service.in
+
+autoreconf -fiv
+
+./configure \
+    --prefix=/usr \
+    --sbindir=/usr/bin \
+    --sysconfdir=/etc \
+    --with-drivedbdir \
+    --with-libcap-ng=yes \
+    --with-libsystemd=yes \
+    --with-systemdsystemunitdir=/usr/lib/systemd/system \
+    --with-systemdenvfile=/etc/conf.d/smartd \
+    --with-smartdscriptdir=/usr/share/smartmontools \
+    --with-smartdplugindir=/usr/share/smartmontools/smartd_warning.d
+
+make
+
+sed -i "s|sysconfig/smartmontools|conf.d/smartd|g" smartd.service
+sed -i "s|smartd_opts|SMARTD_ARGS|g" smartd.service
+
+make DESTDIR="$1" install
+
+rm -rf "$1"/etc/rc.d/
+install -Dm644 smartd.conf "$1"/etc/conf.d/smartd
