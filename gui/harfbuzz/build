@@ -1,12 +1,11 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
+export CFLAGS="${CFLAGS/-fexceptions/} -flto=auto -ffat-lto-objects"
+export CXXFLAGS="${CXXFLAGS/-fexceptions/} -flto=auto -ffat-lto-objects"
 
-./configure \
-    --prefix=/usr \
-    --disable-static \
-    --with-graphite2 \
-    --with-gobject \
-    --enable-introspection 
+meson build \
+    ${MESON_OPTIONS} \
+    -D graphite2=enabled
 
-make
-make DESTDIR="$1" install
+ninja -C build
+ninja -C build install
