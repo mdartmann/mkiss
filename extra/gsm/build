@@ -2,7 +2,7 @@
 
 patch -p0 -i gsm-shared.patch
 
-make CCFLAGS="-c ${CFLAGS} -fPIC"
+make CCFLAGS="-c ${CFLAGS} -fPIC -flto=auto -ffat-lto-objects"
 
 install -dm755 "$1"/usr/{bin,lib,include/gsm,share/man/man{1,3}}
 
