@@ -1,0 +1,14 @@
+#!/bin/sh -uxe
+
+NOCONFIGURE=1 ./autogen.sh
+
+./configure \
+    --prefix=/usr \
+    --libexecdir=/usr/lib \
+    --sbindir=/usr/bin \
+    --with-vpnc-script=/etc/vpnc/vnpc-script 
+
+make
+make DESTDIR="$1" install
+
+install -Dm755 vpnc-script "$1"/etc/vpnc/vnpc-script
