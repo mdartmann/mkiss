@@ -1,5 +1,11 @@
 #!/bin/sh -uxe
 
+# Fix https://github.com/madler/zlib/issues/613
+patch -Np1 -i ec3df00224d4.patch
+
+export CFLAGS+=" -flto=auto -ffat-lto-objects"
+export CXXFLAGS+=" -flto=auto -ffat-lto-objects"
+
 ./configure \
 	--prefix=/usr 
 

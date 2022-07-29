@@ -1,1 +1,2 @@
-https://sourceforge.net/projects/libpng/files/zlib/VERSION/zlib-VERSION.tar.xz
+https://zlib.net/zlib-VERSION.tar.gz
+https://github.com/madler/zlib/commit/ec3df00224d4.patch

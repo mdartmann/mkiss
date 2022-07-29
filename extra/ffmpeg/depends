@@ -9,6 +9,7 @@ glib2
 lame
 libass
 libdrm
+libfdk-aac
 libpulse
 librsvg
 libvdpau

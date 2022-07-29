@@ -8,6 +8,7 @@ export CXXFLAGS+=" -flto=auto"
     --disable-debug \
     --disable-static \
     --disable-stripping \
+    --enable-nonfree \
     --enable-amf \
     --enable-avisynth \
     --enable-cuda-llvm \
@@ -22,6 +23,7 @@ export CXXFLAGS+=" -flto=auto"
     --enable-libbluray \
     --enable-libdav1d \
     --enable-libdrm \
+    --enable-libfdk-aac \
     --enable-libfreetype \
     --enable-libfribidi \
     --enable-libgsm \
