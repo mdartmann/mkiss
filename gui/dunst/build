@@ -1,0 +1,19 @@
+#!/bin/sh -uxe
+
+# Remove git tree to fix Makefile issues
+rm -rf .git
+
+make \
+    PREFIX=/usr \
+    SYSCONFDIR=/etc \
+    X11INC=/usr/include/X11 \
+    X11LIB=/usr/lib/X11 \
+    all
+
+make \
+    DESTDIR="$1" \
+    SYSCONFDIR=/etc \
+    PREFIX=/usr \
+    install
+
+install -Dm755 dunstify "$1"/usr/bin/dunstify
