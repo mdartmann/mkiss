@@ -1,1 +1,6 @@
 https://downloads.isc.org/isc/dhcp/VERSION/dhcp-VERSION.tar.gz
+files/dhcp-tmpfiles.conf
+files/dhcp-sysusers.conf
+files/dhclient@.service
+files/dhcpd4.service
+files/dhcpd6.service

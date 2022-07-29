@@ -21,3 +21,9 @@ make DESTDIR="$1" install
 mv "$1/etc/dhcpd.conf.example" "$1/etc/dhcpd.conf"
 
 install -Dm644 doc/examples/dhcpd-dhcpv6.conf "$1/etc/dhcpd6.conf"
+
+mkdir -p "$1"/usr/lib/{systemd/system,tmpfiles.d,sysusers.d}
+install -Dm644 "dhcp-sysusers.conf" "${1}/usr/lib/sysusers.d/dhcp.conf"
+install -Dm644 "dhcp-tmpfiles.conf" "${1}/usr/lib/tmpfiles.d/dhcp.conf"
+install -Dm644 "dhcpd4.service" "${1}/usr/lib/systemd/system/dhcpd4.service"
+install -Dm644 "dhcpd6.service" "${1}/usr/lib/systemd/system/dhcpd6.service"
