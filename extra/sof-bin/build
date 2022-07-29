@@ -1,0 +1,9 @@
+#!/bin/sh -uxe
+:>nostrip
+
+export FW_DEST="$1"/usr/lib/firmware/intel 
+export TOOLS_DEST="$1"/usr/bin
+
+mkdir -p "$FW_DEST" "$TOOLS_DEST"
+
+./install.sh v$2 || zsh
