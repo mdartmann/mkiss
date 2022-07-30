@@ -1,9 +1,8 @@
 #!/bin/sh -uxe
 export DESTDIR="$1"
 
-# Minimal debug info; #6229
-export CFLAGS+=" -g1 -mtls-dialect=gnu -flto=auto -ffat-lto-objects"
-export CXXFLAGS+=" -g1 -mtls-dialect=gnu -flto=auto -ffat-lto-objects"
+export CFLAGS+=" -mtls-dialect=gnu -flto=jobserver -ffat-lto-objects"
+export CXXFLAGS+=" -mtls-dialect=gnu -flto=jobserver -ffat-lto-objects"
 
 meson build \
     -D b_ndebug=true \
